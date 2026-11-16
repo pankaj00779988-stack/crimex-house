@@ -1,5 +1,9 @@
 # CRIMEX HOUSE
 
+**Live website:** https://crimexhouse.vercel.app
+
+**Public source:** https://github.com/pankaj00779988-stack/crimex-house
+
 A mobile-first interactive heist series website built with **Next.js 16 App Router, React 19, TypeScript, and Tailwind CSS 4**. All story, voting, evidence, and checkout content lives in `/data`. Inter and JetBrains Mono are self-hosted through Fontsource; no Google Fonts request is needed at build time.
 
 ## Run locally
@@ -97,3 +101,11 @@ Accessibility includes keyboard navigation, skip link, visible focus states, nat
 GitHub stores the source; Vercel serves the website. This standard Next.js application uses image optimization and response headers and is intended for Vercel or a Node host, rather than an unmodified GitHub Pages static deployment.
 
 Publishing does not enable payments automatically. Configure and verify the checkout URLs before accepting reservations.
+
+## Current hosting setup
+
+The initial production release was deployed directly to the Vercel project **crimex-house** in the **crimexhouse** workspace from source commit `1581602`. Both https://crimexhouse.vercel.app and https://crimex-house.vercel.app point to this release.
+
+Automatic deployments from GitHub are not connected yet: Vercel requires a GitHub Login Connection for this account. To enable future JSON edits to deploy automatically, connect GitHub under [Vercel account authentication](https://vercel.com/account/settings/authentication), then connect `pankaj00779988-stack/crimex-house` under the project’s **Settings → Git**, with `main` as the production branch. Until linked, changes pushed to GitHub need a separate Vercel deployment.
+
+The custom domain `crimex.house` has not been purchased or attached. Registration is separate from the free Vercel address.
