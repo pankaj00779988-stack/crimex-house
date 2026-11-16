@@ -438,7 +438,7 @@ legend,
 }
 .scene-art img {
   object-fit: cover;
-  object-position: center 68%;
+  object-position: center 55%;
   filter: saturate(0.65);
 }
 .hero-shade {
@@ -3697,5 +3697,187 @@ legend,
   }
   to {
     transform: scaleX(1);
+  }
+}
+
+/* Premiere gates deliberately contain no hidden vote controls or active keypad. */
+.premiere-badge {
+  color: var(--pink) !important;
+  border-bottom: 1px solid #ff2e9360;
+  padding-bottom: 4px;
+}
+.follow-button {
+  white-space: normal;
+  line-height: 1.7;
+  min-width: 0;
+}
+.follow-button > span {
+  overflow-wrap: anywhere;
+}
+.vote-standby {
+  min-height: 405px;
+  display: flex;
+  flex-direction: column;
+}
+.vote-standby .standby-emblem {
+  margin: 34px auto 22px;
+}
+.vote-standby h2 {
+  font-size: 25px;
+  letter-spacing: -1px;
+  margin: 0 0 14px;
+}
+.vote-standby .standby-unlock {
+  font:
+    9px/1.9 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.5px;
+  color: var(--pink);
+  margin-bottom: 19px;
+}
+.vote-standby .vote-bottom {
+  margin-top: 27px;
+  font-size: 7px;
+}
+.vote-standby > .text-link {
+  margin-top: 13px;
+  font-size: 8px;
+  color: #bdbdc7;
+}
+.standby-emblem {
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  border: 1px solid #ff2e9345;
+  background: #ff2e9307;
+  color: var(--pink);
+  transform: rotate(-4deg);
+}
+.standby-emblem svg {
+  transform: rotate(4deg);
+}
+.teaser-dossier {
+  position: relative;
+  padding: 10px 0 5px;
+}
+.teaser-dossier > svg {
+  color: #72655d;
+  margin-bottom: 24px;
+}
+.teaser-dossier > .stamp {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  font-size: 10px;
+}
+.teaser-dossier > p {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.8;
+  color: var(--ink);
+}
+.teaser-dossier > .teaser-note {
+  font-size: 12px;
+  font-weight: 400;
+  color: #776d62;
+  margin-top: 17px;
+}
+.teaser-dossier > .button {
+  margin-top: 25px;
+}
+.vault-standby {
+  max-width: 700px;
+  margin: 56px auto 10px;
+  padding: 40px 35px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 30%, #ff2e9309, transparent 70%),
+    var(--surface);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--pink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.vault-standby .standby-emblem {
+  margin: 30px 0;
+}
+.vault-standby h1 {
+  font-weight: 900;
+  font-size: clamp(25px, 4vw, 39px);
+  line-height: 1.2;
+  letter-spacing: -1.4px;
+  max-width: 560px;
+}
+.vault-standby > p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--muted);
+  margin: 20px 0 0;
+  max-width: 410px;
+}
+.vault-standby > .text-link {
+  margin-top: 22px;
+  color: #a4a4b0;
+  font-size: 8px;
+}
+.sealed-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  gap: 6px;
+  margin: 25px 0;
+  opacity: 0.4;
+}
+.sealed-keypad > span {
+  display: grid;
+  place-items: center;
+  background: #1e1e25;
+  border: 1px solid var(--line);
+  height: 30px;
+  color: #777781;
+}
+@media (max-width: 680px) {
+  .announcement-mobile {
+    font-size: 6px;
+    letter-spacing: 0.15px;
+  }
+  .countdown {
+    font-size: 8px;
+    letter-spacing: 0.5px;
+  }
+  .vote-standby {
+    min-height: 390px;
+  }
+  .vote-standby h2 {
+    font-size: 24px;
+  }
+  .vote-standby .standby-unlock {
+    font-size: 8px;
+  }
+  .vault-standby {
+    margin-top: 30px;
+    padding: 30px 21px;
+  }
+  .vault-standby > .eyebrow {
+    font-size: 6px;
+    letter-spacing: 0.8px;
+  }
+  .vault-standby h1 {
+    font-size: 26px;
+    letter-spacing: -0.9px;
+  }
+  .vault-standby > p {
+    font-size: 11px;
+  }
+  .vault-standby > .button {
+    font-size: 8px;
+  }
+  .teaser-dossier > .stamp {
+    font-size: 8px;
+    padding: 5px;
+  }
+  .teaser-dossier > p {
+    font-size: 15px;
   }
 }

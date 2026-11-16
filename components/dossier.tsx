@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Episode, siteConfig } from "@/lib/data";
+import { getWatchUrl, isEpisodeReleased } from "@/lib/release";
 import { SceneArt } from "./art";
 export function DossierModal({
   episode,
@@ -22,6 +23,7 @@ export function DossierModal({
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
+  const released = isEpisodeReleased(episode);
   useEffect(() => {
     const dialog = ref.current;
     if (open && !dialog?.open) dialog?.showModal();
@@ -61,37 +63,63 @@ export function DossierModal({
         </span>
         <h2 id={titleId}>{episode.title}</h2>
         <div className="dossier-divider" />
-        <span className="eyebrow">INCIDENT REPORT</span>
-        <p>{episode.summary}</p>
-        <div className="law-card">
-          <span className="stamp">FEDERAL FELONY</span>
-          <FileText size={24} />
-          <h3>{episode.realLawRule}</h3>
-          <p>{episode.lawExplanation}</p>
-        </div>
-        <div className="clue-card">
-          <span className="eyebrow">RECOVERED INTELLIGENCE</span>
-          <p>{episode.recoveredIntelligence ?? episode.safeClue}</p>
-        </div>
-        <div className="dossier-actions">
-          <a
-            href={siteConfig.instagramUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="button dark-button"
-          >
-            <Play size={15} /> Watch on Instagram
-            <ArrowUpRight size={15} />
-          </a>
-          <Link href="/safe" onClick={onClose} className="text-link">
-            Crack the safe
-            <ArrowRight size={16} />
-          </Link>
-        </div>
-        <small>
-          Fictional case file. Law references are for story context, not legal
-          advice.
-        </small>
+        {released ? (
+          <>
+            <span className="eyebrow">INCIDENT REPORT</span>
+            <p>{episode.summary}</p>
+            <div className="law-card">
+              <span className="stamp">FEDERAL FELONY</span>
+              <FileText size={24} />
+              <h3>{episode.realLawRule}</h3>
+              <p>{episode.lawExplanation}</p>
+            </div>
+            <div className="clue-card">
+              <span className="eyebrow">RECOVERED INTELLIGENCE</span>
+              <p>{episode.recoveredIntelligence ?? episode.safeClue}</p>
+            </div>
+            <div className="dossier-actions">
+              <a
+                href={getWatchUrl(episode, siteConfig.instagramUrl)}
+                target="_blank"
+                rel="noreferrer"
+                className="button dark-button"
+              >
+                <Play size={15} /> Watch on Instagram
+                <ArrowUpRight size={15} />
+              </a>
+              <Link href="/safe" onClick={onClose} className="text-link">
+                Crack the safe
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+            <small>
+              Fictional case file. Law references are for story context, not
+              legal advice.
+            </small>
+          </>
+        ) : (
+          <div className="teaser-dossier">
+            <LockKeyhole size={32} />
+            <span className="stamp">DROPS {siteConfig.dropLabel}</span>
+            <p>
+              File {String(episode.part).padStart(2, "0")} declassifies when the
+              Reel goes live on {siteConfig.handle}
+            </p>
+            <p className="teaser-note">
+              Until then, the evidence stays sealed. Follow the account and be
+              there for the premiere.
+            </p>
+            <a
+              href={siteConfig.instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="button dark-button"
+            >
+              FOLLOW {siteConfig.handle.toUpperCase()}
+              <ArrowUpRight size={15} />
+            </a>
+          </div>
+        )}
       </div>
     </dialog>
   );
@@ -104,7 +132,8 @@ export function EpisodeCard({
   compact?: boolean;
 }) {
   const [open, setOpen] = useState(false);
-  const live = episode.status === "LIVE";
+  const released = isEpisodeReleased(episode);
+  const live = episode.status === "LIVE" && released;
   const available = episode.status !== "LOCKED";
   return (
     <>
@@ -130,7 +159,11 @@ export function EpisodeCard({
                 LIVE NOW
               </>
             ) : available ? (
-              <>FILE OPEN</>
+              released ? (
+                <>FILE OPEN</>
+              ) : (
+                <>DROPS {siteConfig.dropLabel}</>
+              )
             ) : (
               <>
                 <LockKeyhole size={10} />
@@ -138,7 +171,7 @@ export function EpisodeCard({
               </>
             )}
           </span>
-          {available ? (
+          {released ? (
             <span className="play-circle">
               <Play size={22} fill="currentColor" />
             </span>
@@ -157,7 +190,7 @@ export function EpisodeCard({
             {episode.title}
             {available && <ArrowUpRight size={18} />}
           </h3>
-          <p>{episode.subtitle}</p>
+          <p>{available && !released ? episode.teaser : episode.subtitle}</p>
         </div>
       </button>
       <DossierModal
@@ -169,19 +202,21 @@ export function EpisodeCard({
   );
 }
 export function WatchButton({ episode }: { episode: Episode }) {
-  const [open, setOpen] = useState(false);
+  const released = isEpisodeReleased(episode);
   return (
-    <>
-      <button className="button primary" onClick={() => setOpen(true)}>
-        <Play size={16} fill="currentColor" />
-        WATCH PART {String(episode.part).padStart(2, "0")}
-        <ArrowUpRight size={16} />
-      </button>
-      <DossierModal
-        episode={episode}
-        open={open}
-        onClose={() => setOpen(false)}
-      />
-    </>
+    <a
+      className={`button primary ${released ? "" : "follow-button"}`}
+      href={getWatchUrl(episode, siteConfig.instagramUrl)}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {released && <Play size={16} fill="currentColor" />}
+      <span>
+        {released
+          ? `WATCH PART ${String(episode.part).padStart(2, "0")}`
+          : `FOLLOW ${siteConfig.handle.toUpperCase()} FOR PART ${String(episode.part).padStart(2, "0")}`}
+      </span>
+      <ArrowUpRight size={16} />
+    </a>
   );
 }

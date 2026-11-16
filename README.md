@@ -46,6 +46,8 @@ Give each episode a unique, permanent `id`. Keep exactly one episode `LIVE`: the
   "part": 2,
   "title": "THE NEXT MOVE",
   "status": "LIVE",
+  "isReleased": false,
+  "reelUrl": "",
   "subtitle": "Your vote writes what happens next.",
   "runtime": "00:59",
   "choices": ["OPTION A (Description)", "OPTION B (Description)"],
@@ -67,7 +69,7 @@ Changing the active episode's ID creates a fresh vote, five fresh vault attempts
 ### `data/siteConfig.json`
 
 - Brand title, handle, Instagram link, HUD amounts, and vault rules.
-- `countdownTargetHour`: UTC hour, 0–23. Default is **19 (7:00 PM UTC)**. `countdownTimeZone` documents the supported UTC schedule; the drop time is deliberately consistent across visitors. Update `dropLabel` together with the hour.
+- `countdownTargetHour`: local hour, 0–23, in `countdownTimeZone`. The premiere is **19 (7:00 PM ET)** in **America/New_York**. The countdown automatically handles EST/EDT and daylight-saving transitions. Update `dropLabel` with the configured hour/zone. The clock never changes release state.
 - `tiers`: three prices, descriptions, and external payment links. **The supplied Gumroad/Razorpay URLs are placeholders.** Replace each `checkoutUrl` with a real HTTPS checkout, and set its `checkoutReady` to `true`. Until then, Reserve displays a clear setup message and does not open a broken checkout or take payment.
 - Valid reservations open the configured payment link in a new tab and add an `instagram` query parameter. Configure your payment provider's own custom field/webhook if the handle must be captured in paid orders; a query string alone is not a verified order record.
 
@@ -77,7 +79,8 @@ Update the three evidence cards and the pinned persons list. The next preview pi
 
 ## Artwork
 
-- `public/art/scene_01.jpg`: a starter neon night-street photograph from [Unsplash](https://images.unsplash.com/photo-1519608487953-e999c86e7455). Replace with your episode artwork; recommended 2200 × 1400 or larger. It is used in the hero and episode art, optimized by Next Image.
+- `public/art/scene_01.png`: Part 01 artwork (place the uploaded original PNG here). The active episode references this path. Missing artwork uses the gradient fallback.
+- `public/art/scene_01.jpg`: the original starter neon night-street photograph from [Unsplash](https://images.unsplash.com/photo-1519608487953-e999c86e7455). Replace with your episode artwork; recommended 2200 × 1400 or larger. It is used in the hero and episode art, optimized by Next Image.
 - `public/art/pfp.jpg`: add your profile image here. Until uploaded, a styled CH monogram appears automatically.
 - Both image components handle missing files with fallback backgrounds; no broken-image icon is shown.
 - The evidence illustrations are local CSS/SVG with no external image dependency.
@@ -109,3 +112,20 @@ The initial production release was deployed directly to the Vercel project **cri
 Automatic deployments from GitHub are not connected yet: Vercel requires a GitHub Login Connection for this account. To enable future JSON edits to deploy automatically, connect GitHub under [Vercel account authentication](https://vercel.com/account/settings/authentication), then connect `pankaj00779988-stack/crimex-house` under the project’s **Settings → Git**, with `main` as the production branch. Until linked, changes pushed to GitHub need a separate Vercel deployment.
 
 The custom domain `crimex.house` has not been purchased or attached. Registration is separate from the free Vercel address.
+
+## Part 01 pre-launch and release
+
+Part 01 remains the active `LIVE` slot in the editorial data, but its public state is controlled by `isReleased` and `reelUrl`. While `isReleased` is `false`, visitors see a premiere countdown, a follow CTA, a locked vote, a spoiler-free teaser dossier, and a sealed vault. The board, handle preview, and reservation interface remain open. Existing checkout setup requirements still apply.
+
+To release Part 01, change only these two fields in `data/episodes.json` and redeploy:
+
+```json
+{
+  "isReleased": true,
+  "reelUrl": "https://www.instagram.com/reel/YOUR_REAL_REEL_ID/"
+}
+```
+
+Every Watch action opens that exact URL, including its query parameters. The vote, full dossier, and vault unlock together; the safe code remains `1150`. A true release flag with a missing or invalid HTTPS Instagram Reel URL fails the build, preventing a half-released site. Flipping the flag back to `false` seals everything again. The 7 PM countdown does **not** auto-release the episode.
+
+The release gate controls the visitor interface. The corkboard intentionally stays available, and the source repository remains public; this is not a mechanism for protecting secret data from source inspection.

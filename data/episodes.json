@@ -6,8 +6,8 @@
     "status": "LIVE",
     "subtitle": "The money is real. So is the tracker.",
     "location": "UNDISCLOSED MOTEL",
-    "runtime": "00:59",
-    "image": "/art/scene_01.jpg",
+    "runtime": "01:17",
+    "image": "/art/scene_01.png",
     "choices": ["DECOY (Garbage Truck)", "RUN (Hit Highway)"],
     "initialVotes": {
       "optionA": 914,
@@ -24,7 +24,10 @@
     "recoveredIntelligence": "The cash weighs 110 pounds. The GPS is in Bundle #50. Two details. One combination.",
     "unlockMessage": "The first two digits of 110 pounds. Bundle #50. The answer was hiding in plain sight.",
     "exhibitNote": "$5M IN CASH. ONE VERY BAD NIGHT.",
-    "timestamp": "02:14 AM"
+    "timestamp": "02:14 AM",
+    "isReleased": false,
+    "reelUrl": "",
+    "teaser": "Five million dollars. One bad night. The first move is almost here."
   },
   {
     "id": "s1-p2",

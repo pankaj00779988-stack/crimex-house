@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FolderOpen } from "lucide-react";
+import { isEpisodeReleased, getPublicEpisode } from "@/lib/release";
 import { Hud } from "@/components/shell";
 import { EpisodeCard } from "@/components/dossier";
 import { episodes, siteConfig } from "@/lib/data";
@@ -30,13 +31,13 @@ export default function FilesPage() {
       <div className="archive-heading">
         <span className="mono">SEASON 01 — CASE FILES</span>
         <span className="mono muted">
-          {episodes.filter((e) => e.status !== "LOCKED").length} DECLASSIFIED /{" "}
+          {episodes.filter(isEpisodeReleased).length} DECLASSIFIED /{" "}
           {episodes.length} FILES
         </span>
       </div>
       <section className="files-grid" aria-label="Season one episodes">
         {episodes.map((episode) => (
-          <EpisodeCard key={episode.id} episode={episode} />
+          <EpisodeCard key={episode.id} episode={getPublicEpisode(episode)} />
         ))}
       </section>
       <p className="archive-note">

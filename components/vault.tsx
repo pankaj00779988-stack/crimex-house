@@ -13,7 +13,8 @@ import {
   VolumeX,
   UnlockKeyhole,
 } from "lucide-react";
-import { activeEpisode, siteConfig } from "@/lib/data";
+import { activeEpisode, siteConfig, type Episode } from "@/lib/data";
+import { isEpisodeReleased } from "@/lib/release";
 import { normalizeHandle, scoreGuess, validHandle } from "@/lib/game";
 import { isBoolean, isNumber, isString, useStoredState } from "@/lib/storage";
 import { useSound } from "@/lib/sound";
@@ -22,16 +23,63 @@ const isAttempts = (v: unknown): v is string[] =>
   Array.isArray(v) &&
   v.length <= siteConfig.safeMaxAttempts &&
   v.every((g) => typeof g === "string" && /^\d{4}$/.test(g));
-export function Vault() {
+export function Vault({ episode = activeEpisode }: { episode?: Episode }) {
+  return isEpisodeReleased(episode) ? (
+    <ActiveVault episode={episode} />
+  ) : (
+    <VaultStandby episode={episode} />
+  );
+}
+function VaultStandby({ episode }: { episode: Episode }) {
+  return (
+    <section className="vault-standby" aria-labelledby="vault-standby-title">
+      <span className="eyebrow pink">
+        RESTRICTED ACCESS / PRE-LAUNCH STANDBY
+      </span>
+      <div className="standby-emblem">
+        <LockKeyhole size={44} />
+      </div>
+      <h1 id="vault-standby-title">
+        VAULT SEALED UNTIL PART {String(episode.part).padStart(2, "0")}{" "}
+        PREMIERES AT {siteConfig.dropLabel}
+      </h1>
+      <p>
+        The keypad and evidence are under seal. Watch the premiere to find your
+        first lead.
+      </p>
+      <div className="sealed-keypad" aria-hidden="true">
+        {Array.from({ length: 12 }, (_, i) => (
+          <span key={i}>
+            <LockKeyhole size={12} />
+          </span>
+        ))}
+      </div>
+      <a
+        className="button primary"
+        href={siteConfig.instagramUrl}
+        target="_blank"
+        rel="noreferrer"
+      >
+        FOLLOW {siteConfig.handle.toUpperCase()}
+        <ArrowRight size={16} />
+      </a>
+      <Link className="text-link" href="/board">
+        THE CORKBOARD IS OPEN
+        <ArrowRight size={15} />
+      </Link>
+    </section>
+  );
+}
+function ActiveVault({ episode }: { episode: Episode }) {
   const [attempts, setAttempts] = useStoredState(
-    `crimex:safe:${activeEpisode.id}`,
+    `crimex:safe:${episode.id}`,
     emptyAttempts,
     isAttempts,
   );
   const [misses, setMisses] = useStoredState("crimex:misses", 0, isNumber);
   const [sfx, setSfx] = useStoredState("crimex:sfx", true, isBoolean);
   const [completion, setCompletion] = useStoredState(
-    `crimex:crew:${activeEpisode.id}`,
+    `crimex:crew:${episode.id}`,
     "",
     isString,
   );
@@ -40,7 +88,7 @@ export function Vault() {
   const [handle, setHandle] = useState("");
   const [handleError, setHandleError] = useState("");
   const play = useSound(sfx);
-  const code = activeEpisode.safeCode ?? "";
+  const code = episode.safeCode ?? "";
   const unlocked = attempts.includes(code);
   const locked = !unlocked && attempts.length >= siteConfig.safeMaxAttempts;
   const press = useCallback(
@@ -164,7 +212,7 @@ export function Vault() {
           <summary>
             NEED A LEAD?<span>+</span>
           </summary>
-          <p>{activeEpisode.safeClue}</p>
+          <p>{episode.safeClue}</p>
           <Link href="/files">
             Review the case file
             <ArrowRight size={14} />
@@ -310,8 +358,7 @@ export function Vault() {
           </Link>
         )}
         <span className="vault-serial">
-          CH–S01–{String(activeEpisode.part).padStart(3, "0")} {"//"}{" "}
-          AES–FICTION
+          CH–S01–{String(episode.part).padStart(3, "0")} {"//"} AES–FICTION
         </span>
       </section>
       {unlocked && (
@@ -326,7 +373,7 @@ export function Vault() {
             <br />
             NOW LEAVE A TRACE.
           </h2>
-          <p>{activeEpisode.unlockMessage}</p>
+          <p>{episode.unlockMessage}</p>
           <div className="dossier-divider" />
           <span className="eyebrow">CREW COMPLETION LOG</span>
           {completion ? (

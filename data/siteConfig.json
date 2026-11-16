@@ -3,15 +3,15 @@
   "handle": "@crimex.house",
   "description": "Five million dollars. One bad decision. An interactive heist thriller where the crew calls the shots.",
   "countdownTargetHour": 19,
-  "countdownTimeZone": "UTC",
-  "dropLabel": "7:00 PM UTC",
+  "countdownTimeZone": "America/New_York",
+  "dropLabel": "7:00 PM ET",
   "season": 1,
   "cash": 5000000,
   "banked": 0,
   "initialSuspicion": 34,
   "safeMaxAttempts": 5,
   "suspicionPerMiss": 5,
-  "instagramUrl": "https://www.instagram.com/crimex.house/",
+  "instagramUrl": "https://instagram.com/crimex.house",
   "tiers": [
     {
       "id": "pin",

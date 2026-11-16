@@ -15,7 +15,7 @@ import {
   Instagram,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { siteConfig } from "@/lib/data";
+import { siteConfig, activeEpisode, activeEpisodeReleased } from "@/lib/data";
 import { nextDrop } from "@/lib/game";
 import { isNumber, useStoredState } from "@/lib/storage";
 import { Avatar } from "./art";
@@ -46,7 +46,12 @@ export function Announcement() {
       const seconds = Math.max(
         0,
         Math.floor(
-          (nextDrop(now, siteConfig.countdownTargetHour) - now.getTime()) /
+          (nextDrop(
+            now,
+            siteConfig.countdownTargetHour,
+            siteConfig.countdownTimeZone,
+          ) -
+            now.getTime()) /
             1000,
         ),
       );
@@ -70,10 +75,14 @@ export function Announcement() {
         <span>
           <Radio size={13} />
           <span className="announcement-copy">
-            THE NEXT MOVE DROPS AT {siteConfig.dropLabel}
+            {activeEpisodeReleased
+              ? `THE NEXT MOVE DROPS AT ${siteConfig.dropLabel}`
+              : `SEASON ${String(siteConfig.season).padStart(2, "0")} · PART ${String(activeEpisode.part).padStart(2, "0")} DROPS AT ${siteConfig.dropLabel}`}
           </span>
           <span className="announcement-mobile">
-            NEXT DROP · {siteConfig.dropLabel}
+            {activeEpisodeReleased
+              ? `NEXT DROP · ${siteConfig.dropLabel}`
+              : `SEASON ${String(siteConfig.season).padStart(2, "0")} · PART ${String(activeEpisode.part).padStart(2, "0")} DROPS AT ${siteConfig.dropLabel}`}
           </span>
         </span>
         <span className="countdown" aria-label={`Next drop in ${countdown}`}>

@@ -4,7 +4,7 @@ import Image from "next/image";
 export function SceneArt({
   className = "",
   priority = false,
-  src = "/art/scene_01.jpg",
+  src = "/art/scene_01.png",
 }: {
   className?: string;
   priority?: boolean;

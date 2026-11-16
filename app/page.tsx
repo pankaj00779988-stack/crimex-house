@@ -12,16 +12,24 @@ import {
 } from "lucide-react";
 import { Hud } from "@/components/shell";
 import { SceneArt } from "@/components/art";
+import { getPublicEpisode } from "@/lib/release";
 import { Vote } from "@/components/vote";
 import { EpisodeCard, WatchButton } from "@/components/dossier";
-import { activeEpisode, episodes, siteConfig } from "@/lib/data";
+import {
+  activeEpisode,
+  activeEpisodeReleased,
+  episodes,
+  siteConfig,
+} from "@/lib/data";
 export default function Home() {
   return (
     <main id="main" className="page-container">
       <div className="page-kicker">
         <span>
           <span className="live-dot" />
-          THE OPERATION IS LIVE
+          {activeEpisodeReleased
+            ? "THE OPERATION IS LIVE"
+            : "PRE-LAUNCH STANDBY"}
         </span>
         <span>
           INTERACTIVE HEIST SERIES / S
@@ -35,7 +43,11 @@ export default function Home() {
         <div className="hero-content">
           <div className="hero-label">
             <span className="season-label">SEASON 01</span>
-            <span>FICTION. FINANCE. FELONIES.</span>
+            <span className="premiere-badge">
+              {activeEpisodeReleased
+                ? "LIVE NOW"
+                : `PREMIERING ${siteConfig.dropLabel}`}
+            </span>
           </div>
           <h1>
             FIVE MILLION.
@@ -43,15 +55,25 @@ export default function Home() {
             ZERO <span>ALIBIS.</span>
           </h1>
           <p className="hero-description">
-            The cash is stolen. The tracker is live.
-            <br />
-            And the next bad decision? <strong>That’s yours.</strong>
+            {activeEpisodeReleased ? (
+              <>
+                The cash is stolen. The tracker is live.
+                <br />
+                And the next bad decision? <strong>That’s yours.</strong>
+              </>
+            ) : (
+              <>
+                {activeEpisode.teaser}
+                <br />
+                Follow the series. Be there for the first move.
+              </>
+            )}
           </p>
           <div className="hero-actions">
-            <WatchButton episode={activeEpisode} />
+            <WatchButton episode={getPublicEpisode(activeEpisode)} />
             <Link href="/safe" className="hero-safe-link">
               <LockKeyhole size={16} />
-              CRACK THE SAFE
+              {activeEpisodeReleased ? "CRACK THE SAFE" : "VAULT ON STANDBY"}
               <ArrowUpRight size={15} />
             </Link>
           </div>
@@ -83,7 +105,9 @@ export default function Home() {
         </span>
         <span className="transmission-right">
           <span className="live-dot" />
-          TRANSMISSION ACTIVE
+          {activeEpisodeReleased
+            ? "TRANSMISSION ACTIVE"
+            : "TRANSMISSION ON STANDBY"}
         </span>
       </div>
       <section className="how-section" aria-labelledby="how-title">
@@ -101,7 +125,7 @@ export default function Home() {
             {
               number: "01",
               title: "Watch the heist.",
-              text: "60-second episodes. Real financial laws. Fictional people making very expensive mistakes.",
+              text: "Short episodes. Real financial laws. Fictional people making very expensive mistakes.",
               icon: Play,
               href: "/files",
               action: "OPEN THE CASE FILES",
@@ -109,7 +133,7 @@ export default function Home() {
             {
               number: "02",
               title: "Call the next move.",
-              text: "Decoy or run? Trust or betray? The crew votes. The next episode lives with the consequences.",
+              text: "Every choice changes the story. The crew votes. The next episode lives with the consequences.",
               icon: MousePointer2,
               href: "/#vote-title",
               action: "CAST YOUR VOTE",
@@ -151,7 +175,7 @@ export default function Home() {
         </div>
         <div className="preview-grid">
           {episodes.slice(0, 3).map((e) => (
-            <EpisodeCard key={e.id} episode={e} compact />
+            <EpisodeCard key={e.id} episode={getPublicEpisode(e)} compact />
           ))}
         </div>
       </section>

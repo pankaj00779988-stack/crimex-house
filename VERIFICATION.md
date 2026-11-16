@@ -3,7 +3,7 @@
 The following checks have passed on Node.js 24:
 
 - `npm run lint`: no ESLint errors or warnings.
-- `npm test`: seven tests covering duplicate-aware digit feedback, countdown rollover at 19:00 UTC and year boundaries, Instagram handle validation, and initial JSON consistency.
+- `npm test`: 16 tests covering digit feedback, countdowns in UTC and America/New_York (including EST/EDT and DST transitions), handle validation, standby spoiler suppression, disabled vault controls, and exact Reel URL routing after release.
 - `npm run build`: optimized Next.js production build and its TypeScript checks; all four application pages prerender successfully.
 - `npm audit --omit=dev`: no known production dependency vulnerabilities at build time.
 

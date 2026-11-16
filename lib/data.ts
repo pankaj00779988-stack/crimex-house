@@ -1,5 +1,6 @@
 import episodeData from "@/data/episodes.json";
 import config from "@/data/siteConfig.json";
+import { isEpisodeReleased, isInstagramReelUrl } from "./release";
 export { default as siteConfig } from "@/data/siteConfig.json";
 export { default as corkboard } from "@/data/corkboard.json";
 export interface Episode {
@@ -7,6 +8,9 @@ export interface Episode {
   part: number;
   title: string;
   status: string;
+  isReleased?: boolean;
+  reelUrl?: string;
+  teaser?: string;
   subtitle: string;
   image?: string;
   location?: string;
@@ -48,10 +52,16 @@ for (const episode of episodes) {
       `Released episode ${episode.id} needs a summary and realLawRule.`,
     );
   }
+  if (episode.isReleased && !isInstagramReelUrl(episode.reelUrl ?? "")) {
+    throw new Error(
+      `Released episode ${episode.id} needs a valid HTTPS Instagram Reel URL.`,
+    );
+  }
 }
 export const activeEpisode = episodes.find(
   (episode) => episode.status === "LIVE",
 )!;
+export const activeEpisodeReleased = isEpisodeReleased(activeEpisode);
 if (
   !/^\d{4}$/.test(activeEpisode.safeCode ?? "") ||
   !activeEpisode.safeClue ||
@@ -68,8 +78,10 @@ if (
 if (
   !Number.isInteger(config.countdownTargetHour) ||
   config.countdownTargetHour < 0 ||
-  config.countdownTargetHour > 23 ||
-  config.countdownTimeZone !== "UTC"
+  config.countdownTargetHour > 23
 ) {
-  throw new Error("Countdown must use a target hour from 0–23 in UTC.");
+  throw new Error("Countdown must use a target hour from 0–23.");
 }
+new Intl.DateTimeFormat("en-US", {
+  timeZone: config.countdownTimeZone,
+}).format();
