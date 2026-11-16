@@ -10,8 +10,8 @@
     "image": "/art/scene_01.png",
     "choices": ["DECOY (Garbage Truck)", "RUN (Hit Highway)"],
     "initialVotes": {
-      "optionA": 914,
-      "optionB": 514
+      "optionA": 0,
+      "optionB": 0
     },
     "realLawRule": "31 U.S.C. § 5324 — Structuring Cash Deposits",
     "lawExplanation": "Structuring cash transactions to evade reporting requirements can be a federal crime. The cash itself is only the beginning of the problem.",

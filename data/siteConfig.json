@@ -14,30 +14,32 @@
   "instagramUrl": "https://instagram.com/crimex.house",
   "youtubeUrl": "https://youtube.com/@crimex_house",
   "youtubeHandle": "@crimex_house",
-  "tiers": [
+  "siteUrl": "https://crimexhouse.vercel.app",
+  "participation": {
+    "cost": "FREE",
+    "shareText": "Five million dollars. Zero alibis. Join the CRIMEX HOUSE crew, play free games, and help call the next move.",
+    "maxTheoryLength": 500
+  },
+  "faq": [
     {
-      "id": "pin",
-      "name": "Corkboard Pin",
-      "price": 9,
-      "description": "Your handle. On the board. In the story.",
-      "checkoutUrl": "https://crimexhouse.gumroad.com/l/YOUR-CORKBOARD-PIN",
-      "checkoutReady": false
+      "question": "Does it cost anything to join or play?",
+      "answer": "No. The crew board, practice games, and episode vault are free. No purchase or account is required."
     },
     {
-      "id": "pass",
-      "name": "Season 1 Crew Pass",
-      "price": 29,
-      "description": "A corkboard pin + a front-row seat for the whole heist.",
-      "checkoutUrl": "https://crimexhouse.gumroad.com/l/YOUR-SEASON-PASS",
-      "checkoutReady": false
+      "question": "How do I vote on the next move?",
+      "answer": "When an episode is released, watch its Instagram Reel and comment your choice there. Choosing an option on this website prepares your comment; your Instagram comment casts the vote."
     },
     {
-      "id": "cameo",
-      "name": "Business Cameo",
-      "price": 150,
-      "description": "Make your business part of the evidence.",
-      "checkoutUrl": "https://rzp.io/l/YOUR-BUSINESS-CAMEO",
-      "checkoutReady": false
+      "question": "Can I play before Part 01 premieres?",
+      "answer": "Yes. Dead Drop and Signal Intercept are open practice games with no story spoilers. The episode vault stays sealed until Part 01 is released."
+    },
+    {
+      "question": "Is my crew pin public?",
+      "answer": "Your personal pin, theory draft, and game records are saved on your device. They are not uploaded automatically. Share your theory in the Instagram comments to join the public conversation."
+    },
+    {
+      "question": "Where do I watch the episodes?",
+      "answer": "Story episodes link to their Instagram Reels. YouTube is a separate home for upcoming full-length episodes."
     }
   ]
 }

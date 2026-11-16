@@ -68,20 +68,20 @@ test("handles accept Instagram characters and reject injection, whitespace and e
     assert.equal(validHandle(v), false);
   assert.equal(normalizeHandle(" @night.runner "), "@night.runner");
 });
-test("JSON content provides one playable live episode and five locked episodes", () => {
+test("editorial configuration has one active episode, valid counts, and no paid tiers", () => {
   const live = episodes.filter((e) => e.status === "LIVE");
   assert.equal(live.length, 1);
   assert.equal(episodes.filter((e) => e.status === "LOCKED").length, 5);
   assert.match(live[0].safeCode!, /^\d{4}$/);
   assert.equal(live[0].choices!.length, 2);
-  assert.equal(
-    live[0].initialVotes!.optionA + live[0].initialVotes!.optionB,
-    1428,
+  assert.ok(
+    Object.values(live[0].initialVotes!).every(
+      (count) => Number.isSafeInteger(count) && count >= 0,
+    ),
   );
   assert.equal(new Set(episodes.map((e) => e.id)).size, episodes.length);
   assert.equal(config.safeMaxAttempts, 5);
   assert.equal(config.suspicionPerMiss, 5);
-  assert.ok(
-    config.tiers.every((t) => new URL(t.checkoutUrl).protocol === "https:"),
-  );
+  assert.equal("tiers" in config, false);
+  assert.equal(config.participation.cost, "FREE");
 });

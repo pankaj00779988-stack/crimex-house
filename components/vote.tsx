@@ -5,7 +5,7 @@ import {
   Truck,
   Route,
   Fingerprint,
-  Users,
+  MessageCircle,
   Radio,
   LockKeyhole,
 } from "lucide-react";
@@ -13,6 +13,7 @@ import { activeEpisode, siteConfig, type Episode } from "@/lib/data";
 import { isEpisodeReleased } from "@/lib/release";
 import { useStoredState } from "@/lib/storage";
 import { useState } from "react";
+import { CommentLink } from "./share";
 type Choice = "optionA" | "optionB" | "";
 const isChoice = (v: unknown): v is Choice =>
   v === "optionA" || v === "optionB" || v === "";
@@ -73,8 +74,8 @@ function LiveVote({ episode }: { episode: Episode }) {
   );
   const [error, setError] = useState("");
   const seed = episode.initialVotes ?? { optionA: 0, optionB: 0 };
-  const a = seed.optionA + (vote === "optionA" ? 1 : 0);
-  const b = seed.optionB + (vote === "optionB" ? 1 : 0);
+  const a = seed.optionA;
+  const b = seed.optionB;
   const total = a + b;
   const options = [
     { id: "optionA" as const, count: a, icon: Truck },
@@ -104,7 +105,6 @@ function LiveVote({ episode }: { episode: Episode }) {
               key={id}
               className={`vote-option ${vote === id ? "selected" : ""}`}
               aria-pressed={vote === id}
-              disabled={!!vote}
               onClick={() => {
                 if (!setVote(id))
                   setError(
@@ -121,19 +121,27 @@ function LiveVote({ episode }: { episode: Episode }) {
                   <small>{detail?.replace(")", "")}</small>
                 </span>
                 <span className="vote-percent">
-                  {percent}%{vote === id && <Check size={12} />}
+                  {total > 0 ? (
+                    `${percent}%`
+                  ) : vote === id ? (
+                    <Check size={16} />
+                  ) : (
+                    <MessageCircle size={14} />
+                  )}
                 </span>
               </span>
-              <span className="vote-bar">
-                <span style={{ width: `${percent}%` }} />
-              </span>
+              {total > 0 && (
+                <span className="vote-bar">
+                  <span style={{ width: `${percent}%` }} />
+                </span>
+              )}
               <span className="vote-option-foot">
                 <span>
                   {episode.choiceStrategies?.[index] ?? "Choose the next move."}
                 </span>
                 <span>
                   {vote === id
-                    ? "YOUR VOTE"
+                    ? "YOUR CHOICE"
                     : `OPTION ${index === 0 ? "A" : "B"}`}
                 </span>
               </span>
@@ -141,28 +149,33 @@ function LiveVote({ episode }: { episode: Episode }) {
           );
         })}
       </div>
-      <div className="vote-total">
-        <span>
-          <Users size={13} />
-          {total.toLocaleString("en-US")} VOTES
-        </span>
-        <span>
-          <span className="live-dot" />
-          CREW IS DECIDING
-        </span>
-      </div>
+      {total > 0 && (
+        <div className="vote-total">
+          <span>{total.toLocaleString("en-US")} REPORTED COMMENTS</span>
+          <span>CREATOR SNAPSHOT</span>
+        </div>
+      )}
+      {vote && (
+        <CommentLink
+          text={
+            (episode.choices?.[vote === "optionA" ? 0 : 1] ?? "").split(" (")[0]
+          }
+          reelUrl={episode.reelUrl!}
+          label={`COMMENT ${(episode.choices?.[vote === "optionA" ? 0 : 1] ?? "").split(" (")[0]}`}
+        />
+      )}
       <div className="vote-bottom" aria-live="polite">
         <Fingerprint size={15} />
         <span>
           {error ||
             (vote
-              ? "Vote locked. Your move is on the record."
-              : "One crew. One choice. You write the next part.")}
+              ? "Choice saved. Post it on the Reel to cast your vote."
+              : "Choose your move, then comment it on Instagram.")}
         </span>
         {!vote && <ArrowUpRight size={13} />}
       </div>
       <small className="local-note">
-        Episode tally + your vote · saved on this device
+        Your choice is saved here. The Instagram comment is your vote.
       </small>
     </section>
   );

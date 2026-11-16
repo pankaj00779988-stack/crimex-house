@@ -10,10 +10,15 @@ import {
   MapPin,
   ScanLine,
   Youtube,
+  Gamepad2,
+  Radio,
+  FolderOpen,
 } from "lucide-react";
 import { Hud } from "@/components/shell";
 import { SceneArt } from "@/components/art";
 import { getPublicEpisode } from "@/lib/release";
+import { Engagement } from "@/components/share";
+import games from "@/data/games.json";
 import { Vote } from "@/components/vote";
 import { EpisodeCard, WatchButton } from "@/components/dossier";
 import {
@@ -72,9 +77,16 @@ export default function Home() {
           </p>
           <div className="hero-actions">
             <WatchButton episode={getPublicEpisode(activeEpisode)} />
-            <Link href="/safe" className="hero-safe-link">
-              <LockKeyhole size={16} />
-              {activeEpisodeReleased ? "CRACK THE SAFE" : "VAULT ON STANDBY"}
+            <Link
+              href={activeEpisodeReleased ? "/safe" : "/games"}
+              className="hero-safe-link"
+            >
+              {activeEpisodeReleased ? (
+                <LockKeyhole size={16} />
+              ) : (
+                <Gamepad2 size={16} />
+              )}
+              {activeEpisodeReleased ? "CRACK THE SAFE" : "PLAY FREE GAMES"}
               <ArrowUpRight size={15} />
             </Link>
           </div>
@@ -115,7 +127,7 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <span className="eyebrow pink">THE RULES OF ENGAGEMENT</span>
-            <h2 id="how-title">Watch. Decide. Get your hands dirty.</h2>
+            <h2 id="how-title">Watch. Comment. Change the case.</h2>
           </div>
           <span className="mono muted hide-mobile">
             THREE STEPS. NO GOING BACK.
@@ -134,10 +146,10 @@ export default function Home() {
             {
               number: "02",
               title: "Call the next move.",
-              text: "Every choice changes the story. The crew votes. The next episode lives with the consequences.",
+              text: "Watch the Reel and comment your choice on Instagram. The crew’s comments shape what happens next.",
               icon: MousePointer2,
-              href: "/#vote-title",
-              action: "CAST YOUR VOTE",
+              href: "/#join-crew",
+              action: "JOIN THE CONVERSATION",
             },
             {
               number: "03",
@@ -163,6 +175,43 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <section className="games-preview" aria-labelledby="games-title">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow pink">
+              OPEN BEFORE THE PREMIERE · ALWAYS FREE
+            </span>
+            <h2 id="games-title">Get a head start on the heist.</h2>
+          </div>
+          <Link href="/games" className="text-link mono">
+            THE TRAINING GROUND
+            <ArrowRight size={16} />
+          </Link>
+        </div>
+        <div className="game-preview-grid">
+          {[
+            { game: games.memory, icon: FolderOpen, skill: "MEMORY" },
+            { game: games.reaction, icon: Radio, skill: "REACTION" },
+          ].map(({ game, icon: Icon, skill }) => (
+            <Link
+              href={`/games#${game.id}`}
+              className="game-preview-card"
+              key={game.id}
+            >
+              <span className="status-badge live">FREE TO PLAY</span>
+              <Icon size={30} />
+              <span className="eyebrow">{skill} / PRACTICE MODE</span>
+              <h3>{game.title}</h3>
+              <p>{game.subtitle}</p>
+              <span className="text-link">
+                PLAY NOW
+                <ArrowUpRight size={15} />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <Engagement />
       <section className="files-preview" aria-labelledby="files-title">
         <div className="section-heading">
           <div>
@@ -207,15 +256,32 @@ export default function Home() {
         <div>
           <span className="eyebrow pink">YOU’RE ALREADY INVOLVED.</span>
           <h2>Might as well leave your name.</h2>
-          <p>Get pinned to the board. Become part of the story.</p>
+          <p>Save a free personal crew pin. Bring your theory to Instagram.</p>
         </div>
         <Link href="/board" className="button outline">
-          JOIN THE CORKBOARD
+          ADD MY FREE CREW PIN
           <ArrowUpRight size={16} />
         </Link>
         <span className="crew-banner-decor" aria-hidden="true">
           CLASSIFIED
         </span>
+      </section>
+      <section className="crew-faq" aria-labelledby="faq-title">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow pink">THE QUICK BRIEFING</span>
+            <h2 id="faq-title">Before your first move.</h2>
+          </div>
+        </div>
+        {siteConfig.faq.map((item) => (
+          <details key={item.question}>
+            <summary>
+              {item.question}
+              <span>+</span>
+            </summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
       </section>
     </main>
   );

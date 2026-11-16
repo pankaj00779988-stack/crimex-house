@@ -14,6 +14,7 @@ import {
   Network,
   Instagram,
   Youtube,
+  Gamepad2,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { siteConfig, activeEpisode, activeEpisodeReleased } from "@/lib/data";
@@ -25,6 +26,7 @@ const navigation = [
   { href: "/files", label: "Case files", icon: FolderOpen },
   { href: "/safe", label: "The safe", icon: LockKeyhole },
   { href: "/board", label: "The board", icon: Network },
+  { href: "/games", label: "Games", icon: Gamepad2 },
 ];
 export function Brand() {
   return (

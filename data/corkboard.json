@@ -22,9 +22,5 @@
       "kind": "map"
     }
   ],
-  "persons": [
-    { "handle": "@crimex.house", "number": "001" },
-    { "handle": "@night.runner", "number": "002" },
-    { "handle": "@vault.theory", "number": "003" }
-  ]
+  "persons": []
 }

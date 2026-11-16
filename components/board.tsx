@@ -1,5 +1,8 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
+import { CommentLink, ShareButton } from "./share";
+import { isEpisodeReleased } from "@/lib/release";
 import {
   ArrowUpRight,
   Check,
@@ -7,7 +10,9 @@ import {
   Fingerprint,
   MapPin,
   Radio,
-  ShieldCheck,
+  ArrowRight,
+  Gamepad2,
+  MessageCircle,
   UserRound,
 } from "lucide-react";
 import { activeEpisode, corkboard, siteConfig } from "@/lib/data";
@@ -50,8 +55,28 @@ function EvidenceVisual({ kind }: { kind: string }) {
     </div>
   );
 }
+interface CrewDraft {
+  handle: string;
+  theory: string;
+}
+const emptyDraft: CrewDraft = { handle: "", theory: "" };
+const isDraft = (value: unknown): value is CrewDraft => {
+  if (!value || typeof value !== "object") return false;
+  const v = value as CrewDraft;
+  return (
+    typeof v.handle === "string" &&
+    validHandle(v.handle) &&
+    typeof v.theory === "string" &&
+    v.theory.length <= siteConfig.participation.maxTheoryLength
+  );
+};
 export function InvestigationBoard() {
-  const [tier, setTier] = useState(siteConfig.tiers[0].id);
+  const [saved, setSaved] = useStoredState(
+    "crimex:crew:draft",
+    emptyDraft,
+    isDraft,
+  );
+  const [draftTheory, setDraftTheory] = useState<string | null>(null);
   const [handle, setHandle] = useState("");
   const [message, setMessage] = useState("");
   const [completion] = useStoredState(
@@ -59,11 +84,11 @@ export function InvestigationBoard() {
     "",
     isString,
   );
-  const selected =
-    siteConfig.tiers.find((t) => t.id === tier) ?? siteConfig.tiers[0];
+  const theory = draftTheory ?? saved.theory;
+  const released = isEpisodeReleased(activeEpisode);
   const preview = handle.trim()
     ? normalizeHandle(handle).slice(0, 31)
-    : completion || "@your.handle";
+    : saved.handle || completion || "@your.handle";
   return (
     <div className="board-layout">
       <section
@@ -113,6 +138,11 @@ export function InvestigationBoard() {
             <br />
             PART OF THE CASE.
           </h3>
+          {corkboard.persons.length === 0 && (
+            <p className="board-empty">
+              The crew starts here. Preview your personal pin below.
+            </p>
+          )}
           <div className="persons-list">
             {corkboard.persons.map((person) => (
               <div key={person.number}>
@@ -127,92 +157,52 @@ export function InvestigationBoard() {
               </span>
               <strong>{preview}</strong>
               <span className="preview-label">
-                {completion && !handle ? "CREW" : "YOU?"}
+                {saved.handle && !handle ? "YOU" : "PREVIEW"}
               </span>
             </div>
           </div>
-          <span className="board-preview-note">YOUR HANDLE APPEARS HERE</span>
+          <span className="board-preview-note">
+            PERSONAL PREVIEW · SAVED ON YOUR DEVICE
+          </span>
         </article>
         <span className="board-bottom-note">NOTHING IS COINCIDENCE.</span>
       </section>
-      <aside className="reservation-panel">
-        <span className="eyebrow pink">FROM VIEWER TO PERSON OF INTEREST</span>
+      <aside className="crew-panel">
+        <span className="eyebrow pink">THE FIRST CREW STARTS WITH YOU</span>
         <h2>
-          GET YOUR NAME
+          YOUR HANDLE.
           <br />
-          IN THE <span>CASE.</span>
+          YOUR <span>THEORY.</span>
         </h2>
         <p>
-          Don’t just watch the story.
-          <br />
-          Leave your fingerprints on it.
+          Join for free. Put your name on your board and get your first theory
+          ready for the Reel.
         </p>
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            setMessage("");
-            if (!validHandle(handle)) {
+            const chosenHandle = handle || saved.handle || completion;
+            if (!validHandle(chosenHandle)) {
               setMessage(
-                "Enter a valid Instagram handle: 1–30 letters, numbers, dots, or underscores.",
+                "Enter 1–30 letters, numbers, dots, or underscores for your Instagram handle.",
               );
               return;
             }
             if (
-              !selected.checkoutReady ||
-              selected.checkoutUrl.includes("YOUR-")
-            ) {
+              setSaved({
+                handle: normalizeHandle(chosenHandle),
+                theory: theory.trim(),
+              })
+            )
               setMessage(
-                "Reservations aren’t open yet. Checkout for this tier is being set up. Your card has not been charged.",
+                "Your free crew pin and theory are saved on this device.",
               );
-              return;
-            }
-            try {
-              const url = new URL(selected.checkoutUrl);
-              if (url.protocol !== "https:")
-                throw new Error("Invalid checkout");
-              url.searchParams.set("instagram", normalizeHandle(handle));
-              window.open(url.toString(), "_blank", "noopener,noreferrer");
+            else
               setMessage(
-                "Checkout opened in a new tab. Your reservation is confirmed by the payment provider after payment.",
+                "Browser storage is unavailable. You can still copy your theory and join the Instagram conversation.",
               );
-            } catch {
-              setMessage(
-                "Checkout is temporarily unavailable. Please try again later.",
-              );
-            }
           }}
         >
-          <fieldset className="tier-selector">
-            <legend>CHOOSE YOUR INVOLVEMENT</legend>
-            {siteConfig.tiers.map((item) => (
-              <label
-                key={item.id}
-                className={`tier-option ${tier === item.id ? "selected" : ""}`}
-              >
-                <input
-                  type="radio"
-                  name="tier"
-                  value={item.id}
-                  checked={tier === item.id}
-                  onChange={() => {
-                    setTier(item.id);
-                    setMessage("");
-                  }}
-                />
-                <span className="radio-display" />
-                <span className="tier-copy">
-                  <strong>
-                    {item.name}
-                    {item.id === "pass" && (
-                      <span className="tier-tag">THE INSIDE JOB</span>
-                    )}
-                  </strong>
-                  <small>{item.description}</small>
-                </span>
-                <span className="tier-price">${item.price}</span>
-              </label>
-            ))}
-          </fieldset>
           <label className="form-label" htmlFor="board-handle">
             YOUR INSTAGRAM HANDLE
           </label>
@@ -225,42 +215,59 @@ export function InvestigationBoard() {
                 setHandle(e.target.value.replace(/^@/, ""));
                 setMessage("");
               }}
-              placeholder="your.handle"
+              placeholder={saved.handle.replace(/^@/, "") || "your.handle"}
               autoComplete="off"
               maxLength={31}
-              aria-describedby="handle-description reservation-status"
+              aria-describedby="crew-pin-note"
             />
           </div>
-          <small id="handle-description">
-            Watch your name appear on the board. No sign-in needed.
-          </small>
-          <button className="button primary reserve-button" type="submit">
-            RESERVE MY SPOT
-            <span>
-              ${selected.price}
-              <ArrowUpRight size={16} />
-            </span>
+          <label className="form-label theory-label" htmlFor="board-theory">
+            YOUR CASE THEORY <span>OPTIONAL</span>
+          </label>
+          <textarea
+            id="board-theory"
+            value={theory}
+            onChange={(e) => setDraftTheory(e.target.value)}
+            maxLength={siteConfig.participation.maxTheoryLength}
+            placeholder="What would you do if you found the money?"
+            rows={4}
+          />
+          <span className="theory-limit">
+            {theory.length}/{siteConfig.participation.maxTheoryLength}
+          </span>
+          <button className="button primary crew-save" type="submit">
+            SAVE MY FREE CREW PIN
+            <ArrowUpRight size={16} />
           </button>
-          <p
-            id="reservation-status"
-            className="reservation-message"
-            role="status"
-          >
+          <p className="action-message" role="status">
             {message}
           </p>
-          <span className="checkout-note">
-            <ShieldCheck size={13} />
-            SECURE EXTERNAL CHECKOUT · ONE-TIME PAYMENT
-          </span>
-        </form>
-        <div className="reservation-fineprint">
-          <Fingerprint size={23} />
-          <p>
-            Part of a fictional universe.
-            <br />
-            <span>A real way to support independent storytelling.</span>
+          <p id="crew-pin-note" className="crew-privacy">
+            Your pin and theory stay on this device. Saving here does not
+            publish to Instagram or the public board.
           </p>
-        </div>
+        </form>
+        {released && theory.trim() ? (
+          <CommentLink
+            text={theory.trim()}
+            reelUrl={activeEpisode.reelUrl!}
+            label="COPY THEORY + OPEN THE REEL"
+          />
+        ) : (
+          <div className="crew-next">
+            <MessageCircle size={18} />
+            <p>
+              When Part 01 drops, post your theory in the Instagram comments.
+              That’s where the crew meets.
+            </p>
+          </div>
+        )}
+        <ShareButton label="INVITE A FRIEND" />
+        <Link className="text-link crew-games-link" href="/games">
+          <Gamepad2 size={16} />
+          PLAY THE FREE PRACTICE GAMES
+          <ArrowRight size={14} />
+        </Link>
       </aside>
     </div>
   );

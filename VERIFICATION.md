@@ -1,21 +1,18 @@
 # Verification
 
-The following checks have passed on Node.js 24:
+Run lint, tests, production build, and TypeScript checks before publishing. Tests cover the vault, premiere time zones/DST, release gates, exact Instagram Reel links, free participation, memory game rules, game controls, local crew draft persistence, and share fallback/cancellation.
 
-- `npm run lint`: no ESLint errors or warnings.
-- `npm test`: 16 tests covering digit feedback, countdowns in UTC and America/New_York (including EST/EDT and DST transitions), handle validation, standby spoiler suppression, disabled vault controls, and exact Reel URL routing after release.
-- `npm run build`: optimized Next.js production build and its TypeScript checks; all four application pages prerender successfully.
-- `npm audit --omit=dev`: no known production dependency vulnerabilities at build time.
+Interaction tests use jsdom and Testing Library. They exercise React controls but do not replace mobile Safari/Chrome testing. Browser preview controls are unavailable in this environment; visual browser QA remains outstanding.
 
-Browser preview tools are unavailable in the provided environment. The following browser checks remain for release review:
+## Release review
 
-1. Inspect `/`, `/safe`, `/files`, `/board` at 375px, 768px, and 1440px. Verify no horizontal overflow and no obscured controls, including at 200% zoom.
-2. Vote once. Confirm tally increases by one, bars animate, further voting is disabled, and reloading/another tab preserves the vote.
-3. Guess `1111` in the vault: first two digits green, last two dark, suspicion rises from 34% to 39%. Guess `5011`: all pink, suspicion rises to 44%. Guess `1150`: unlock chime and cream dossier. Refresh and confirm the vault remains open.
-4. In a fresh browser profile, use five wrong guesses. Confirm lockout remains after reload. Toggle SFX and check the keyboard, buzz, and chime after a user gesture.
-5. Save `@your.handle` after unlocking. Check completion persists and appears in the board's preview. Verify that invalid handles receive useful messages.
-6. Open Part 1's case file. Check focus stays in the dialog, Escape closes it, and focus returns to the opener. Locked cards cannot open.
-7. Type a handle on the board and switch tiers. Confirm live preview and price update. Placeholder checkout shows a setup message. After real HTTPS URLs are configured and `checkoutReady` is true, verify the correct provider opens in a new tab.
-8. Rename/remove artwork to confirm clean image fallbacks. Check reduced-motion settings and keyboard-only navigation.
+1. Inspect all five pages at 375px, 768px, and 1440px, at 200% zoom, and with reduced motion. Verify no horizontal overflow.
+2. In standby, check that choices, dossier clues, and the episode keypad stay sealed. Verify Instagram follow and separate YouTube links.
+3. In a released test build, every Watch/Like/Comment action must open the exact Reel. Selecting an option saves a draft choice, not a submitted vote. The visitor posts the comment on Instagram.
+4. Dead Drop must count one move per pair, reject duplicate/third-card flips, hide misses, finish after all pairs, and restore personal records after reload.
+5. Signal Intercept must reject early taps, measure after the signal, support keyboard activation, and save only better results.
+6. Save a handle/theory and reload. Check the local pin/draft survives, with no product prices or paid controls and no claim of public submission.
+7. Check native sharing, cancel, clipboard success/denial, and selectable-link fallback.
+8. Check keyboard navigation, labels, status announcements, dialog Escape/focus return, and missing-image fallbacks.
 
-Checkout placeholders are intentionally inactive. Device-local votes and completions do not represent a shared database.
+Public HTTP checks verify accessible pages and expected free/standby content. Local records are not a public community database.

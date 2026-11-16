@@ -2,7 +2,11 @@ import episodeData from "@/data/episodes.json";
 import config from "@/data/siteConfig.json";
 import { isEpisodeReleased, isInstagramReelUrl } from "./release";
 export { default as siteConfig } from "@/data/siteConfig.json";
-export { default as corkboard } from "@/data/corkboard.json";
+import boardData from "@/data/corkboard.json";
+export const corkboard = {
+  ...boardData,
+  persons: boardData.persons as { handle: string; number: string }[],
+};
 export interface Episode {
   id: string;
   part: number;

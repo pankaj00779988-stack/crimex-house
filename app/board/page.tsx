@@ -5,7 +5,7 @@ import { InvestigationBoard } from "@/components/board";
 export const metadata: Metadata = {
   title: "Persons of Interest",
   description:
-    "Follow the investigation. Get your handle pinned to the Crimex House evidence board.",
+    "Join the free crew board, save a personal handle pin, and draft your theory for Instagram.",
 };
 export default function BoardPage() {
   return (
@@ -23,7 +23,10 @@ export default function BoardPage() {
         <h1>
           IT’S ALL <span>CONNECTED.</span>
         </h1>
-        <p>The evidence. The crew. You. Some names belong on the board.</p>
+        <p>
+          Your first theory belongs here. Add a free personal pin, then join the
+          conversation on Instagram.
+        </p>
       </header>
       <InvestigationBoard />
     </main>

@@ -1,0 +1,17 @@
+{
+  "memory": {
+    "id": "dead-drop",
+    "title": "Dead Drop",
+    "subtitle": "Match the evidence. Leave nothing behind.",
+    "description": "Find six matching pairs in as few moves as possible. Every round reshuffles the evidence.",
+    "symbols": ["CASH", "KEY", "FILE", "RADIO", "CAR", "PRINT"]
+  },
+  "reaction": {
+    "id": "signal-intercept",
+    "title": "Signal Intercept",
+    "subtitle": "Wait for the signal. Then make your move.",
+    "description": "Tap only when INTERCEPT appears. Move too early and the attempt is blown.",
+    "minimumDelayMs": 1400,
+    "maximumDelayMs": 4000
+  }
+}
