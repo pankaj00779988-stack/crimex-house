@@ -117,7 +117,7 @@ test("teaser modal contains no unreleased incident report or safe clue", () => {
   );
   assert.match(card, /01:17/);
   assert.match(card, /DROPS/);
-  assert.match(card, /scene_01/);
+  assert.ok(card.includes(encodeURIComponent(standby.image!)));
   assert.doesNotMatch(card, /LIVE NOW|Bundle #50|GPS|safeClue/);
 });
 test("all watch actions open the exact Reel URL after the two-field release", () => {

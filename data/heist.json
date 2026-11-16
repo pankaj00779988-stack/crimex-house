@@ -1,0 +1,123 @@
+{
+  "id": "room-17",
+  "title": "ROOM 17",
+  "eyebrow": "CASE ZERO / AN ORIGINAL PRACTICE CASE",
+  "tagline": "The room has answers. The hallway has eyes.",
+  "briefing": "An anonymous caller left you a motel key and a simple job: recover the black ledger from the locked case, then get out without being seen. The room is quiet. It won’t stay that way.",
+  "maxMoves": 8,
+  "maxAttempts": 3,
+  "startingAlert": 12,
+  "cacheCode": "0940",
+  "artwork": "/art/motel-room.webp",
+  "clues": [
+    {
+      "id": "key",
+      "number": "01",
+      "label": "Brass key",
+      "action": "TAKE THE KEY",
+      "cost": 1,
+      "alert": 0,
+      "x": 40,
+      "y": 70,
+      "item": "Brass key",
+      "note": "The tag reads ROOM 17. A smaller tooth on the key fits the slot beside the case’s number lock. Keep it."
+    },
+    {
+      "id": "clock",
+      "number": "02",
+      "label": "Desk clock",
+      "action": "INSPECT THE CLOCK",
+      "cost": 1,
+      "alert": 4,
+      "x": 42,
+      "y": 54,
+      "item": "Clock note",
+      "note": "Under the clock, a service note reads: NIGHT DEPOSIT — 09:40. A second line says: HOURS, THEN MINUTES. FOUR DIGITS. The hands aren’t the clue. The note is."
+    },
+    {
+      "id": "map",
+      "number": "03",
+      "label": "Evacuation map",
+      "action": "READ THE MAP",
+      "cost": 1,
+      "alert": 0,
+      "x": 30,
+      "y": 67,
+      "item": "Evacuation map",
+      "note": "A penciled route connects Room 17 to the rear service stairs. The lobby is covered by a camera. The brass key opens the service door. Quiet is better than fast."
+    },
+    {
+      "id": "phone",
+      "number": "04",
+      "label": "Ringing phone",
+      "action": "ANSWER THE PHONE",
+      "cost": 1,
+      "alert": 24,
+      "x": 24,
+      "y": 55,
+      "item": "Caller’s warning",
+      "note": "You pick up. A voice says, ‘The lobby is clear.’ Then the line clicks twice. Someone now knows the room is occupied. The map tells a different story."
+    },
+    {
+      "id": "cord",
+      "number": "05",
+      "label": "Curtain cord",
+      "action": "TAKE THE CORD",
+      "cost": 2,
+      "alert": 10,
+      "x": 89,
+      "y": 28,
+      "item": "Curtain cord",
+      "note": "You pull the cord free. It will hold long enough to reach the fire escape through the window. The blinds snap against the wall. That was loud."
+    }
+  ],
+  "exits": [
+    {
+      "id": "service",
+      "label": "Service stairs",
+      "description": "Follow the penciled route. Requires the evacuation map.",
+      "requirement": "map",
+      "alert": 2
+    },
+    {
+      "id": "lobby",
+      "label": "Front lobby",
+      "description": "The shortest walk. The camera will get a clear look at you.",
+      "requirement": "",
+      "alert": 35
+    },
+    {
+      "id": "window",
+      "label": "Fire escape",
+      "description": "Go through the window. Requires the curtain cord.",
+      "requirement": "cord",
+      "alert": 8
+    }
+  ],
+  "outcomes": {
+    "ghost": {
+      "stamp": "GHOST",
+      "title": "You were never here.",
+      "description": "Ledger recovered. Service door locked behind you. No camera frame, no noise trail. A clean exit.",
+      "rank": 3
+    },
+    "shadow": {
+      "stamp": "SHADOW",
+      "title": "Out of the room. Not out of sight.",
+      "description": "You recovered the ledger, but your route left a trace. A cleaner run is possible. Review what raised the room alert.",
+      "rank": 2
+    },
+    "exposed": {
+      "stamp": "EXPOSED",
+      "title": "You got the ledger. They got your face.",
+      "description": "The lobby camera caught you leaving. The job is complete, but the next move will be harder.",
+      "rank": 1
+    },
+    "lockdown": {
+      "stamp": "LOCKDOWN",
+      "title": "The hallway goes silent.",
+      "description": "Too many moves, too much noise, or too many wrong combinations. The case is sealed and the exit is gone. Start again. Read the room.",
+      "rank": 0
+    }
+  }
+}

@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { siteConfig } from "@/lib/data";
 export function SceneArt({
   className = "",
   priority = false,
-  src = "/art/scene_01.png",
+  src = siteConfig.artwork,
 }: {
   className?: string;
   priority?: boolean;
@@ -30,11 +31,11 @@ export function Avatar() {
   const [failed, setFailed] = useState(false);
   return (
     <span className="avatar">
-      {failed ? (
+      {failed || !siteConfig.avatarUrl ? (
         <span>CH</span>
       ) : (
         <Image
-          src="/art/pfp.jpg"
+          src={siteConfig.avatarUrl}
           alt=""
           width={32}
           height={32}

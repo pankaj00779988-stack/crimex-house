@@ -31,7 +31,7 @@
     },
     {
       "question": "Can I play before Part 01 premieres?",
-      "answer": "Yes. Dead Drop and Signal Intercept are open practice games with no story spoilers. The episode vault stays sealed until Part 01 is released."
+      "answer": "Yes. Room 17 is a complete original practice case. Dead Drop and Signal Intercept are quick drills. All three are open now, with no Part 01 spoilers. The episode vault stays sealed until release."
     },
     {
       "question": "Is my crew pin public?",
@@ -41,5 +41,7 @@
       "question": "Where do I watch the episodes?",
       "answer": "Story episodes link to their Instagram Reels. YouTube is a separate home for upcoming full-length episodes."
     }
-  ]
+  ],
+  "artwork": "/art/motel-room.webp",
+  "avatarUrl": ""
 }

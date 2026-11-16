@@ -1,0 +1,2086 @@
+/* HQ art direction and the original Room 17 interactive case. */
+.hq-v2 {
+  padding-top: 24px;
+}
+.hq-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  font:
+    9px/1.7 "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #81818d;
+  margin: 0 0 17px;
+}
+.hq-status > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #b2b2bc;
+}
+.cinema-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 580px;
+  overflow: hidden;
+  border: 1px solid #ffffff18;
+  background: #101015;
+}
+.cinema-hero .scene-art img {
+  object-position: 65% 52%;
+  filter: saturate(0.85);
+}
+.cinema-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      #08080af2 2%,
+      #08080aca 32%,
+      #08080a40 68%,
+      #08080a08
+    ),
+    linear-gradient(0deg, #08080af2, transparent 35%);
+}
+.cinema-copy {
+  padding: 57px 44px 90px;
+  max-width: 730px;
+  position: relative;
+}
+.cinema-label {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.cinema-label .eyebrow {
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  color: #b5b2bb;
+}
+.cinema-label .season-label {
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  padding: 7px 9px;
+  border-color: #ffffff45;
+}
+.cinema-copy h1 {
+  font-size: clamp(60px, 6.9vw, 86px);
+  line-height: 1.01;
+  letter-spacing: -4.5px;
+  font-weight: 900;
+}
+.cinema-copy h1 > span {
+  color: var(--pink);
+}
+.cinema-copy > p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #b9b6c0;
+  margin-top: 25px;
+}
+.cinema-copy > p strong {
+  font-weight: 500;
+  color: var(--paper);
+}
+.cinema-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 23px;
+  align-items: center;
+  margin-top: 29px;
+}
+.cinema-actions > .button {
+  min-height: 50px;
+  font-size: 10px;
+  padding: 10px 18px;
+}
+.cinema-game-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font:
+    9px/1.7 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.6px;
+}
+.cinema-game-link:hover {
+  color: var(--pink);
+}
+.cinema-fineprint {
+  font-size: 10px;
+  color: #7f7b88;
+  display: block;
+  margin-top: 18px;
+  line-height: 1.8;
+}
+.cinema-stamp {
+  position: absolute;
+  right: 36px;
+  bottom: 85px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+}
+.cinema-stamp .stamp {
+  font-size: 11px;
+  background: #08080a80;
+  backdrop-filter: blur(5px);
+}
+.cinema-stamp > span:last-child {
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  color: #bab2bb;
+  letter-spacing: 1.1px;
+}
+.cinema-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 24px;
+  border-top: 1px solid #ffffff15;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #898491;
+  background: #08080a70;
+}
+.cinema-caption > svg {
+  color: var(--pink);
+}
+.cinema-frame {
+  margin-left: auto;
+  color: #625d69;
+  font-size: 7px;
+}
+.hq-v2 > .hud {
+  border-top: 0;
+}
+.hq-v2 .hud > div {
+  padding: 24px;
+}
+.hq-v2 .hud .eyebrow {
+  font-size: 8px;
+}
+.hq-v2 .hud strong {
+  font-size: 24px;
+}
+.hq-path {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+  padding: 32px 0;
+  gap: 25px;
+}
+.hq-path > div {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  min-width: 0;
+}
+.hq-path-number {
+  font:
+    27px/1 "JetBrains Mono",
+    monospace;
+  color: #3c3642;
+  letter-spacing: -2px;
+}
+.hq-path h2 {
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hq-path h2 svg {
+  color: var(--pink);
+  width: 14px;
+}
+.hq-path p {
+  font-size: 11px;
+  color: #92909c;
+  line-height: 1.8;
+  margin-top: 8px;
+  max-width: 250px;
+}
+.hq-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+.hq-section-heading h2 {
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -1.2px;
+  margin-top: 9px;
+}
+.hq-section-heading .eyebrow {
+  font-size: 9px;
+  letter-spacing: 1.3px;
+}
+.hq-section-heading > .text-link {
+  font-size: 9px;
+  margin-bottom: 4px;
+}
+.hq-case-section {
+  padding: 49px 0;
+}
+.hq-case-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+.hq-case-split .episode-visual {
+  height: 268px;
+}
+.hq-case-split .episode-info {
+  padding: 23px 25px;
+}
+.hq-case-split .episode-info h3 {
+  font-size: 28px;
+  letter-spacing: -0.9px;
+}
+.hq-case-split .episode-info p {
+  font-size: 12px;
+}
+.hq-case-split .episode-info > .eyebrow {
+  font-size: 9px;
+}
+.hq-case-split .vote-standby {
+  min-height: 0;
+  padding: 25px;
+}
+.hq-case-split .vote-standby > .vote-top {
+  gap: 10px;
+}
+.hq-case-split .vote-standby > .standby-emblem {
+  margin: 27px auto 22px;
+}
+.hq-case-split .vote-standby h2 {
+  font-size: 26px;
+}
+.hq-case-split .vote-standby p {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.hq-case-split .vote-standby .standby-unlock {
+  font-size: 10px;
+}
+.hq-case-split .vote-standby .vote-bottom {
+  font-size: 8px;
+  margin-top: 22px;
+}
+.hq-case-split .vote-top > .eyebrow {
+  font-size: 9px;
+}
+.hq-feature-case {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border: 1px solid #ff2e9335;
+  background: #131117;
+  margin-bottom: 45px;
+}
+.feature-room-visual {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 440px;
+  background: #151119;
+}
+.feature-room-visual .scene-art img {
+  object-position: 64% center;
+  filter: brightness(0.65) saturate(0.8);
+}
+.feature-room-visual:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #08080ae0, transparent 65%);
+  z-index: -1;
+}
+.feature-case-tab {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: var(--pink);
+  color: #180c13;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  padding: 9px 12px;
+}
+.feature-room-number {
+  position: absolute;
+  left: 27px;
+  bottom: 35px;
+  font-size: 151px;
+  letter-spacing: -12px;
+  line-height: 1;
+  font-weight: 900;
+  color: #f5f2eb;
+}
+.feature-room-caption {
+  position: absolute;
+  left: 33px;
+  bottom: 20px;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 2px;
+  color: #aaa0af;
+}
+.feature-room-copy {
+  padding: 39px 36px;
+}
+.feature-room-copy > .eyebrow {
+  font-size: 9px;
+  letter-spacing: 1.2px;
+}
+.feature-room-copy h2 {
+  font-size: 69px;
+  font-weight: 900;
+  letter-spacing: -3.7px;
+  line-height: 1.06;
+  margin: 17px 0 12px;
+}
+.feature-room-copy h2 > span {
+  color: var(--pink);
+}
+.feature-room-copy > p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #d7d1da;
+}
+.feature-room-copy > .feature-room-description {
+  font-size: 13px;
+  color: #928b9b;
+  line-height: 1.9;
+  margin-top: 13px;
+  max-width: 390px;
+}
+.feature-room-stakes {
+  display: flex;
+  gap: 32px;
+  padding: 23px 0;
+  margin: 22px 0;
+  border-top: 1px solid #ffffff12;
+  border-bottom: 1px solid #ffffff12;
+}
+.feature-room-stakes > span {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1.5px;
+  color: #918598;
+}
+.feature-room-stakes strong {
+  font-size: 28px;
+  color: var(--paper);
+  font-weight: 500;
+}
+.feature-room-copy > .button {
+  min-height: 48px;
+  font-size: 10px;
+}
+.feature-room-note {
+  display: block;
+  color: #827a8a;
+  font-size: 10px;
+  line-height: 1.9;
+  margin-top: 15px;
+  max-width: 340px;
+}
+.hq-v2 .engagement-section {
+  padding: 33px;
+  background: transparent;
+  border-color: var(--line);
+}
+.hq-v2 .engagement-section h2 {
+  font-size: 29px;
+}
+.hq-v2 .engagement-section > div:first-child > p {
+  font-size: 13px;
+}
+.hq-v2 .engagement-actions .button {
+  min-height: 48px;
+  font-size: 9px;
+}
+.hq-v2 .engagement-note {
+  font-size: 10px;
+}
+.hq-crew-invite {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 26px 0 33px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.hq-crew-invite > svg {
+  color: var(--pink);
+}
+.hq-crew-invite h2 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.hq-crew-invite p {
+  font-size: 12px;
+  color: #8f8b99;
+  line-height: 1.9;
+  margin-top: 7px;
+}
+.hq-crew-invite > .text-link {
+  margin-left: auto;
+  font-size: 9px;
+}
+.hq-v2 .youtube-callout {
+  border-color: var(--line);
+  background: #111014;
+  margin-bottom: 45px;
+}
+.hq-v2 .youtube-copy h2 {
+  font-size: 25px;
+}
+.hq-v2 .youtube-copy p {
+  font-size: 12px;
+}
+.hq-faq {
+  padding-bottom: 10px;
+}
+.hq-faq summary {
+  font-size: 14px;
+  padding: 22px 0;
+}
+.hq-faq details p {
+  font-size: 13px;
+}
+
+/* Room 17: state is deterministic; the room never uses a time limit. */
+.heist-page-header {
+  padding: 35px 0 36px;
+}
+.heist-page-header h1 {
+  font-size: clamp(42px, 5vw, 65px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -3px;
+  margin-top: 15px;
+}
+.heist-page-header h1 > span {
+  color: var(--pink);
+}
+.heist-page-header > p {
+  color: #a19aa9;
+  line-height: 1.9;
+  font-size: 14px;
+  margin-top: 17px;
+}
+.heist-machine {
+  border: 1px solid #ffffff24;
+  background: #111015;
+  scroll-margin-top: 18px;
+}
+.heist-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding: 19px 24px;
+}
+.heist-topline .eyebrow {
+  font-size: 9px;
+  letter-spacing: 1.2px;
+}
+.heist-free {
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #a19aa9;
+}
+.heist-brief {
+  position: relative;
+  isolation: isolate;
+  min-height: 535px;
+  overflow: hidden;
+}
+.heist-brief .scene-art img {
+  object-position: 65% center;
+  filter: brightness(0.9);
+}
+.heist-scene-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, #0b090ff2 0, #0b090fe6 30%, #0b090f45 75%),
+    linear-gradient(0deg, #0b090fb0, transparent 60%);
+}
+.heist-brief-copy {
+  padding: 44px;
+  max-width: 620px;
+}
+.heist-brief-copy h2 {
+  font-size: 94px;
+  line-height: 1.02;
+  font-weight: 900;
+  letter-spacing: -6px;
+  margin-top: 20px;
+}
+.heist-brief-copy h2 > span {
+  color: var(--pink);
+}
+.heist-brief-copy > p {
+  font-size: 14px;
+  color: #bdb3c3;
+  line-height: 1.95;
+  margin-top: 20px;
+}
+.heist-rules {
+  display: flex;
+  gap: 32px;
+  margin: 28px 0;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #aa9cb1;
+}
+.heist-rules > span {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+.heist-rules strong {
+  font-size: 25px;
+  color: var(--paper);
+  font-weight: 500;
+}
+.heist-brief-copy > .button {
+  min-height: 50px;
+  font-size: 10px;
+}
+.heist-brief-note {
+  display: block;
+  font-size: 10px;
+  color: #8b8093;
+  line-height: 1.9;
+  margin-top: 17px;
+  max-width: 350px;
+}
+.heist-status {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  background: #19151e;
+  border-bottom: 1px solid var(--line);
+}
+.heist-status > div {
+  padding: 18px 24px;
+}
+.heist-status > div + div {
+  border-left: 1px solid var(--line);
+}
+.heist-status > div > span {
+  font:
+    8px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #8e8099;
+  display: block;
+  margin-bottom: 10px;
+}
+.heist-status strong {
+  font:
+    25px "JetBrains Mono",
+    monospace;
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.heist-status strong small {
+  font-size: 11px;
+  color: #7b6c85;
+}
+.heist-status .heist-objective {
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  line-height: 1.6;
+}
+.heist-status .heist-objective svg {
+  color: var(--pink);
+}
+.heist-status .risk-high {
+  color: var(--pink);
+}
+.heist-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+}
+.heist-room {
+  position: relative;
+  isolation: isolate;
+  min-height: 365px;
+  overflow: hidden;
+}
+.heist-room .scene-art img {
+  object-position: center center;
+  filter: brightness(0.82);
+}
+.heist-room-caption {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #c1b3cb;
+}
+.heist-room-caption .eyebrow {
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+.heist-room-caption > span:last-child {
+  font:
+    6px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.7px;
+  align-self: center;
+}
+.heist-hotspot {
+  position: absolute;
+  left: var(--hotspot-x);
+  top: var(--hotspot-y);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: 0;
+  z-index: 1;
+  min-width: 44px;
+  min-height: 44px;
+}
+.heist-hotspot > span {
+  width: 29px;
+  height: 29px;
+  border: 1px solid #ff2e93a0;
+  box-shadow:
+    0 0 0 4px #ff2e9319,
+    0 3px 12px #0008;
+  background: #190b17da;
+  color: #ff78bb;
+  display: grid;
+  place-items: center;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  border-radius: 50%;
+}
+.heist-hotspot > b {
+  font:
+    7px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.3px;
+  padding: 4px 5px;
+  background: #08080ae6;
+  color: #e3d5e9;
+  text-transform: uppercase;
+}
+.heist-hotspot:hover > span {
+  background: var(--pink);
+  color: #11050d;
+}
+.heist-hotspot.found > span {
+  border-color: #a1e4ba;
+  box-shadow: 0 0 0 4px #a1e4ba14;
+  color: #b8f5ce;
+}
+.heist-note {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 25px;
+  position: relative;
+  min-height: 300px;
+  color-scheme: light;
+}
+.heist-note > .eyebrow {
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #8b7c6c;
+  padding-right: 24px;
+}
+.heist-note-number {
+  position: absolute;
+  right: 21px;
+  top: 18px;
+  font:
+    28px "JetBrains Mono",
+    monospace;
+  color: #ded5c9;
+}
+.heist-note h3 {
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin-top: 33px;
+}
+.heist-note p {
+  font-size: 12px;
+  line-height: 1.95;
+  color: #6d6055;
+  margin-top: 16px;
+}
+.heist-note-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font:
+    7px/1.9 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.4px;
+  color: #958575;
+  border-top: 1px dashed #a4958550;
+  margin-top: 25px;
+  padding-top: 16px;
+}
+.heist-clues {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding: 18px;
+  gap: 9px;
+  border-bottom: 1px solid var(--line);
+}
+.heist-clues > button {
+  position: relative;
+  text-align: left;
+  background: #1c1722;
+  border: 1px solid #ffffff16;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 12px;
+  min-width: 0;
+}
+.heist-clues > button:hover {
+  border-color: var(--pink);
+}
+.heist-clues > button > svg {
+  color: var(--pink);
+}
+.heist-clues strong {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.heist-clues > button > span {
+  font:
+    6px/1.8 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.2px;
+  color: #95839e;
+}
+.heist-clues .clue-check {
+  position: absolute;
+  right: 9px;
+  top: 13px;
+  color: #9bdbb3;
+}
+.heist-clues > button.collected {
+  border-color: #a1e4ba30;
+  background: #141d1a;
+}
+.heist-clues > button.collected > span {
+  color: #8fbaa0;
+}
+.heist-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.8;
+  color: #c9b9d3;
+  font-size: 11px;
+  padding: 18px 24px;
+  margin: 0;
+  background: #1b1320;
+  border-bottom: 1px solid #ffffff10;
+}
+.heist-message > svg {
+  color: var(--pink);
+  margin-top: 3px;
+}
+.heist-equipment {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  border-bottom: 1px solid var(--line);
+}
+.heist-cache,
+.heist-inventory {
+  padding: 27px 25px;
+  min-width: 0;
+}
+.heist-cache {
+  border-right: 1px solid var(--line);
+}
+.heist-cache .eyebrow,
+.heist-inventory > .eyebrow {
+  font-size: 8px;
+  color: #9a88a5;
+  letter-spacing: 1px;
+}
+.heist-cache h3,
+.heist-inventory h3 {
+  font-size: 22px;
+  letter-spacing: -0.5px;
+  font-weight: 700;
+  margin-top: 9px;
+}
+.heist-cache form {
+  margin-top: 19px;
+}
+.heist-cache label {
+  font:
+    7px "JetBrains Mono",
+    monospace;
+  color: #8e7c9b;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 9px;
+}
+.heist-cache form > div {
+  display: flex;
+  gap: 9px;
+}
+.heist-cache input {
+  width: 0;
+  flex: 1;
+  min-width: 0;
+  background: #09070c;
+  border: 1px solid #ffffff25;
+  min-height: 48px;
+  padding: 10px 14px;
+  font:
+    20px "JetBrains Mono",
+    monospace;
+  letter-spacing: 7px;
+  color: var(--paper);
+}
+.heist-cache input:disabled {
+  opacity: 0.4;
+}
+.heist-cache button {
+  font-size: 8px;
+}
+.heist-cache button:disabled {
+  opacity: 0.35;
+  transform: none;
+}
+.heist-cache small {
+  color: #8d7b99;
+  font-size: 10px;
+  line-height: 1.8;
+  margin-top: 11px;
+  display: block;
+}
+.heist-cache-open {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #9bdab2;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.7px;
+  margin-top: 27px;
+}
+.heist-inventory > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+.heist-inventory > div > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #a7bdaf;
+  border: 1px solid #a1e4ba22;
+  padding: 7px 9px;
+  background: #a1e4ba06;
+}
+.heist-inventory > div > span.ledger-item {
+  color: var(--paper);
+  border-color: #ff2e9360;
+  background: #ff2e9310;
+}
+.heist-inventory > p {
+  font-size: 11px;
+  line-height: 1.8;
+  color: #806f8c;
+  margin-top: 18px;
+}
+.heist-exits {
+  padding: 29px 24px;
+}
+.heist-exits h3 {
+  font-size: 25px;
+  letter-spacing: -0.7px;
+  font-weight: 800;
+  margin-top: 9px;
+}
+.heist-exits > div:first-child > p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #97869f;
+  margin-top: 10px;
+}
+.heist-exit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+.heist-exit-grid > button {
+  background: #1a151f;
+  text-align: left;
+  padding: 21px 18px;
+  border: 1px solid #ffffff25;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.heist-exit-grid > button > svg {
+  color: var(--pink);
+}
+.heist-exit-grid strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+.heist-exit-grid > button > span {
+  color: #a490ae;
+  font-size: 11px;
+  line-height: 1.8;
+  flex: 1;
+}
+.heist-exit-grid small {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7px;
+  font:
+    7px/1.7 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.3px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  margin-top: 5px;
+  color: #d9b6e6;
+}
+.heist-exit-grid > button:disabled {
+  opacity: 0.4;
+}
+.heist-exit-grid > button:hover:not(:disabled) {
+  border-color: var(--pink);
+  background: #26172a;
+}
+.heist-bottomline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 19px 24px;
+  border-top: 1px solid var(--line);
+}
+.heist-bottomline > span {
+  font:
+    7px/1.8 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.6px;
+  color: #75627f;
+}
+.heist-bottomline > button {
+  font-size: 8px;
+  border: 0;
+  background: transparent;
+  padding: 6px 0;
+  color: #bc9dcb;
+}
+.heist-storage-warning {
+  padding: 17px 24px;
+  color: #d9a8bd;
+  background: #ff2e9312;
+  font-size: 12px;
+  line-height: 1.9;
+}
+.heist-outcome {
+  position: relative;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 48px 40px;
+  min-height: 400px;
+  color-scheme: light;
+}
+.heist-outcome > .stamp {
+  position: absolute;
+  right: 35px;
+  top: 40px;
+  font-size: 17px;
+  padding: 10px 14px;
+}
+.heist-outcome > .eyebrow {
+  font-size: 9px;
+  color: #8c7b6a;
+  padding-right: 170px;
+}
+.heist-outcome h2 {
+  font-size: 48px;
+  letter-spacing: -2.5px;
+  font-weight: 900;
+  line-height: 1.1;
+  max-width: 610px;
+  margin-top: 36px;
+}
+.heist-outcome > p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #746557;
+  max-width: 680px;
+  margin-top: 21px;
+}
+.heist-result-stats {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 24px 0;
+  margin-top: 23px;
+  border-top: 1px dashed #93816f50;
+  border-bottom: 1px dashed #93816f50;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.5px;
+  color: #8b705e;
+}
+.heist-result-stats > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.heist-debrief {
+  margin-top: 23px;
+}
+.heist-debrief summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 1px;
+  cursor: pointer;
+  list-style: none;
+}
+.heist-debrief summary::-webkit-details-marker {
+  display: none;
+}
+.heist-debrief[open] summary > svg {
+  transform: rotate(90deg);
+}
+.heist-debrief ol {
+  margin: 20px 0 0;
+  padding-left: 20px;
+  color: #7c695b;
+}
+.heist-debrief li {
+  font-size: 12px;
+  line-height: 1.9;
+  padding: 7px 0;
+}
+.heist-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+  align-items: flex-start;
+  margin-top: 28px;
+}
+.heist-result-actions .button {
+  font-size: 9px;
+  min-height: 46px;
+}
+.heist-outcome .share-control .button {
+  color: var(--ink);
+  border-color: #1c191740;
+}
+.heist-outcome .action-message {
+  color: #7b6657;
+  max-width: 290px;
+}
+.heist-outcome > .heist-record {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font:
+    8px/1.8 "JetBrains Mono",
+    monospace;
+  color: #957e6c;
+  margin-top: 25px;
+  letter-spacing: 0.6px;
+}
+.quick-drills {
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  background: #0e0c11;
+}
+.quick-drills > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  cursor: pointer;
+  list-style: none;
+  padding: 24px;
+}
+.quick-drills > summary::-webkit-details-marker {
+  display: none;
+}
+.quick-drills > summary > span:first-child {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.quick-drills summary svg {
+  color: var(--pink);
+}
+.quick-drills summary strong {
+  display: block;
+  font:
+    10px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.6px;
+}
+.quick-drills summary small {
+  display: block;
+  font-size: 11px;
+  color: #897e93;
+  margin-top: 9px;
+  line-height: 1.8;
+}
+.quick-drills-plus {
+  color: var(--pink);
+  font-size: 24px;
+}
+.quick-drills[open] .quick-drills-plus {
+  transform: rotate(45deg);
+}
+.quick-drills > .arcade-grid {
+  padding: 0 22px 22px;
+}
+@media (max-width: 1000px) {
+  .cinema-copy {
+    padding: 45px 33px 100px;
+    max-width: 610px;
+  }
+  .cinema-copy h1 {
+    font-size: 68px;
+    letter-spacing: -3.5px;
+  }
+  .cinema-hero {
+    min-height: 560px;
+  }
+  .cinema-stamp {
+    right: 26px;
+    bottom: 78px;
+  }
+  .cinema-stamp .stamp {
+    font-size: 9px;
+  }
+  .hq-path {
+    gap: 20px;
+  }
+  .hq-path > div {
+    gap: 12px;
+  }
+  .hq-path p {
+    font-size: 10px;
+  }
+  .feature-room-copy {
+    padding: 32px 28px;
+  }
+  .feature-room-copy h2 {
+    font-size: 57px;
+  }
+  .feature-room-copy > .feature-room-description {
+    font-size: 12px;
+  }
+  .hq-case-split {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .hq-case-split .episode-visual {
+    height: 250px;
+  }
+  .heist-note {
+    padding: 23px;
+  }
+  .heist-note h3 {
+    font-size: 23px;
+  }
+  .heist-note p {
+    font-size: 11px;
+  }
+  .heist-clues {
+    padding: 14px;
+    gap: 7px;
+  }
+  .heist-clues > button {
+    padding: 14px 10px;
+  }
+}
+@media (max-width: 850px) {
+  .cinema-copy {
+    max-width: 560px;
+  }
+  .cinema-copy h1 {
+    font-size: 58px;
+    letter-spacing: -3px;
+  }
+  .cinema-copy > p {
+    font-size: 14px;
+  }
+  .cinema-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+  .cinema-copy {
+    padding-bottom: 125px;
+  }
+  .cinema-stamp {
+    bottom: 78px;
+  }
+  .hq-section-heading h2 {
+    font-size: 30px;
+  }
+  .hq-case-split .vote-standby {
+    padding: 23px;
+  }
+  .hq-case-split .vote-standby h2 {
+    font-size: 24px;
+  }
+  .hq-case-split .vote-standby .standby-unlock {
+    font-size: 9px;
+  }
+  .hq-case-split .episode-visual {
+    height: 255px;
+  }
+  .hq-case-split .episode-info {
+    padding: 22px;
+  }
+  .hq-feature-case {
+    grid-template-columns: 0.9fr 1fr;
+  }
+  .feature-room-copy {
+    padding: 30px 24px;
+  }
+  .feature-room-copy h2 {
+    font-size: 50px;
+    letter-spacing: -2.5px;
+  }
+  .feature-room-copy > .eyebrow {
+    font-size: 7px;
+  }
+  .feature-room-copy > p {
+    font-size: 13px;
+  }
+  .feature-room-stakes {
+    gap: 26px;
+  }
+  .hq-crew-invite {
+    flex-wrap: wrap;
+  }
+  .hq-crew-invite > .text-link {
+    margin-left: 44px;
+  }
+  .heist-brief-copy {
+    padding: 36px;
+    max-width: 530px;
+  }
+  .heist-brief-copy h2 {
+    font-size: 80px;
+  }
+  .heist-brief-copy > p {
+    font-size: 13px;
+  }
+  .heist-stage {
+    grid-template-columns: 1.4fr 1fr;
+  }
+  .heist-hotspot > b {
+    font-size: 6px;
+  }
+  .heist-hotspot > span {
+    width: 25px;
+    height: 25px;
+  }
+  .heist-clues {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .heist-clues > button {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+  }
+  .heist-clues > button > span {
+    grid-column: 2;
+  }
+  .heist-clues .clue-check {
+    display: none;
+  }
+  .heist-cache,
+  .heist-inventory {
+    padding: 24px 20px;
+  }
+  .heist-exit-grid > button {
+    padding: 19px 15px;
+  }
+  .heist-exit-grid strong {
+    font-size: 14px;
+  }
+  .heist-outcome h2 {
+    font-size: 42px;
+  }
+}
+@media (max-width: 680px) {
+  .hq-v2 {
+    padding-top: 18px;
+  }
+  .hq-status {
+    font-size: 7px;
+    letter-spacing: 0.3px;
+    margin-bottom: 14px;
+  }
+  .hq-status > span:last-child {
+    display: none;
+  }
+  .cinema-hero {
+    min-height: 0;
+  }
+  .cinema-hero .cinema-art {
+    height: 315px;
+    inset: 0 0 auto;
+  }
+  .cinema-hero .scene-art img {
+    object-position: 65% center;
+  }
+  .cinema-shade {
+    background:
+      linear-gradient(
+        0deg,
+        #08080a 0,
+        #08080a 28%,
+        #08080ac0 45%,
+        #08080a00 77%
+      ),
+      linear-gradient(90deg, #08080a30, transparent);
+  }
+  .cinema-copy {
+    padding: 230px 22px 91px;
+    max-width: none;
+  }
+  .cinema-label {
+    margin-bottom: 18px;
+    gap: 10px;
+  }
+  .cinema-label .eyebrow {
+    font-size: 6px;
+    letter-spacing: 0.7px;
+  }
+  .cinema-label .season-label {
+    font-size: 7px;
+    padding: 5px 7px;
+  }
+  .cinema-copy h1 {
+    font-size: clamp(38px, 10.6vw, 52px);
+    letter-spacing: -2px;
+    line-height: 1.04;
+  }
+  .cinema-copy > p {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-top: 18px;
+  }
+  .cinema-actions {
+    margin-top: 23px;
+    gap: 21px;
+    align-items: stretch;
+  }
+  .cinema-actions > .button {
+    min-height: 51px;
+    font-size: 9px;
+    padding: 12px;
+  }
+  .cinema-actions > .cinema-game-link {
+    font-size: 9px;
+    justify-content: center;
+  }
+  .cinema-fineprint {
+    font-size: 9px;
+    text-align: center;
+    margin-top: 17px;
+  }
+  .cinema-stamp {
+    top: 21px;
+    left: 18px;
+    right: auto;
+    bottom: auto;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .cinema-stamp .stamp {
+    font-size: 8px;
+    padding: 6px 8px;
+  }
+  .cinema-stamp > span:last-child {
+    font-size: 7px;
+  }
+  .cinema-caption {
+    padding: 15px;
+    gap: 8px;
+    line-height: 1.7;
+    font-size: 6px;
+    letter-spacing: 0.5px;
+  }
+  .cinema-caption > svg {
+    width: 12px;
+  }
+  .cinema-frame {
+    display: none;
+  }
+  .hq-v2 .hud > div {
+    padding: 17px 10px;
+  }
+  .hq-v2 .hud .eyebrow {
+    font-size: 5px;
+    letter-spacing: 0.3px;
+  }
+  .hq-v2 .hud strong {
+    font-size: 14px;
+    letter-spacing: -0.7px;
+  }
+  .hq-v2 .hud > div > svg {
+    right: 8px;
+    top: 12px;
+    width: 10px;
+  }
+  .hq-path {
+    grid-template-columns: 1fr;
+    gap: 23px;
+    padding: 28px 0;
+  }
+  .hq-path > div {
+    gap: 16px;
+  }
+  .hq-path-number {
+    font-size: 25px;
+  }
+  .hq-path h2 {
+    font-size: 15px;
+  }
+  .hq-path p {
+    font-size: 12px;
+    max-width: none;
+    margin-top: 6px;
+  }
+  .hq-case-section {
+    padding: 34px 0;
+  }
+  .hq-section-heading {
+    gap: 17px;
+    flex-wrap: wrap;
+    margin-bottom: 23px;
+  }
+  .hq-section-heading h2 {
+    font-size: 28px;
+    letter-spacing: -1px;
+  }
+  .hq-section-heading .eyebrow {
+    font-size: 7px;
+    letter-spacing: 0.9px;
+  }
+  .hq-section-heading > .text-link {
+    font-size: 8px;
+  }
+  .hq-case-split {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+  .hq-case-split .episode-visual {
+    height: 205px;
+  }
+  .hq-case-split .episode-info {
+    padding: 21px;
+  }
+  .hq-case-split .episode-info h3 {
+    font-size: 25px;
+  }
+  .hq-case-split .episode-info p {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .hq-case-split .episode-info > .eyebrow {
+    font-size: 8px;
+  }
+  .hq-case-split .vote-standby {
+    min-height: 370px;
+    padding: 24px;
+  }
+  .hq-case-split .vote-standby > .standby-emblem {
+    margin: 24px auto;
+  }
+  .hq-case-split .vote-standby h2 {
+    font-size: 25px;
+  }
+  .hq-case-split .vote-top > .eyebrow {
+    font-size: 8px;
+  }
+  .hq-feature-case {
+    grid-template-columns: 1fr;
+    margin-bottom: 30px;
+  }
+  .feature-room-visual {
+    min-height: 240px;
+  }
+  .feature-room-visual .scene-art img {
+    object-position: 65% 46%;
+  }
+  .feature-room-number {
+    font-size: 110px;
+    left: 20px;
+    bottom: 30px;
+    letter-spacing: -8px;
+  }
+  .feature-room-caption {
+    left: 25px;
+    bottom: 17px;
+    font-size: 6px;
+  }
+  .feature-case-tab {
+    left: 20px;
+    top: 20px;
+    font-size: 8px;
+    padding: 7px 9px;
+  }
+  .feature-room-copy {
+    padding: 28px 24px;
+  }
+  .feature-room-copy h2 {
+    font-size: 60px;
+    margin-top: 13px;
+    letter-spacing: -3px;
+  }
+  .feature-room-copy > .eyebrow {
+    font-size: 8px;
+  }
+  .feature-room-copy > p {
+    font-size: 14px;
+  }
+  .feature-room-copy > .feature-room-description {
+    font-size: 13px;
+  }
+  .feature-room-stakes {
+    justify-content: space-between;
+    gap: 15px;
+    margin: 20px 0;
+    padding: 21px 0;
+  }
+  .feature-room-stakes > span {
+    font-size: 8px;
+  }
+  .feature-room-copy > .button {
+    width: 100%;
+    min-height: 50px;
+  }
+  .feature-room-note {
+    font-size: 10px;
+  }
+  .hq-v2 .engagement-section {
+    padding: 25px 23px;
+  }
+  .hq-v2 .engagement-section h2 {
+    font-size: 25px;
+    line-height: 1.3;
+  }
+  .hq-v2 .engagement-section > div:first-child > p {
+    font-size: 13px;
+  }
+  .hq-v2 .engagement-actions .button {
+    font-size: 8px;
+    min-height: 47px;
+  }
+  .hq-v2 .engagement-note {
+    font-size: 10px;
+  }
+  .hq-crew-invite {
+    padding: 25px 0;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+  .hq-crew-invite > svg {
+    width: 22px;
+    margin-top: 3px;
+  }
+  .hq-crew-invite > div {
+    flex: 1;
+    min-width: 0;
+  }
+  .hq-crew-invite h2 {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+  .hq-crew-invite p {
+    font-size: 12px;
+  }
+  .hq-crew-invite > .text-link {
+    margin-left: 36px;
+    font-size: 8px;
+  }
+  .hq-v2 .youtube-callout {
+    margin-bottom: 35px;
+  }
+  .hq-v2 .youtube-copy h2 {
+    font-size: 21px;
+  }
+  .hq-v2 .youtube-copy p {
+    font-size: 12px;
+  }
+  .hq-faq summary {
+    font-size: 13px;
+    line-height: 1.7;
+    padding: 20px 0;
+  }
+  .hq-faq details p {
+    font-size: 12px;
+  }
+  .heist-page-header {
+    padding: 22px 0 28px;
+  }
+  .heist-page-header > .eyebrow {
+    font-size: 7px;
+    letter-spacing: 0.9px;
+  }
+  .heist-page-header h1 {
+    font-size: 41px;
+    letter-spacing: -1.8px;
+    margin-top: 15px;
+    line-height: 1.12;
+  }
+  .heist-page-header > p {
+    font-size: 13px;
+    margin-top: 15px;
+  }
+  .heist-machine {
+    display: flex;
+    flex-direction: column;
+  }
+  .heist-topline {
+    padding: 17px 16px;
+    gap: 8px;
+  }
+  .heist-topline .eyebrow {
+    font-size: 7px;
+    letter-spacing: 0.5px;
+    gap: 5px;
+  }
+  .heist-topline svg {
+    width: 12px;
+  }
+  .heist-free {
+    font-size: 6px;
+    letter-spacing: 0.3px;
+  }
+  .heist-brief {
+    min-height: 0;
+  }
+  .heist-brief .scene-art {
+    height: 310px;
+    inset: 0 0 auto;
+  }
+  .heist-brief .scene-art img {
+    object-position: 65% center;
+  }
+  .heist-scene-shade {
+    background: linear-gradient(
+      0deg,
+      #0b090f 0,
+      #0b090f 40%,
+      #0b090fb0 65%,
+      transparent 95%
+    );
+  }
+  .heist-brief-copy {
+    padding: 235px 23px 30px;
+    max-width: none;
+  }
+  .heist-brief-copy > .eyebrow {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+  .heist-brief-copy h2 {
+    font-size: 64px;
+    letter-spacing: -4px;
+    margin-top: 14px;
+  }
+  .heist-brief-copy > p {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-top: 17px;
+  }
+  .heist-rules {
+    justify-content: space-between;
+    gap: 8px;
+    margin: 24px 0;
+    font-size: 7px;
+    letter-spacing: 0.5px;
+  }
+  .heist-rules > span {
+    gap: 7px;
+  }
+  .heist-rules strong {
+    font-size: 24px;
+  }
+  .heist-brief-copy > .button {
+    width: 100%;
+  }
+  .heist-brief-note {
+    font-size: 10px;
+  }
+  .heist-status {
+    order: 1;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    grid-template-columns: 1fr 1fr 1.3fr;
+  }
+  .heist-status > div {
+    padding: 14px 12px;
+  }
+  .heist-status > div > span {
+    font-size: 6px;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+  }
+  .heist-status strong {
+    font-size: 23px;
+    gap: 4px;
+  }
+  .heist-status strong small {
+    font-size: 9px;
+  }
+  .heist-status .heist-objective {
+    font-size: 7px;
+    letter-spacing: 0.2px;
+    gap: 5px;
+    line-height: 1.8;
+  }
+  .heist-status .heist-objective svg {
+    width: 12px;
+  }
+  .heist-stage {
+    display: contents;
+  }
+  .heist-room {
+    order: 2;
+    min-height: 205px;
+  }
+  .heist-room .scene-art img {
+    object-position: 65% center;
+  }
+  .heist-room-caption {
+    top: 14px;
+    left: 14px;
+    right: 14px;
+  }
+  .heist-room-caption > span:last-child {
+    font-size: 5px;
+    letter-spacing: 0.2px;
+  }
+  .heist-room-caption .eyebrow {
+    font-size: 6px;
+  }
+  .heist-hotspot {
+    display: none;
+  }
+  .heist-clues {
+    order: 3;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 14px;
+  }
+  .heist-clues > button {
+    padding: 13px 10px;
+    gap: 7px;
+    min-height: 76px;
+    grid-template-columns: 19px minmax(0, 1fr);
+  }
+  .heist-clues > button > svg {
+    width: 17px;
+  }
+  .heist-clues strong {
+    font-size: 10px;
+  }
+  .heist-clues > button > span {
+    font-size: 6px;
+    letter-spacing: 0.1px;
+  }
+  .heist-clues > button:last-child {
+    grid-column: 1/-1;
+  }
+  .heist-note {
+    order: 4;
+    padding: 24px 23px;
+    min-height: 0;
+  }
+  .heist-note > .eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.9px;
+  }
+  .heist-note h3 {
+    font-size: 25px;
+    margin-top: 23px;
+  }
+  .heist-note p {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-top: 14px;
+  }
+  .heist-note-foot {
+    margin-top: 21px;
+    font-size: 8px;
+    padding-top: 13px;
+  }
+  .heist-message {
+    order: 5;
+    padding: 17px 19px;
+    font-size: 11px;
+    gap: 9px;
+  }
+  .heist-message > svg {
+    width: 14px;
+  }
+  .heist-equipment {
+    order: 6;
+    grid-template-columns: 1fr;
+  }
+  .heist-cache,
+  .heist-inventory {
+    padding: 24px 20px;
+  }
+  .heist-cache {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .heist-cache h3,
+  .heist-inventory h3 {
+    font-size: 22px;
+  }
+  .heist-cache input {
+    letter-spacing: 5px;
+    padding: 12px;
+    font-size: 20px;
+    min-height: 49px;
+  }
+  .heist-cache button {
+    padding: 0 12px;
+    font-size: 8px;
+    gap: 7px;
+  }
+  .heist-cache small {
+    font-size: 10px;
+  }
+  .heist-inventory > div {
+    margin-top: 19px;
+  }
+  .heist-inventory > div > span {
+    font-size: 10px;
+  }
+  .heist-exits {
+    order: 7;
+    padding: 25px 20px;
+  }
+  .heist-exits h3 {
+    font-size: 25px;
+  }
+  .heist-exits > div:first-child > p {
+    font-size: 12px;
+  }
+  .heist-exit-grid {
+    grid-template-columns: 1fr;
+    gap: 11px;
+    margin-top: 21px;
+  }
+  .heist-exit-grid > button {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr);
+    gap: 8px 12px;
+    padding: 20px 16px;
+  }
+  .heist-exit-grid strong {
+    align-self: center;
+    font-size: 16px;
+  }
+  .heist-exit-grid > button > span {
+    grid-column: 2;
+    font-size: 12px;
+  }
+  .heist-exit-grid small {
+    grid-column: 2;
+    font-size: 7px;
+    padding-top: 11px;
+    margin-top: 6px;
+  }
+  .heist-bottomline {
+    order: 8;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 17px 20px;
+    gap: 12px;
+  }
+  .heist-bottomline > span {
+    font-size: 6px;
+    letter-spacing: 0.4px;
+  }
+  .heist-bottomline > button {
+    font-size: 8px;
+  }
+  .heist-storage-warning {
+    order: 9;
+    padding: 17px 20px;
+    font-size: 11px;
+  }
+  .heist-outcome {
+    padding: 29px 23px;
+  }
+  .heist-outcome > .stamp {
+    position: relative;
+    right: auto;
+    top: auto;
+    font-size: 14px;
+    padding: 8px 11px;
+    margin-bottom: 26px;
+  }
+  .heist-outcome > .eyebrow {
+    display: block;
+    font-size: 8px;
+    padding-right: 0;
+  }
+  .heist-outcome h2 {
+    font-size: 35px;
+    letter-spacing: -1.5px;
+    margin-top: 20px;
+    line-height: 1.14;
+  }
+  .heist-outcome > p {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-top: 20px;
+  }
+  .heist-result-stats {
+    font-size: 8px;
+    gap: 16px;
+    padding: 21px 0;
+    margin-top: 24px;
+  }
+  .heist-debrief summary {
+    font-size: 8px;
+  }
+  .heist-debrief li {
+    font-size: 12px;
+  }
+  .heist-result-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .heist-result-actions .button {
+    width: 100%;
+    min-height: 48px;
+    font-size: 8px;
+  }
+  .heist-outcome > .heist-record {
+    font-size: 7px;
+    line-height: 2;
+  }
+  .quick-drills {
+    margin-top: 22px;
+  }
+  .quick-drills > summary {
+    padding: 20px;
+  }
+  .quick-drills summary strong {
+    font-size: 8px;
+    line-height: 1.8;
+  }
+  .quick-drills summary small {
+    font-size: 10px;
+    margin-top: 5px;
+  }
+  .quick-drills > summary > span:first-child {
+    gap: 11px;
+  }
+  .quick-drills > .arcade-grid {
+    padding: 0 13px 13px;
+  }
+}
+@media (max-width: 374px) {
+  .cinema-copy {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .cinema-copy h1 {
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+  .hq-v2 .hud strong {
+    font-size: 12px;
+  }
+  .heist-page-header h1 {
+    font-size: 37px;
+  }
+  .heist-brief-copy h2 {
+    font-size: 57px;
+  }
+  .heist-topline .eyebrow {
+    font-size: 6px;
+  }
+  .heist-free {
+    font-size: 5px;
+  }
+}

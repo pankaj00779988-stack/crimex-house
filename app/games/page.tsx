@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Gamepad2 } from "lucide-react";
-import { Hud } from "@/components/shell";
+import { ArrowRight, Fingerprint, Gamepad2 } from "lucide-react";
+import { Room17 } from "@/components/heist";
 import {
   MemoryGame,
   ReactionGame,
@@ -9,37 +9,46 @@ import {
 } from "@/components/arcade";
 import { activeEpisodeReleased } from "@/lib/data";
 export const metadata: Metadata = {
-  title: "Free Crew Games",
+  title: "Room 17 — The Free Heist Case",
   description:
-    "Play Dead Drop and Signal Intercept. Free heist practice games, no account required.",
+    "Read the room. Recover the ledger. Choose your exit. Play the original Room 17 interactive heist case for free.",
 };
 export default function GamesPage() {
   return (
-    <main id="main" className="page-container subpage">
+    <main id="main" className="page-container subpage heist-page">
       <div className="page-kicker">
         <span>
-          <Gamepad2 size={13} />
-          CREW TRAINING GROUND
+          <Fingerprint size={13} />
+          AN ORIGINAL CRIMEX HOUSE CASE
         </span>
         <span>FREE TO PLAY / NO ACCOUNT NEEDED</span>
       </div>
-      <Hud />
-      <header className="page-title">
-        <span className="eyebrow pink">GET YOUR HEAD IN THE GAME</span>
+      <header className="heist-page-header">
+        <span className="eyebrow pink">READ THE ROOM. LEAVE NO TRACE.</span>
         <h1>
-          SHARP EYES.
+          Every move
           <br />
-          <span>FASTER MOVES.</span>
+          has a <span>consequence.</span>
         </h1>
-        <p>
-          While the case is under seal, sharpen your memory and timing. Two
-          original practice games. No story spoilers.
-        </p>
+        <p>The right answer opens the case. The right decisions get you out.</p>
       </header>
-      <div className="arcade-grid">
-        <MemoryGame />
-        <ReactionGame />
-      </div>
+      <Room17 />
+      <details className="quick-drills">
+        <summary>
+          <span>
+            <Gamepad2 size={20} />
+            <span>
+              <strong>WARM UP WITH A QUICK DRILL</strong>
+              <small>Dead Drop · Memory / Signal Intercept · Reaction</small>
+            </span>
+          </span>
+          <span className="quick-drills-plus">+</span>
+        </summary>
+        <div className="arcade-grid">
+          <MemoryGame />
+          <ReactionGame />
+        </div>
+      </details>
       {!activeEpisodeReleased && <SealedEpisodeGame />}
       <div className="arcade-bottom">
         <Link className="button outline" href="/safe">
