@@ -1,0 +1,49 @@
+import type { Metadata } from "next";
+import { FolderOpen } from "lucide-react";
+import { Hud } from "@/components/shell";
+import { EpisodeCard } from "@/components/dossier";
+import { episodes, siteConfig } from "@/lib/data";
+export const metadata: Metadata = { title: "Case Files" };
+export default function FilesPage() {
+  return (
+    <main id="main" className="page-container subpage">
+      <div className="page-kicker">
+        <span>
+          <FolderOpen size={13} />
+          THE ARCHIVE
+        </span>
+        <span>ACCESS LEVEL: CREW</span>
+      </div>
+      <Hud />
+      <header className="page-title">
+        <span className="eyebrow pink">SEASON 01 / THE PAPER TRAIL</span>
+        <h1>
+          NOTHING STAYS
+          <br />
+          <span>BURIED FOREVER.</span>
+        </h1>
+        <p>
+          Six parts. Five million dollars. Follow the evidence from the first
+          bad decision to the last.
+        </p>
+      </header>
+      <div className="archive-heading">
+        <span className="mono">SEASON 01 — CASE FILES</span>
+        <span className="mono muted">
+          {episodes.filter((e) => e.status !== "LOCKED").length} DECLASSIFIED /{" "}
+          {episodes.length} FILES
+        </span>
+      </div>
+      <section className="files-grid" aria-label="Season one episodes">
+        {episodes.map((episode) => (
+          <EpisodeCard key={episode.id} episode={episode} />
+        ))}
+      </section>
+      <p className="archive-note">
+        <span className="live-dot" />
+        New intelligence drops at {siteConfig.dropLabel}. Locked files are
+        released as the story unfolds.
+      </p>
+    </main>
+  );
+}

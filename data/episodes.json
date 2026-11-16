@@ -1,0 +1,64 @@
+[
+  {
+    "id": "s1-p1",
+    "part": 1,
+    "title": "110 POUNDS",
+    "status": "LIVE",
+    "subtitle": "The money is real. So is the tracker.",
+    "location": "UNDISCLOSED MOTEL",
+    "runtime": "00:59",
+    "image": "/art/scene_01.jpg",
+    "choices": ["DECOY (Garbage Truck)", "RUN (Hit Highway)"],
+    "initialVotes": {
+      "optionA": 914,
+      "optionB": 514
+    },
+    "realLawRule": "31 U.S.C. § 5324 — Structuring Cash Deposits",
+    "lawExplanation": "Structuring cash transactions to evade reporting requirements can be a federal crime. The cash itself is only the beginning of the problem.",
+    "summary": "Stashed $5M in a motel before discovering a live GPS tracker inside Bundle #50.",
+    "safeCode": "1150",
+    "safeClue": "First 2 digits of cash weight (110 lbs) + GPS bundle number (50)",
+    "voteHeading": "60 seconds.\nTwo ways out.",
+    "voteContext": "The tracker is live. They’re closing in.\nWhat’s our next move?",
+    "choiceStrategies": ["Lose the signal.", "Trust your speed."],
+    "recoveredIntelligence": "The cash weighs 110 pounds. The GPS is in Bundle #50. Two details. One combination.",
+    "unlockMessage": "The first two digits of 110 pounds. Bundle #50. The answer was hiding in plain sight.",
+    "exhibitNote": "$5M IN CASH. ONE VERY BAD NIGHT.",
+    "timestamp": "02:14 AM"
+  },
+  {
+    "id": "s1-p2",
+    "part": 2,
+    "title": "THE NEXT MOVE",
+    "status": "LOCKED",
+    "subtitle": "Your vote writes what happens next."
+  },
+  {
+    "id": "s1-p3",
+    "part": 3,
+    "title": "CLASSIFIED",
+    "status": "LOCKED",
+    "subtitle": "Intelligence not yet released."
+  },
+  {
+    "id": "s1-p4",
+    "part": 4,
+    "title": "CLASSIFIED",
+    "status": "LOCKED",
+    "subtitle": "Intelligence not yet released."
+  },
+  {
+    "id": "s1-p5",
+    "part": 5,
+    "title": "CLASSIFIED",
+    "status": "LOCKED",
+    "subtitle": "Intelligence not yet released."
+  },
+  {
+    "id": "s1-p6",
+    "part": 6,
+    "title": "CLASSIFIED",
+    "status": "LOCKED",
+    "subtitle": "The final file stays sealed."
+  }
+]

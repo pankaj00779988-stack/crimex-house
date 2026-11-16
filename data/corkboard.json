@@ -1,0 +1,30 @@
+{
+  "evidence": [
+    {
+      "id": "suspect",
+      "label": "SUSPECT",
+      "title": "Unknown",
+      "note": "Identity unconfirmed. Motive: $5,000,000.",
+      "kind": "silhouette"
+    },
+    {
+      "id": "beacon",
+      "label": "BEACON",
+      "title": "Bundle #50",
+      "note": "GPS signal detected inside the cash.",
+      "kind": "beacon"
+    },
+    {
+      "id": "tower",
+      "label": "TOWER TRIANGULATION",
+      "title": "60 seconds out",
+      "note": "They have a signal. You have a choice.",
+      "kind": "map"
+    }
+  ],
+  "persons": [
+    { "handle": "@crimex.house", "number": "001" },
+    { "handle": "@night.runner", "number": "002" },
+    { "handle": "@vault.theory", "number": "003" }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "seriesTitle": "CRIMEX HOUSE",
+  "handle": "@crimex.house",
+  "description": "Five million dollars. One bad decision. An interactive heist thriller where the crew calls the shots.",
+  "countdownTargetHour": 19,
+  "countdownTimeZone": "UTC",
+  "dropLabel": "7:00 PM UTC",
+  "season": 1,
+  "cash": 5000000,
+  "banked": 0,
+  "initialSuspicion": 34,
+  "safeMaxAttempts": 5,
+  "suspicionPerMiss": 5,
+  "instagramUrl": "https://www.instagram.com/crimex.house/",
+  "tiers": [
+    {
+      "id": "pin",
+      "name": "Corkboard Pin",
+      "price": 9,
+      "description": "Your handle. On the board. In the story.",
+      "checkoutUrl": "https://crimexhouse.gumroad.com/l/YOUR-CORKBOARD-PIN",
+      "checkoutReady": false
+    },
+    {
+      "id": "pass",
+      "name": "Season 1 Crew Pass",
+      "price": 29,
+      "description": "A corkboard pin + a front-row seat for the whole heist.",
+      "checkoutUrl": "https://crimexhouse.gumroad.com/l/YOUR-SEASON-PASS",
+      "checkoutReady": false
+    },
+    {
+      "id": "cameo",
+      "name": "Business Cameo",
+      "price": 150,
+      "description": "Make your business part of the evidence.",
+      "checkoutUrl": "https://rzp.io/l/YOUR-BUSINESS-CAMEO",
+      "checkoutReady": false
+    }
+  ]
+}
