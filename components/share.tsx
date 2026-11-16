@@ -56,7 +56,7 @@ export function ShareButton({
   }
   return (
     <div className="share-control">
-      <button className="button outline" onClick={() => void share()}>
+      <button className="button button-outline" onClick={() => void share()}>
         <Share2 size={15} />
         {label}
       </button>
@@ -142,7 +142,7 @@ export function Engagement({ episode = activeEpisode }: { episode?: Episode }) {
         {released ? (
           <>
             <a
-              className="button outline"
+              className="button button-outline"
               href={episode.reelUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -164,12 +164,12 @@ export function Engagement({ episode = activeEpisode }: { episode?: Episode }) {
           </>
         ) : (
           <>
-            <button className="button outline" disabled>
+            <button className="button button-outline" disabled>
               <Heart size={15} />
               LIKE THE REEL
               <LockKeyhole size={12} />
             </button>
-            <button className="button outline" disabled>
+            <button className="button button-outline" disabled>
               <MessageCircle size={15} />
               COMMENTS OPEN AT PREMIERE
               <LockKeyhole size={12} />

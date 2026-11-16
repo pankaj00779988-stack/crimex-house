@@ -51,6 +51,13 @@ test("HQ artwork, five responsive pages, channel links, and teaser dialog", asyn
         page.getByRole("link", { name: "ENTER ROOM 17" }),
       ).toHaveAttribute("href", "/games#room-17");
       await page.evaluate(() => window.scrollTo(0, 0));
+      if (info.project.name === "phone-375")
+        await expect(page.locator(".avatar > span")).toBeVisible();
+      await page.keyboard.press("Tab");
+      const skip = page.getByRole("link", { name: "Skip to content" });
+      await expect(skip).toBeFocused();
+      await expect(skip).toHaveCSS("clip-path", "none");
+      await skip.evaluate((node) => (node as HTMLElement).blur());
       await page.screenshot({
         path: info.outputPath("hq.png"),
         fullPage: true,
@@ -101,6 +108,7 @@ test("Room 17 plays through to a clean exit and restores its report after reload
     page.getByText("BLACK LEDGER RECOVERED", { exact: true }),
   ).toBeVisible();
   await noOverflow(page);
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({
     path: info.outputPath("room17-playing.png"),
     fullPage: true,

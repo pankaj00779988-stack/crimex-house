@@ -1,4 +1,22 @@
 /* HQ art direction and the original Room 17 interactive case. */
+.social-link .avatar > span {
+  display: block;
+}
+.skip-link {
+  top: 12px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+.skip-link:focus {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: normal;
+  clip-path: none;
+}
 .hq-v2 {
   padding-top: 24px;
 }
@@ -1378,6 +1396,13 @@
   }
 }
 @media (max-width: 680px) {
+  .announcement-mobile {
+    font-size: 7.5px;
+    letter-spacing: 0.15px;
+  }
+  .countdown {
+    font-size: 9px;
+  }
   .hq-v2 {
     padding-top: 18px;
   }
@@ -1660,6 +1685,7 @@
   .hq-crew-invite > div {
     flex: 1;
     min-width: 0;
+    flex-basis: calc(100% - 36px);
   }
   .hq-crew-invite h2 {
     font-size: 17px;
@@ -1671,6 +1697,7 @@
   .hq-crew-invite > .text-link {
     margin-left: 36px;
     font-size: 8px;
+    flex-basis: calc(100% - 36px);
   }
   .hq-v2 .youtube-callout {
     margin-bottom: 35px;
@@ -1688,6 +1715,9 @@
   }
   .hq-faq details p {
     font-size: 12px;
+  }
+  .hq-faq .hq-section-heading > svg {
+    display: none;
   }
   .heist-page-header {
     padding: 22px 0 28px;
@@ -2060,6 +2090,10 @@
   }
 }
 @media (max-width: 374px) {
+  .announcement-inner {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
   .cinema-copy {
     padding-left: 18px;
     padding-right: 18px;

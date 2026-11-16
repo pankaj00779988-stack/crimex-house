@@ -192,7 +192,7 @@ export default function Home() {
           </p>
         </div>
         <a
-          className="button outline"
+          className="button button-outline"
           href={siteConfig.youtubeUrl}
           target="_blank"
           rel="noopener noreferrer"

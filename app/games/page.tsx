@@ -51,7 +51,7 @@ export default function GamesPage() {
       </details>
       {!activeEpisodeReleased && <SealedEpisodeGame />}
       <div className="arcade-bottom">
-        <Link className="button outline" href="/safe">
+        <Link className="button button-outline" href="/safe">
           {activeEpisodeReleased
             ? "CRACK THE EPISODE VAULT"
             : "CHECK THE EPISODE VAULT"}

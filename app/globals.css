@@ -488,12 +488,12 @@ img {
 .primary:hover {
   background: #ff63af;
 }
-.outline {
+.button-outline {
   border: 1px solid #fff3;
   background: transparent;
   color: #f5f5f6;
 }
-.outline:hover {
+.button-outline:hover {
   border-color: var(--pink);
   color: var(--pink);
 }

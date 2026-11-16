@@ -248,7 +248,7 @@ export function Room17() {
                 </button>
               ))}
             </div>
-            <aside className="heist-note">
+            <aside className="heist-note" aria-live="polite">
               <span className="eyebrow">RECOVERED INTELLIGENCE</span>
               {note ? (
                 <>
