@@ -12,6 +12,8 @@
   "safeMaxAttempts": 5,
   "suspicionPerMiss": 5,
   "instagramUrl": "https://instagram.com/crimex.house",
+  "youtubeUrl": "https://youtube.com/@crimex_house",
+  "youtubeHandle": "@crimex_house",
   "tiers": [
     {
       "id": "pin",

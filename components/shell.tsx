@@ -13,6 +13,7 @@ import {
   LockKeyhole,
   Network,
   Instagram,
+  Youtube,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { siteConfig, activeEpisode, activeEpisodeReleased } from "@/lib/data";
@@ -180,11 +181,27 @@ export function Footer() {
           <br />
           <span>You decide how this ends.</span>
         </p>
-        <a href={siteConfig.instagramUrl} target="_blank" rel="noreferrer">
-          <Instagram size={16} />
-          {siteConfig.handle}
-          <ArrowUpRight size={14} />
-        </a>
+        <div className="footer-socials" aria-label="Follow the crew">
+          <a
+            href={siteConfig.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Instagram size={16} />
+            {siteConfig.handle}
+            <ArrowUpRight size={14} />
+          </a>
+          <a
+            href={siteConfig.youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Join the crew on YouTube (opens in a new tab)"
+          >
+            <Youtube size={16} />
+            <span>YouTube · {siteConfig.youtubeHandle}</span>
+            <ArrowUpRight size={14} />
+          </a>
+        </div>
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getUTCFullYear()} CRIMEX HOUSE</span>

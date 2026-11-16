@@ -9,6 +9,7 @@ import {
   MousePointer2,
   MapPin,
   ScanLine,
+  Youtube,
 } from "lucide-react";
 import { Hud } from "@/components/shell";
 import { SceneArt } from "@/components/art";
@@ -178,6 +179,26 @@ export default function Home() {
             <EpisodeCard key={e.id} episode={getPublicEpisode(e)} compact />
           ))}
         </div>
+      </section>
+      <section className="youtube-callout" aria-labelledby="youtube-title">
+        <div className="youtube-mark" aria-hidden="true">
+          <Youtube size={31} />
+        </div>
+        <div className="youtube-copy">
+          <span className="eyebrow pink">THE OFFICIAL YOUTUBE VAULT</span>
+          <h2 id="youtube-title">Join the crew on YouTube.</h2>
+          <p>Full-length episodes coming soon. Subscribe and tap the bell.</p>
+        </div>
+        <a
+          href={siteConfig.youtubeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="button primary"
+          aria-label="Subscribe to CRIMEX HOUSE on YouTube (opens in a new tab)"
+        >
+          SUBSCRIBE ON YOUTUBE
+          <ArrowUpRight size={16} />
+        </a>
       </section>
       <section className="crew-banner">
         <div className="crew-banner-icon">
