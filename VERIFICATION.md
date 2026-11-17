@@ -6,12 +6,12 @@ Interaction tests use jsdom and Testing Library. They exercise React controls bu
 
 ## Automated browser suite
 
-Run `BASE_URL=https://your-preview.vercel.app npm run test:browser`. This checks responsive overflow, loaded artwork, all five routes, native dialog Escape/focus return, Room 17 completion and saved progress, and quick-drill access. Episode checks adapt to the configured release state. Once released, they verify exact Reel links, saved choice persistence, the vault's wrong-attempt suspicion increase, correct-code unlock, and local completion persistence. Browser checks use isolated storage and never post Instagram comments or likes. The suite captures HQ, the active case, and the final report at every configured width.
+Run `BASE_URL=https://your-preview.vercel.app npm run test:browser`. This checks responsive overflow, loaded artwork, all six routes, native dialog Escape/focus return, Room 17 completion and saved progress, and quick-drill access. Episode checks adapt to the configured release state. Once released, they verify exact Reel links, saved choice persistence, the vault's wrong-attempt suspicion increase, correct-code unlock, and local completion persistence. Browser checks use isolated storage and never post Instagram comments or likes. The suite captures HQ, the active case, and the final report at every configured width.
 
 ## Release review
 
-1. Inspect all five pages at 375px, 768px, and 1440px, at 200% zoom, and with reduced motion. Verify no horizontal overflow.
-2. In standby, check that choices, dossier clues, and the episode keypad stay sealed. Verify Instagram follow and separate YouTube links.
+1. Inspect all six pages at 375px, 768px, and 1440px, at 200% zoom, and with reduced motion. Verify no horizontal overflow.
+2. In standby, check that choices, dossier clues, and the episode keypad stay sealed. Verify Instagram follow and separate YouTube links. A release countdown requires a confirmed, future `nextReleaseAt`; absent or elapsed dates must not roll forward or release content.
 3. In a released test build, every Watch/Like/Comment action must open the exact Reel. Selecting an option saves a draft choice, not a submitted vote. The visitor posts the comment on Instagram.
 4. Play Room 17: a quiet service exit should yield GHOST; the phone raises alert, the lobby yields EXPOSED, and move/attempt limits cause LOCKDOWN. Confirm the run/report survives reload and does not change episode suspicion. Dead Drop must count one move per pair, reject duplicate/third-card flips, hide misses, finish after all pairs, and restore personal records after reload.
 5. Signal Intercept must reject early taps, measure after the signal, support keyboard activation, and save only better results.

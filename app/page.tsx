@@ -63,7 +63,7 @@ export default function Home() {
           <span className="stamp">
             {activeEpisodeReleased
               ? "LIVE NOW"
-              : `PREMIERING ${siteConfig.dropLabel}`}
+              : "COMING SOON"}
           </span>
           <span>PART 01 / {activeEpisode.runtime}</span>
         </div>
@@ -74,6 +74,22 @@ export default function Home() {
         </div>
       </section>
       <Hud />
+      <section className="hq-case-section" aria-labelledby="case-title">
+        <div className="hq-section-heading">
+          <div>
+            <span className="eyebrow pink">THE CURRENT CASE / YOUR NEXT MOVE</span>
+            <h2 id="case-title">The first bad decision.</h2>
+          </div>
+          <Link href="/files" className="text-link">
+            OPEN THE ARCHIVE
+            <ArrowUpRight size={16} />
+          </Link>
+        </div>
+        <div className="hq-case-split">
+          <EpisodeCard episode={getPublicEpisode(activeEpisode)} />
+          <Vote />
+        </div>
+      </section>
       <section
         className="hq-missions-callout"
         aria-labelledby="hq-missions-title"
@@ -123,23 +139,6 @@ export default function Home() {
             </div>
           </div>
         ))}
-      </section>
-
-      <section className="hq-case-section" aria-labelledby="case-title">
-        <div className="hq-section-heading">
-          <div>
-            <span className="eyebrow pink">THE NEXT CHAPTER STARTS HERE</span>
-            <h2 id="case-title">The first bad decision.</h2>
-          </div>
-          <Link href="/files" className="text-link">
-            OPEN THE ARCHIVE
-            <ArrowUpRight size={16} />
-          </Link>
-        </div>
-        <div className="hq-case-split">
-          <EpisodeCard episode={getPublicEpisode(activeEpisode)} />
-          <Vote />
-        </div>
       </section>
 
       <section className="hq-feature-case" aria-labelledby="free-case-title">

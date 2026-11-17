@@ -231,8 +231,28 @@ export function CrewMissions({ catalog }: { catalog: Catalog }) {
           open.
         </p>
       )}
-      <div className="missions-layout">
-        <div className="daily-missions">
+      {!account && (
+        <section className="mission-reward-preview" aria-labelledby="reward-preview-title">
+          <div className="mission-reward-preview-art" aria-hidden="true">
+            <span>CRIMEX HOUSE</span>
+            <strong>ZERO<br /><i>ALIBIS.</i></strong>
+            <span>YOUR CREW ID</span>
+          </div>
+          <div>
+            <span className="eyebrow pink">YOUR FIRST UNLOCK</span>
+            <h2 id="reward-preview-title">Your personal Crew ID.</h2>
+            <p>
+              Earn {catalog.reward.credits} credits for a personalized phone wallpaper.
+              Follow and verify your crew account before redeeming.
+            </p>
+            <a className="text-link" href="#crew-rewards">
+              VIEW THE REWARD <ArrowRight size={14} />
+            </a>
+          </div>
+        </section>
+      )}
+      <div className={`missions-layout${account ? " is-signed-in" : ""}`}>
+        <div className="daily-missions" id="daily-missions">
           <div className="mission-section-title">
             <div>
               <span className="eyebrow pink">
@@ -617,7 +637,7 @@ export function CrewMissions({ catalog }: { catalog: Catalog }) {
           </div>
         </section>
       )}
-      <section className="crew-rewards" aria-labelledby="rewards-title">
+      <section className="crew-rewards" id="crew-rewards" aria-labelledby="rewards-title">
         <div className="crew-reward-art" aria-hidden="true">
           <span>CRIMEX HOUSE</span>
           <strong>

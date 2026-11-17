@@ -41,7 +41,7 @@ function VaultStandby({ episode }: { episode: Episode }) {
       </div>
       <h1 id="vault-standby-title">
         VAULT SEALED UNTIL PART {String(episode.part).padStart(2, "0")}{" "}
-        PREMIERES AT {siteConfig.dropLabel}
+        IS RELEASED
       </h1>
       <p>
         The keypad and evidence are under seal. Watch the premiere to find your

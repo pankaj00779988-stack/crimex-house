@@ -19,16 +19,16 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { siteConfig, activeEpisode, activeEpisodeReleased } from "@/lib/data";
-import { nextDrop } from "@/lib/game";
+import { upcomingRelease } from "@/lib/schedule";
 import { isNumber, useStoredState } from "@/lib/storage";
 import { Avatar } from "./art";
 const navigation = [
-  { href: "/", label: "HQ", icon: House },
-  { href: "/files", label: "Case files", icon: FolderOpen },
-  { href: "/safe", label: "The safe", icon: LockKeyhole },
-  { href: "/board", label: "The board", icon: Network },
-  { href: "/games", label: "Games", icon: Gamepad2 },
-  { href: "/missions", label: "Missions", icon: Coins },
+  { href: "/", label: "HQ", shortLabel: "HQ", icon: House },
+  { href: "/files", label: "Case files", shortLabel: "Files", icon: FolderOpen },
+  { href: "/safe", label: "The safe", shortLabel: "Safe", icon: LockKeyhole },
+  { href: "/board", label: "The board", shortLabel: "Board", icon: Network },
+  { href: "/games", label: "Games", shortLabel: "Games", icon: Gamepad2 },
+  { href: "/missions", label: "Missions", shortLabel: "Missions", icon: Coins },
 ];
 export function Brand() {
   return (
@@ -44,35 +44,18 @@ export function Brand() {
   );
 }
 export function Announcement() {
-  const [countdown, setCountdown] = useState("-- : -- : --");
+  const [release, setRelease] = useState<ReturnType<typeof upcomingRelease>>(null);
   useEffect(() => {
     const tick = () => {
-      const now = new Date();
-      const seconds = Math.max(
-        0,
-        Math.floor(
-          (nextDrop(
-            now,
-            siteConfig.countdownTargetHour,
-            siteConfig.countdownTimeZone,
-          ) -
-            now.getTime()) /
-            1000,
-        ),
-      );
-      setCountdown(
-        [
-          Math.floor(seconds / 3600),
-          Math.floor(seconds / 60) % 60,
-          seconds % 60,
-        ]
-          .map((v) => String(v).padStart(2, "0"))
-          .join(" : "),
-      );
+      setRelease(upcomingRelease(siteConfig.nextReleaseAt, siteConfig.countdownTimeZone));
     };
-    tick();
+    const initial = setTimeout(tick, 0);
+    if (!siteConfig.nextReleaseAt) return () => clearTimeout(initial);
     const timer = setInterval(tick, 1000);
-    return () => clearInterval(timer);
+    return () => {
+      clearTimeout(initial);
+      clearInterval(timer);
+    };
   }, []);
   return (
     <div className="announcement">
@@ -80,20 +63,25 @@ export function Announcement() {
         <span>
           <Radio size={13} />
           <span className="announcement-copy">
-            {activeEpisodeReleased
-              ? `THE NEXT MOVE DROPS AT ${siteConfig.dropLabel}`
-              : `SEASON ${String(siteConfig.season).padStart(2, "0")} · PART ${String(activeEpisode.part).padStart(2, "0")} DROPS AT ${siteConfig.dropLabel}`}
+            {release
+              ? `NEXT DROP · ${release.label}`
+              : activeEpisodeReleased
+                ? `PART ${String(activeEpisode.part).padStart(2, "0")} LIVE · NEXT PART IN PRODUCTION`
+                : "THE NEXT CASE IS IN PRODUCTION"}
           </span>
           <span className="announcement-mobile">
-            {activeEpisodeReleased
-              ? `NEXT DROP · ${siteConfig.dropLabel}`
-              : `SEASON ${String(siteConfig.season).padStart(2, "0")} · PART ${String(activeEpisode.part).padStart(2, "0")} DROPS AT ${siteConfig.dropLabel}`}
+            {release ? release.label : "NEXT PART IN PRODUCTION"}
           </span>
         </span>
-        <span className="countdown" aria-label={`Next drop in ${countdown}`}>
-          {countdown}
-          <ArrowUpRight size={13} />
-        </span>
+        {release ? (
+          <span className="countdown" aria-label={`Next drop in ${release.countdown}`}>
+            {release.countdown}
+          </span>
+        ) : (
+          <a className="announcement-link" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+            GET UPDATES <ArrowUpRight size={13} />
+          </a>
+        )}
       </div>
     </div>
   );
@@ -107,15 +95,17 @@ export function Header() {
         <div className="header-inner">
           <Brand />
           <nav aria-label="Main navigation">
-            {navigation.map(({ href, label, icon: Icon }) => (
+            {navigation.map(({ href, label, shortLabel, icon: Icon }) => (
               <Link
                 key={href}
                 href={href}
                 className={path === href ? "nav-link active" : "nav-link"}
                 aria-current={path === href ? "page" : undefined}
+                aria-label={label}
               >
                 <Icon size={14} />
-                {label}
+                <span className="nav-label-full">{label}</span>
+                <span className="nav-label-short" aria-hidden="true">{shortLabel}</span>
                 {href === "/safe" && <span className="nav-dot" />}
               </Link>
             ))}

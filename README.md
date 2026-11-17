@@ -30,7 +30,7 @@ Use `npm start` to serve the production build.
 
 | URL         | Experience                                                                                                               |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `/`         | HQ, premiere countdown, episode choices, free games, like/comment/share actions, FAQ, separate YouTube channel promotion |
+| `/`         | HQ, current episode and Instagram choices first, release updates, free games, missions, FAQ, separate YouTube promotion |
 | `/games`    | Room 17 interactive heist case, with Dead Drop and Signal Intercept in the optional quick-drills section                 |
 | `/safe`     | Episode vault with four digits, five attempts, feedback, sound, and completion log; sealed before release                |
 | `/files`    | Season archive with teaser/full dossiers controlled by release state                                                     |
@@ -64,7 +64,9 @@ A released episode needs a valid HTTPS Instagram Reel URL or the build fails. Ev
 
 `initialVotes` starts at zero. Update it only with genuine creator-reported Instagram comment totals. With no entered results, no percentages or vote totals are shown. A local choice never inflates reported totals.
 
-Before release, the follow CTA, locked vote, teaser dossier, and sealed vault remain active. Sharing HQ and both practice games are open. The countdown uses 19:00 in `America/New_York`, displays 7:00 PM ET, and adjusts for DST. The clock never releases an episode automatically. YouTube remains an independent channel link.
+Before release, the follow CTA, locked vote, teaser dossier, and sealed vault remain active. Sharing HQ and practice games are open. `nextReleaseAt` in `siteConfig.json` is `null` until a release date is confirmed. Set it to an ISO timestamp with an explicit timezone (for example, `2026-11-20T19:00:00-05:00`) and redeploy to show a dated countdown in `America/New_York`. An absent or elapsed date shows production updates rather than rolling over to tomorrow. The clock never releases an episode automatically. YouTube remains an independent channel link.
+
+On mobile, new visitors see the Crew ID reward preview and daily missions before the account form. Signed-in members retain quick access to their wallet. Mission awards, manual follower confirmation, opt-in rankings and reward costs are unchanged.
 
 ## Free participation and privacy
 

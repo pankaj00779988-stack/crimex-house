@@ -5,6 +5,15 @@ import { isEpisodeReleased } from "../../lib/release";
 const episode = episodes.find((item) => item.status === "LIVE")!;
 const released = isEpisodeReleased(episode);
 
+test.beforeEach(async ({ page, baseURL }) => {
+  if (baseURL && ["localhost", "127.0.0.1"].includes(new URL(baseURL).hostname)) {
+    // Vercel serves Analytics itself; a local Next server has no Insights route.
+    await page.route("**/_vercel/insights/script.js", (route) =>
+      route.fulfill({ contentType: "application/javascript", body: "void 0;" }),
+    );
+  }
+});
+
 async function noOverflow(page: Page) {
   const dimensions = await page.evaluate(() => ({
     width: innerWidth,
@@ -27,6 +36,45 @@ async function imagesReady(page: Page) {
       .toBe(true);
   }
 }
+
+test("episode-first discovery and mobile mission browsing preserve the release gate", async ({ page }, info) => {
+  await page.goto("/");
+  await expect(page.locator(".announcement")).toContainText("NEXT PART IN PRODUCTION");
+  await expect(page.locator(".announcement .countdown")).toHaveCount(0);
+  await expect(page.locator(".vote-instruction")).toContainText("Post your choice in the Instagram comments to vote.");
+  const caseTop = await page.locator(".hq-case-section").evaluate((el) => el.getBoundingClientRect().top);
+  const missionTop = await page.locator(".hq-missions-callout").evaluate((el) => el.getBoundingClientRect().top);
+  expect(caseTop).toBeLessThan(missionTop);
+  await expect(page.locator(".hud")).toContainText("$5,000,000");
+  await page.goto("/files");
+  await expect(page.getByRole("button", { name: "Part 2 locked" })).toBeDisabled();
+  await page.goto("/board");
+  await expect(page.locator(".crew-next")).toContainText("Part 01 is live.");
+
+  // Exercise the guest journey without creating accounts or touching a real wallet.
+  await page.route("**/api/crew", (route) => route.fulfill({ json: {
+    configured: true, account: null, day: "2026-11-17", week: "2026-11-16",
+    resetAt: new Date(Date.now() + 60 * 60_000).toISOString(),
+  } }));
+  await page.route("**/api/crew/leaderboard", (route) => route.fulfill({ json: {
+    week: "2026-11-16", nextWeek: "2026-11-23", entries: [],
+  } }));
+  await page.goto("/missions");
+  await expect(page.locator(".mission-reward-preview")).toContainText("40 credits");
+  if ((page.viewportSize()?.width ?? 0) <= 800) {
+    const formTop = await page.locator(".crew-account-panel").evaluate((el) => el.getBoundingClientRect().top);
+    for (const selector of [".mission-reward-preview", ".daily-mission"])
+      expect(await page.locator(selector).first().evaluate((el) => el.getBoundingClientRect().top)).toBeLessThan(formTop);
+  }
+  if (info.project.name === "phone-375") {
+    await expect(page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Case files" })).toHaveCSS("font-size", "10px");
+  }
+  await page.getByRole("button", { name: "JOIN TO EARN" }).first().click();
+  await expect(page.getByLabel("INSTAGRAM HANDLE", { exact: true })).toBeFocused();
+  await noOverflow(page);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.screenshot({ path: info.outputPath("missions-discovery.png"), fullPage: true });
+});
 
 test("HQ artwork, six responsive pages, channel links, and episode release state", async ({
   page,

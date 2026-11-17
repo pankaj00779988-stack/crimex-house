@@ -59,6 +59,89 @@
   grid-template-columns: minmax(0, 1.4fr) minmax(290px, 1fr);
   gap: 32px;
 }
+.mission-reward-preview {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  margin-bottom: 32px;
+  background: #121216;
+  border: 1px solid rgba(255, 46, 147, 0.3);
+}
+.mission-reward-preview-art {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 12px;
+  aspect-ratio: 9 / 13;
+  background: radial-gradient(ellipse at top right, #451027, #08080a 75%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 3px solid #ff2e93;
+}
+.mission-reward-preview-art > span {
+  font: 6px "JetBrains Mono", monospace;
+  letter-spacing: 0.04em;
+}
+.mission-reward-preview-art strong {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+.mission-reward-preview-art i {
+  color: #ff2e93;
+  font-style: normal;
+}
+.mission-reward-preview h2 {
+  margin: 10px 0;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+.mission-reward-preview p {
+  color: #a5a5b2;
+  font-size: 14px;
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 14px;
+}
+.mission-reward-preview .text-link {
+  font-size: 10px;
+}
+#crew-account,
+#crew-rewards,
+#daily-missions {
+  scroll-margin-top: 24px;
+}
+.announcement-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  min-height: 32px;
+}
+.nav-label-short {
+  display: none;
+}
+.vote-widget .vote-instruction {
+  margin: 0 0 22px;
+  padding: 12px 14px;
+  border-left: 2px solid #ff2e93;
+  background: rgba(255, 46, 147, 0.06);
+  color: #f5f2eb;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.vote-instruction > span {
+  display: block;
+  color: #a5a5b2;
+  font-size: 11px;
+  margin-top: 3px;
+}
 .mission-section-title {
   align-items: end;
   margin-bottom: 24px;
@@ -697,6 +780,8 @@
     grid-template-columns: 1fr 1.2fr;
     align-items: start;
     gap: 20px;
+  }
+  .missions-layout.is-signed-in .crew-sidebar {
     grid-row: 1;
   }
   .crew-account-panel {
@@ -754,6 +839,34 @@
   }
   .crew-sidebar {
     display: block;
+  }
+  .mission-reward-preview {
+    grid-template-columns: 80px minmax(0, 1fr);
+    padding: 18px;
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+  .mission-reward-preview h2 {
+    font-size: 21px;
+  }
+  .mission-reward-preview p {
+    font-size: 12px;
+  }
+  .mission-reward-preview .eyebrow {
+    font-size: 8px;
+  }
+  .mission-reward-preview .text-link {
+    font-size: 9px;
+  }
+  .mission-reward-preview-art {
+    padding: 10px 7px;
+    gap: 10px;
+  }
+  .mission-reward-preview-art strong {
+    font-size: 21px;
+  }
+  .mission-reward-preview-art > span {
+    font-size: 5px;
   }
   .crew-wallet {
     padding: 24px;
@@ -856,14 +969,20 @@
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    font-size: 8px;
-    letter-spacing: 0.02em;
+    font-size: 10px;
+    letter-spacing: 0;
     padding: 12px 2px;
     white-space: nowrap;
   }
   .header .nav-link > svg {
     width: 13px;
     height: 13px;
+  }
+  .nav-label-full {
+    display: none;
+  }
+  .nav-label-short {
+    display: inline;
   }
   .header .nav-dot {
     display: none;

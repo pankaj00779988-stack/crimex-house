@@ -257,8 +257,9 @@ export function InvestigationBoard() {
           <div className="crew-next">
             <MessageCircle size={18} />
             <p>
-              When Part 01 drops, post your theory in the Instagram comments.
-              That’s where the crew meets.
+              {released
+                ? "Part 01 is live. Draft your theory here, then post it in the Reel’s Instagram comments."
+                : "Save your theory here. Join the Instagram conversation when the next Reel is released."}
             </p>
           </div>
         )}

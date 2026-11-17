@@ -116,7 +116,7 @@ test("teaser modal contains no unreleased incident report or safe clue", () => {
     createElement(EpisodeCard, { episode: standby }),
   );
   assert.match(card, /01:17/);
-  assert.match(card, /DROPS/);
+  assert.match(card, /COMING SOON/);
   assert.ok(card.includes(encodeURIComponent(standby.image!)));
   assert.doesNotMatch(card, /LIVE NOW|Bundle #50|GPS|safeClue/);
 });

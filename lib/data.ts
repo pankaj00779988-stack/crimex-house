@@ -1,6 +1,7 @@
 import episodeData from "@/data/episodes.json";
 import config from "@/data/siteConfig.json";
 import { isEpisodeReleased, isInstagramReelUrl } from "./release";
+import { releaseTime } from "./schedule";
 export { default as siteConfig } from "@/data/siteConfig.json";
 import boardData from "@/data/corkboard.json";
 export const corkboard = {
@@ -89,3 +90,6 @@ if (
 new Intl.DateTimeFormat("en-US", {
   timeZone: config.countdownTimeZone,
 }).format();
+if (config.nextReleaseAt !== null && releaseTime(config.nextReleaseAt) === null) {
+  throw new Error("nextReleaseAt must be null or a dated ISO timestamp with a timezone.");
+}

@@ -4,6 +4,7 @@
   "description": "Five million dollars. One bad decision. An interactive heist thriller where the crew calls the shots.",
   "countdownTargetHour": 19,
   "countdownTimeZone": "America/New_York",
+  "nextReleaseAt": null,
   "dropLabel": "7:00 PM ET",
   "season": 1,
   "cash": 5000000,

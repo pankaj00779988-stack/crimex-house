@@ -42,8 +42,11 @@ export default function FilesPage() {
       </section>
       <p className="archive-note">
         <span className="live-dot" />
-        New intelligence drops at {siteConfig.dropLabel}. Locked files are
-        released as the story unfolds.
+        The next part is in production. Follow{" "}
+        <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+          {siteConfig.handle}
+        </a>{" "}
+        for confirmed release updates. Locked files open as the story unfolds.
       </p>
     </main>
   );

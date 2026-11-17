@@ -100,7 +100,7 @@ export function DossierModal({
         ) : (
           <div className="teaser-dossier">
             <LockKeyhole size={32} />
-            <span className="stamp">DROPS {siteConfig.dropLabel}</span>
+            <span className="stamp">AWAITING RELEASE</span>
             <p>
               File {String(episode.part).padStart(2, "0")} declassifies when the
               Reel goes live on {siteConfig.handle}
@@ -162,7 +162,7 @@ export function EpisodeCard({
               released ? (
                 <>FILE OPEN</>
               ) : (
-                <>DROPS {siteConfig.dropLabel}</>
+                <>COMING SOON</>
               )
             ) : (
               <>

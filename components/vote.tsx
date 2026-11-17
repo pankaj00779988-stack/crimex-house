@@ -42,8 +42,7 @@ function LockedVote({ episode }: { episode: Episode }) {
       </div>
       <h2 id="vote-title">CREW VOTE LOCKED</h2>
       <p className="standby-unlock">
-        UNLOCKS WHEN PART {String(episode.part).padStart(2, "0")} DROPS AT{" "}
-        {siteConfig.dropLabel}
+        UNLOCKS WHEN PART {String(episode.part).padStart(2, "0")} IS RELEASED ON INSTAGRAM
       </p>
       <p>
         No spoilers. No early moves.
@@ -95,6 +94,10 @@ function LiveVote({ episode }: { episode: Episode }) {
       </div>
       <h2 id="vote-title">{episode.voteHeading ?? "Your move. Your call."}</h2>
       <p>{episode.voteContext ?? episode.subtitle}</p>
+      <p className="vote-instruction">
+        Post your choice in the Instagram comments to vote.
+        <span>Selecting here prepares your comment.</span>
+      </p>
       <div className="vote-options">
         {options.map(({ id, count, icon: Icon }, index) => {
           const raw = episode.choices?.[index] ?? "";
