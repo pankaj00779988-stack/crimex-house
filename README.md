@@ -67,6 +67,8 @@ Before release, the follow CTA, locked vote, teaser dossier, and sealed vault re
 
 ## Free participation and privacy
 
+Vercel Web Analytics is installed in the root layout for automatic page views and client-side navigation. Activate it in the project's [Analytics dashboard](https://vercel.com/crimexhouse/crimex-house/analytics) and redeploy if Vercel requests it. The Hobby setup uses page-view analytics only: no paid custom events or submission tracking. Visits are anonymous; local crew pins, drafts, vault completions, and game scores are not uploaded. Data starts after activation and does not reconstruct earlier visits.
+
 No site account, database, or API keys are needed. Crew pins, theory drafts, personal game records, sound settings, safe attempts, and saved choices use localStorage and survive reloads. They synchronize between tabs. Storage failures are reported.
 
 Pins, drafts, and scores stay on the visitor's device. They do not create a public membership, upload a theory, enter a contest, or publish a leaderboard entry. Only real handles deliberately added by the creator to `corkboard.json` appear publicly. Instagram handles likes/comments and its own sign-in requirements.
