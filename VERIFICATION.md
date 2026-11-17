@@ -6,7 +6,7 @@ Interaction tests use jsdom and Testing Library. They exercise React controls bu
 
 ## Automated browser suite
 
-Run `BASE_URL=https://your-preview.vercel.app npm run test:browser`. This checks responsive overflow, loaded artwork, all five routes, native dialog Escape/focus return, Room 17 completion and saved progress, and quick-drill access. The suite captures HQ, the active case, and the final report at every configured width.
+Run `BASE_URL=https://your-preview.vercel.app npm run test:browser`. This checks responsive overflow, loaded artwork, all five routes, native dialog Escape/focus return, Room 17 completion and saved progress, and quick-drill access. Episode checks adapt to the configured release state. Once released, they verify exact Reel links, saved choice persistence, the vault's wrong-attempt suspicion increase, correct-code unlock, and local completion persistence. Browser checks use isolated storage and never post Instagram comments or likes. The suite captures HQ, the active case, and the final report at every configured width.
 
 ## Release review
 

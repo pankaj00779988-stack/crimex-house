@@ -48,6 +48,8 @@ Keep exactly one episode in the editorial `LIVE` slot. Its public release is sep
 
 ## Release Part 01
 
+Part 01 is released and points directly to the creator-supplied [Instagram Reel](https://www.instagram.com/reel/Df0s0ByqzGz/?obrf=eDJ0NTcweGdlZDAy). Parts 02–06 remain locked.
+
 Change these two fields together and redeploy:
 
 ```json

@@ -1,4 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
+import episodes from "../../data/episodes.json";
+import { isEpisodeReleased } from "../../lib/release";
+
+const episode = episodes.find((item) => item.status === "LIVE")!;
+const released = isEpisodeReleased(episode);
 
 async function noOverflow(page: Page) {
   const dimensions = await page.evaluate(() => ({
@@ -23,7 +28,7 @@ async function imagesReady(page: Page) {
   }
 }
 
-test("HQ artwork, five responsive pages, channel links, and teaser dialog", async ({
+test("HQ artwork, five responsive pages, channel links, and episode release state", async ({
   page,
 }, info) => {
   const errors: string[] = [];
@@ -45,8 +50,20 @@ test("HQ artwork, five responsive pages, channel links, and teaser dialog", asyn
     ).toHaveCount(0);
     if (path === "/") {
       await expect(
-        page.getByRole("link", { name: "FOLLOW @CRIMEX.HOUSE FOR PART 01" }),
-      ).toHaveAttribute("href", "https://instagram.com/crimex.house");
+        page.getByRole("link", {
+          name: released ? "WATCH PART 01" : "FOLLOW @CRIMEX.HOUSE FOR PART 01",
+        }),
+      ).toHaveAttribute(
+        "href",
+        released ? episode.reelUrl! : "https://instagram.com/crimex.house",
+      );
+      if (released) {
+        await expect(page.locator(".cinema-stamp")).toContainText("LIVE NOW");
+        await expect(page.locator(".vote-widget")).toContainText("VOTING OPEN");
+        await expect(page.locator(".vote-widget")).not.toContainText("CREW VOTE LOCKED");
+        for (const name of ["LIKE ON INSTAGRAM", "COMMENT YOUR THEORY"])
+          await expect(page.getByRole("link", { name })).toHaveAttribute("href", episode.reelUrl!);
+      }
       await expect(
         page.getByRole("link", { name: "ENTER ROOM 17" }),
       ).toHaveAttribute("href", "/games#room-17");
@@ -70,19 +87,61 @@ test("HQ artwork, five responsive pages, channel links, and teaser dialog", asyn
       await opener.click();
       const dialog = page.getByRole("dialog");
       await expect(dialog).toBeVisible();
-      await expect(dialog).toContainText(
-        "declassifies when the Reel goes live",
-      );
-      await expect(dialog).not.toContainText("Bundle #50");
+      if (released) {
+        await expect(dialog).toContainText("Bundle #50");
+        await expect(dialog).toContainText("31 U.S.C. § 5324");
+        await expect(dialog.getByRole("link", { name: "Watch on Instagram" }))
+          .toHaveAttribute("href", episode.reelUrl!);
+      } else {
+        await expect(dialog).toContainText("declassifies when the Reel goes live");
+        await expect(dialog).not.toContainText("Bundle #50");
+      }
       await page.keyboard.press("Escape");
       await expect(dialog).not.toBeVisible();
       await expect(opener).toBeFocused();
     }
-    if (path === "/safe")
-      await expect(
-        page.getByRole("heading", { name: /VAULT SEALED UNTIL PART/ }),
-      ).toBeVisible();
+    if (path === "/safe") {
+      if (released)
+        await expect(page.getByRole("button", { name: "Digit 1", exact: true })).toBeEnabled();
+      else
+        await expect(page.getByRole("heading", { name: /VAULT SEALED UNTIL PART/ })).toBeVisible();
+    }
   }
+  expect(errors).toEqual([]);
+});
+
+test("released Part 01 saves a choice and unlocks the episode vault", async ({ page }) => {
+  test.skip(!released, "Part 01 has not been released.");
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/");
+  const decoy = page.getByRole("button", { name: /DECOY/ });
+  await decoy.click();
+  await expect(decoy).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("link", { name: "COMMENT DECOY", exact: true }))
+    .toHaveAttribute("href", episode.reelUrl!);
+  await expect(page.locator(".vote-bottom")).toContainText("Post it on the Reel to cast your vote.");
+  await page.reload();
+  await expect(decoy).toHaveAttribute("aria-pressed", "true");
+  await page.goto("/safe");
+  await page.getByRole("button", { name: "SFX ON", exact: true }).click();
+  for (const digit of "0000")
+    await page.getByRole("button", { name: `Digit ${digit}`, exact: true }).click();
+  await page.getByRole("button", { name: "Submit combination" }).click();
+  await expect(page.locator(".attempt-count")).toContainText("4 / 5");
+  expect(await page.evaluate(() => localStorage.getItem("crimex:misses"))).toBe("1");
+  for (const digit of "1150")
+    await page.getByRole("button", { name: `Digit ${digit}`, exact: true }).click();
+  await page.getByRole("button", { name: "Submit combination" }).click();
+  await expect(page.locator(".unlock-dossier")).toContainText("YOU CRACKED IT.");
+  await noOverflow(page);
+  await page.getByLabel("YOUR INSTAGRAM HANDLE").fill("@release.check");
+  await page.getByRole("button", { name: "LOG COMPLETION" }).click();
+  await expect(page.locator(".completion-confirmation")).toContainText("@release.check");
+  await page.reload();
+  await expect(page.locator(".completion-confirmation")).toContainText("@release.check");
+  await page.goto("/");
+  await expect(page.locator(".hud .suspicion strong")).toContainText("39%");
   expect(errors).toEqual([]);
 });
 
