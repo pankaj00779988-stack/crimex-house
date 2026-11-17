@@ -1,6 +1,7 @@
 import {
   del,
   get,
+  head,
   put,
   BlobError,
   BlobPreconditionFailedError,
@@ -45,8 +46,13 @@ export const privateStore: CrewStore = {
       if (
         error instanceof BlobPreconditionFailedError ||
         (error instanceof BlobError && /already exists/i.test(error.message))
-      )
+      ) {
+        if (process.env.VERCEL_ENV === "preview" && etag) {
+          const current = await head(`${prefix}/${key}.json`);
+          console.warn("Crew storage revision conflict", { readRevision: etag, originRevision: current.etag });
+        }
         throw new Conflict();
+      }
       throw error;
     }
   },
