@@ -28,7 +28,7 @@ async function imagesReady(page: Page) {
   }
 }
 
-test("HQ artwork, five responsive pages, channel links, and episode release state", async ({
+test("HQ artwork, six responsive pages, channel links, and episode release state", async ({
   page,
 }, info) => {
   const errors: string[] = [];
@@ -37,7 +37,14 @@ test("HQ artwork, five responsive pages, channel links, and episode release stat
     if (response.status() >= 400)
       errors.push(`${response.status()} ${response.url()}`);
   });
-  for (const path of ["/", "/files", "/board", "/safe", "/games"]) {
+  for (const path of [
+    "/",
+    "/files",
+    "/board",
+    "/safe",
+    "/games",
+    "/missions",
+  ]) {
     const response = await page.goto(path, { waitUntil: "domcontentloaded" });
     expect(response?.status()).toBe(200);
     await imagesReady(page);
@@ -60,9 +67,14 @@ test("HQ artwork, five responsive pages, channel links, and episode release stat
       if (released) {
         await expect(page.locator(".cinema-stamp")).toContainText("LIVE NOW");
         await expect(page.locator(".vote-widget")).toContainText("VOTING OPEN");
-        await expect(page.locator(".vote-widget")).not.toContainText("CREW VOTE LOCKED");
+        await expect(page.locator(".vote-widget")).not.toContainText(
+          "CREW VOTE LOCKED",
+        );
         for (const name of ["LIKE ON INSTAGRAM", "COMMENT YOUR THEORY"])
-          await expect(page.getByRole("link", { name })).toHaveAttribute("href", episode.reelUrl!);
+          await expect(page.getByRole("link", { name })).toHaveAttribute(
+            "href",
+            episode.reelUrl!,
+          );
       }
       await expect(
         page.getByRole("link", { name: "ENTER ROOM 17" }),
@@ -90,10 +102,13 @@ test("HQ artwork, five responsive pages, channel links, and episode release stat
       if (released) {
         await expect(dialog).toContainText("Bundle #50");
         await expect(dialog).toContainText("31 U.S.C. § 5324");
-        await expect(dialog.getByRole("link", { name: "Watch on Instagram" }))
-          .toHaveAttribute("href", episode.reelUrl!);
+        await expect(
+          dialog.getByRole("link", { name: "Watch on Instagram" }),
+        ).toHaveAttribute("href", episode.reelUrl!);
       } else {
-        await expect(dialog).toContainText("declassifies when the Reel goes live");
+        await expect(dialog).toContainText(
+          "declassifies when the Reel goes live",
+        );
         await expect(dialog).not.toContainText("Bundle #50");
       }
       await page.keyboard.press("Escape");
@@ -102,15 +117,21 @@ test("HQ artwork, five responsive pages, channel links, and episode release stat
     }
     if (path === "/safe") {
       if (released)
-        await expect(page.getByRole("button", { name: "Digit 1", exact: true })).toBeEnabled();
+        await expect(
+          page.getByRole("button", { name: "Digit 1", exact: true }),
+        ).toBeEnabled();
       else
-        await expect(page.getByRole("heading", { name: /VAULT SEALED UNTIL PART/ })).toBeVisible();
+        await expect(
+          page.getByRole("heading", { name: /VAULT SEALED UNTIL PART/ }),
+        ).toBeVisible();
     }
   }
   expect(errors).toEqual([]);
 });
 
-test("released Part 01 saves a choice and unlocks the episode vault", async ({ page }) => {
+test("released Part 01 saves a choice and unlocks the episode vault", async ({
+  page,
+}) => {
   test.skip(!released, "Part 01 has not been released.");
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -118,28 +139,43 @@ test("released Part 01 saves a choice and unlocks the episode vault", async ({ p
   const decoy = page.getByRole("button", { name: /DECOY/ });
   await decoy.click();
   await expect(decoy).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("link", { name: "COMMENT DECOY", exact: true }))
-    .toHaveAttribute("href", episode.reelUrl!);
-  await expect(page.locator(".vote-bottom")).toContainText("Post it on the Reel to cast your vote.");
+  await expect(
+    page.getByRole("link", { name: "COMMENT DECOY", exact: true }),
+  ).toHaveAttribute("href", episode.reelUrl!);
+  await expect(page.locator(".vote-bottom")).toContainText(
+    "Post it on the Reel to cast your vote.",
+  );
   await page.reload();
   await expect(decoy).toHaveAttribute("aria-pressed", "true");
   await page.goto("/safe");
   await page.getByRole("button", { name: "SFX ON", exact: true }).click();
   for (const digit of "0000")
-    await page.getByRole("button", { name: `Digit ${digit}`, exact: true }).click();
+    await page
+      .getByRole("button", { name: `Digit ${digit}`, exact: true })
+      .click();
   await page.getByRole("button", { name: "Submit combination" }).click();
   await expect(page.locator(".attempt-count")).toContainText("4 / 5");
-  expect(await page.evaluate(() => localStorage.getItem("crimex:misses"))).toBe("1");
+  expect(await page.evaluate(() => localStorage.getItem("crimex:misses"))).toBe(
+    "1",
+  );
   for (const digit of "1150")
-    await page.getByRole("button", { name: `Digit ${digit}`, exact: true }).click();
+    await page
+      .getByRole("button", { name: `Digit ${digit}`, exact: true })
+      .click();
   await page.getByRole("button", { name: "Submit combination" }).click();
-  await expect(page.locator(".unlock-dossier")).toContainText("YOU CRACKED IT.");
+  await expect(page.locator(".unlock-dossier")).toContainText(
+    "YOU CRACKED IT.",
+  );
   await noOverflow(page);
   await page.getByLabel("YOUR INSTAGRAM HANDLE").fill("@release.check");
   await page.getByRole("button", { name: "LOG COMPLETION" }).click();
-  await expect(page.locator(".completion-confirmation")).toContainText("@release.check");
+  await expect(page.locator(".completion-confirmation")).toContainText(
+    "@release.check",
+  );
   await page.reload();
-  await expect(page.locator(".completion-confirmation")).toContainText("@release.check");
+  await expect(page.locator(".completion-confirmation")).toContainText(
+    "@release.check",
+  );
   await page.goto("/");
   await expect(page.locator(".hud .suspicion strong")).toContainText("39%");
   expect(errors).toEqual([]);

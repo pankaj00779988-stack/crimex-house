@@ -19,4 +19,10 @@ Run `BASE_URL=https://your-preview.vercel.app npm run test:browser`. This checks
 7. Check native sharing, cancel, clipboard success/denial, and selectable-link fallback.
 8. Check keyboard navigation, labels, status announcements, dialog Escape/focus return, and missing-image fallbacks.
 
-Public HTTP checks verify accessible pages and expected free/standby content. Local records are not a public community database.
+Public HTTP checks verify accessible pages and expected release content. Practice-game records and personal Corkboard drafts stay on the device. Daily-mission accounts and wallets use private shared storage.
+
+## Crew Credits
+
+Unit and service tests cover concurrent claim/redeem idempotency, server-issued challenge signatures and expiry, cross-account rejection, daily caps, memory proofs, five-attempt limits, Eastern daily/weekly boundaries and DST, password hashing, session revocation, credential recovery, follower approval matching, opt-in standings, account deletion and the 1080×1920 personalized PNG.
+
+The account browser test runs once on the phone project to avoid filling the public service with QA accounts. It creates a private, unverified account; solves all three missions through the UI; replays a claim; confirms 50 saved credits after reload; checks pending-account redemption/ranking restrictions; recovers the account; and deletes the QA record. Responsive route checks visit all six pages at 375, 768 and 1440px. No Instagram likes, comments, follows, DMs or paid purchases are submitted by tests.

@@ -28,13 +28,14 @@ Use `npm start` to serve the production build.
 
 ## Pages
 
-| URL      | Experience                                                                                                               |
-| -------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `/`      | HQ, premiere countdown, episode choices, free games, like/comment/share actions, FAQ, separate YouTube channel promotion |
-| `/games` | Room 17 interactive heist case, with Dead Drop and Signal Intercept in the optional quick-drills section                 |
-| `/safe`  | Episode vault with four digits, five attempts, feedback, sound, and completion log; sealed before release                |
-| `/files` | Season archive with teaser/full dossiers controlled by release state                                                     |
-| `/board` | Evidence board, free personal crew pin, private theory draft, and invitation/share actions                               |
+| URL         | Experience                                                                                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `/`         | HQ, premiere countdown, episode choices, free games, like/comment/share actions, FAQ, separate YouTube channel promotion |
+| `/games`    | Room 17 interactive heist case, with Dead Drop and Signal Intercept in the optional quick-drills section                 |
+| `/safe`     | Episode vault with four digits, five attempts, feedback, sound, and completion log; sealed before release                |
+| `/files`    | Season archive with teaser/full dossiers controlled by release state                                                     |
+| `/board`    | Evidence board, free personal crew pin, private theory draft, and invitation/share actions                               |
+| `/missions` | Daily cipher, case briefing, evidence memory challenge, shared Crew Credits wallet, personal reward and weekly Top 10    |
 
 ## JSON content
 
@@ -67,9 +68,29 @@ Before release, the follow CTA, locked vote, teaser dossier, and sealed vault re
 
 ## Free participation and privacy
 
+Daily Missions use a separate website account: Instagram handle, website password, and an optional public-ranking consent. Passwords are scrypt-hashed; sessions use secure HttpOnly cookies. A recovery code is shown once at registration and rotated on recovery. No Instagram password, email address, crypto wallet, or payment is needed. Account settings support public-ranking opt-out and password-confirmed deletion.
+
+Wallets are private JSON documents in the connected private Vercel Blob store. Origin reads bypass the CDN and writes use ETag preconditions with retries. Each account's balance, claims, recent ledger and entitlements change together in one conditional write. Duplicate claims and redemptions do not award or spend twice. Preview deployments use `crew-preview-v1/`; production uses `crew-v1/`. Storage failure returns an error; it never substitutes browser balances. Cookie credentials and private ledger data never appear in leaderboard responses.
+
+`data/crew.json` defines three daily missions (15-credit cipher, 10-credit briefing, 25-credit memory drill), five attempts per mission, a 50-credit daily maximum, and the 40-credit personalized Crew ID wallpaper. Daily reset is midnight America/New_York; weekly scoring starts Monday midnight Eastern. Wallet balances carry forward. Weekly standings count credits earned, unaffected by redemption. Ties use the earliest time the weekly score was reached, then handle. The PNG reward is generated server-side at 1080×1920 and is available only after the account owns the entitlement. Future merchandise and paid checkout are not enabled.
+
+### Confirming follower eligibility
+
+New accounts can earn credits while pending. Redemption and public rankings require creator confirmation. The creator must check that the DM came from the same Instagram handle, that its `CREW-XXXXXXXXXX` code matches the website account, and that the person follows @crimex.house. Then run:
+
+```bash
+npm run crew:approve -- @handle CREW-XXXXXXXXXX
+# To remove confirmation:
+npm run crew:approve -- @handle --revoke
+```
+
+Commit, push, and redeploy after changing this list. Codes are identifiers for manual matching, not passwords; the approval list is public source. Review follower eligibility regularly. This does not continuously track follows, comments, likes, shares, or DMs. Accounts with another person's handle never qualify automatically. Handle disputes and lost-password-plus-lost-recovery cases require creator review.
+
+This starter storage is designed for a small crew. Vercel Hobby includes limited monthly Blob reads/writes; no plan upgrade is made by this setup. If that allowance is reached, crew services pause instead of fabricating balances. Move the storage adapter to a transactional database as participation grows. Private QA accounts are deleted after browser tests. No sample handles are shown as real ranked participants.
+
 Vercel Web Analytics is installed in the root layout for automatic page views and client-side navigation. Activate it in the project's [Analytics dashboard](https://vercel.com/crimexhouse/crimex-house/analytics) and redeploy if Vercel requests it. The Hobby setup uses page-view analytics only: no paid custom events or submission tracking. Visits are anonymous; local crew pins, drafts, vault completions, and game scores are not uploaded. Data starts after activation and does not reconstruct earlier visits.
 
-No site account, database, or API keys are needed. Crew pins, theory drafts, personal game records, sound settings, safe attempts, and saved choices use localStorage and survive reloads. They synchronize between tabs. Storage failures are reported.
+Practice games and story pages do not require an account. Personal Corkboard pins, theory drafts, practice-game records, sound settings, episode safe attempts, and saved vote choices use localStorage and survive reloads. They synchronize between tabs. Storage failures are reported. Daily-mission wallets are separate and saved privately on the server.
 
 Pins, drafts, and scores stay on the visitor's device. They do not create a public membership, upload a theory, enter a contest, or publish a leaderboard entry. Only real handles deliberately added by the creator to `corkboard.json` appear publicly. Instagram handles likes/comments and its own sign-in requirements.
 
@@ -96,7 +117,7 @@ Vercel project: `crimex-house`, workspace: `crimexhouse`. Production domains are
 
 Source is public on GitHub; deployments have been uploaded directly to Vercel. Automatic deployment requires connecting GitHub under [Vercel account authentication](https://vercel.com/account/settings/authentication), then selecting this repository and `main` under project Settings → Git. Until linked, a GitHub push needs a separate Vercel deployment.
 
-For a new import, use the detected Next.js preset, repository root, and default build/output settings. No environment variables are required. Use Vercel or a Node host rather than unmodified GitHub Pages.
+For a new import, use the detected Next.js preset, repository root, and default build/output settings. Connect a private Vercel Blob store to provision `BLOB_READ_WRITE_TOKEN` for Crew Credits; the story and practice pages work without it. Never expose this token through a `NEXT_PUBLIC_` variable. Use Vercel or a Node host rather than unmodified GitHub Pages.
 
 See [COMPETITOR_REVIEW.md](COMPETITOR_REVIEW.md) for research and [VERIFICATION.md](VERIFICATION.md) for automated browser checks and device-testing limits.
 

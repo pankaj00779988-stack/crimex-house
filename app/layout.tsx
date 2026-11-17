@@ -11,6 +11,7 @@ import "@fontsource/jetbrains-mono/500.css";
 import "@fontsource/jetbrains-mono/700.css";
 import "./globals.css";
 import "./redesign.css";
+import "./missions.css";
 import { Header, Footer } from "@/components/shell";
 import { siteConfig } from "@/lib/data";
 export const metadata: Metadata = {

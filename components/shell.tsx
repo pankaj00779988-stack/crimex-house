@@ -15,6 +15,7 @@ import {
   Instagram,
   Youtube,
   Gamepad2,
+  Coins,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { siteConfig, activeEpisode, activeEpisodeReleased } from "@/lib/data";
@@ -27,6 +28,7 @@ const navigation = [
   { href: "/safe", label: "The safe", icon: LockKeyhole },
   { href: "/board", label: "The board", icon: Network },
   { href: "/games", label: "Games", icon: Gamepad2 },
+  { href: "/missions", label: "Missions", icon: Coins },
 ];
 export function Brand() {
   return (

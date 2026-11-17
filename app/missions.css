@@ -1,0 +1,894 @@
+.missions-page {
+  padding-top: 30px;
+  padding-bottom: 60px;
+}
+.missions-kicker,
+.mission-section-title,
+.daily-mission-top,
+.daily-mission-foot,
+.crew-account-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.missions-kicker .eyebrow,
+.crew-wallet > .eyebrow,
+.crew-leaderboard .eyebrow,
+.reward-cost {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.missions-header {
+  padding: 42px 0 34px;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  margin-bottom: 30px;
+}
+.missions-header h1 {
+  font-size: clamp(36px, 6.2vw, 76px);
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+  margin: 0 0 20px;
+}
+.missions-header h1 span {
+  color: #ff2e93;
+}
+.missions-header > p {
+  font-size: 17px;
+  color: #9b9ba8;
+  line-height: 1.7;
+}
+.mission-reset {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 24px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #9b9ba8;
+}
+.mission-reset strong {
+  font-size: 17px;
+  color: #f5f2eb;
+}
+.missions-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(290px, 1fr);
+  gap: 32px;
+}
+.mission-section-title {
+  align-items: end;
+  margin-bottom: 24px;
+}
+.mission-section-title h2 {
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  margin: 8px 0 0;
+}
+.mission-section-title > .eyebrow {
+  font-size: 9px;
+  white-space: nowrap;
+}
+.daily-mission {
+  background: #121216;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  margin-bottom: 16px;
+}
+.daily-mission h3 {
+  font-size: 23px;
+  letter-spacing: -0.035em;
+  margin: 20px 0 10px;
+  font-weight: 800;
+}
+.daily-mission > p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #9b9ba8;
+  max-width: 470px;
+}
+.credit-pill {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  color: #ff2e93;
+  white-space: nowrap;
+}
+.daily-mission-top .eyebrow {
+  font-size: 9px;
+}
+.daily-mission-foot {
+  margin-top: 25px;
+}
+.daily-mission-foot > span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  color: #9b9ba8;
+  letter-spacing: 0.06em;
+}
+.daily-mission-foot .button {
+  min-height: 42px;
+  font-size: 10px;
+  padding: 12px 17px;
+}
+.mission-complete {
+  border-color: rgba(255, 46, 147, 0.45);
+}
+.mission-complete .daily-mission-foot > span {
+  color: #ff2e93;
+}
+.mission-fineprint {
+  display: block;
+  color: #9797a4;
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 16px 0 0;
+}
+.crew-wallet {
+  padding: 27px;
+  background: linear-gradient(135deg, rgba(255, 46, 147, 0.14), #121216 70%);
+  border: 1px solid rgba(255, 46, 147, 0.4);
+}
+.crew-wallet > .eyebrow {
+  font-size: 10px;
+}
+.wallet-number {
+  font-size: 74px;
+  letter-spacing: -0.07em;
+  font-weight: 900;
+  line-height: 1;
+  margin: 26px 0 18px;
+}
+.wallet-number > span {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #ff2e93;
+  margin-top: 14px;
+}
+.crew-wallet > p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #aaaab5;
+}
+.wallet-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 18px;
+  margin-top: 20px;
+}
+.wallet-stats > span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px;
+  color: #9b9ba8;
+  line-height: 1.7;
+}
+.wallet-stats strong {
+  display: block;
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  color: #f5f2eb;
+}
+.crew-account-panel {
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 0;
+  background: #121216;
+}
+.crew-account-panel h2 {
+  font-size: 26px;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  margin: 12px 0;
+}
+.crew-account-panel h3 {
+  font-size: 20px;
+  margin: 22px 0 12px;
+  font-weight: 700;
+}
+.crew-account-panel p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #a5a5b2;
+}
+.crew-account-panel a {
+  color: #ff2e93;
+}
+.crew-auth-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 22px 0;
+}
+.crew-auth-tabs button {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  padding: 10px 15px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: #9b9ba8;
+}
+.crew-auth-tabs button[aria-pressed="true"] {
+  background: #ff2e93;
+  color: #08080a;
+  border-color: #ff2e93;
+}
+.crew-account-panel form > label,
+.mission-dialog form > label,
+.mission-dialog legend {
+  display: block;
+  margin: 20px 0 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #b7b7c1;
+}
+.crew-account-panel input:not([type="checkbox"]),
+.mission-dialog input:not([type="radio"]),
+.crew-recovery input:not([type="checkbox"]) {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  background: #08080a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5f2eb;
+  padding: 13px;
+  font-size: 16px;
+  border-radius: 0;
+}
+.crew-account-panel form > small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.7;
+  color: #9797a4;
+  margin-top: 8px;
+}
+.crew-check {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: Inter, sans-serif !important;
+  font-size: 12px !important;
+  line-height: 1.7;
+  letter-spacing: 0 !important;
+  color: #aaaab5 !important;
+  margin: 20px 0 !important;
+}
+.crew-check input {
+  accent-color: #ff2e93;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+}
+.crew-account-panel form > .button {
+  width: 100%;
+  margin-top: 20px;
+}
+.crew-account-panel form > .text-link {
+  font-size: 9px;
+  margin-top: 19px;
+}
+.crew-account-line {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 12px;
+}
+.crew-account-line > strong {
+  font-size: 19px;
+  overflow-wrap: anywhere;
+}
+.crew-status {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8px;
+  color: #ff2e93;
+  border: 1px solid rgba(255, 46, 147, 0.35);
+  padding: 7px 9px;
+  letter-spacing: 0.08em;
+}
+.crew-verified {
+  color: #71e1ab;
+  border-color: rgba(113, 225, 171, 0.4);
+}
+.crew-code {
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 15px !important;
+  letter-spacing: 0.05em;
+}
+.crew-notice {
+  border: 1px solid rgba(255, 46, 147, 0.35);
+  background: #171017;
+  padding: 17px 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  overflow-wrap: anywhere;
+}
+.crew-error {
+  border-color: #ff2e93;
+}
+.crew-notice .text-link {
+  margin-left: 15px;
+  font-size: 10px;
+}
+.crew-recovery {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: #f5f2eb;
+  color: #1c1917;
+  padding: 28px;
+  margin: 28px 0;
+}
+.crew-recovery > svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.crew-recovery > div {
+  min-width: 0;
+}
+.crew-recovery h2 {
+  font-size: 23px;
+  font-weight: 800;
+  margin: 0 0 10px;
+}
+.crew-recovery p {
+  line-height: 1.8;
+  font-size: 14px;
+}
+.crew-recovery .crew-check {
+  color: #57534e !important;
+}
+.crew-recovery .button {
+  border-color: #1c1917;
+  color: #1c1917;
+}
+.crew-recovery input:not([type="checkbox"]) {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  margin: 18px 0;
+}
+.crew-rewards {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  margin: 60px 0;
+  gap: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 32px;
+  background: #121216;
+}
+.crew-reward-art {
+  align-self: center;
+  background:
+    radial-gradient(ellipse at 95% 25%, #451027, transparent 60%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px), #08080a;
+  background-size:
+    auto,
+    28px 28px,
+    28px 28px,
+    auto;
+  border: 1px solid rgba(255, 46, 147, 0.45);
+  border-top: 5px solid #ff2e93;
+  aspect-ratio: 9/13;
+  max-width: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 25px;
+  margin: auto;
+  gap: 20px;
+  overflow: hidden;
+}
+.crew-reward-art > span:first-child {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+.crew-reward-art > strong {
+  font-size: clamp(42px, 5vw, 64px);
+  line-height: 0.95;
+  font-weight: 900;
+  letter-spacing: -0.055em;
+}
+.crew-reward-art i {
+  color: #ff2e93;
+  font-style: normal;
+}
+.crew-reward-art > span:not(:first-child) {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.crew-reward-art small {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  color: #9b9ba8;
+}
+.crew-reward-copy {
+  align-self: center;
+}
+.crew-reward-copy h2 {
+  font-weight: 900;
+  font-size: clamp(32px, 4.5vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  margin: 14px 0 20px;
+}
+.crew-reward-copy > p {
+  font-size: 14px;
+  color: #a5a5b2;
+  line-height: 1.8;
+}
+.reward-cost {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  margin: 25px 0;
+  color: #ff2e93;
+  flex-wrap: wrap;
+}
+.reward-cost > small {
+  font-size: 8px;
+  color: #9b9ba8;
+}
+.crew-reward-copy > .button {
+  font-size: 10px;
+}
+.crew-leaderboard {
+  scroll-margin-top: 160px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 35px 0;
+}
+.crew-leaderboard > p,
+.crew-history > p,
+.crew-rules p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #9b9ba8;
+}
+.crew-leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+  table-layout: fixed;
+}
+.crew-table-caption {
+  text-align: left;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: #9b9ba8;
+  padding-bottom: 15px;
+}
+.crew-leaderboard th {
+  text-align: left;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #9b9ba8;
+  padding: 14px 10px;
+}
+.crew-leaderboard th:first-child {
+  width: 65px;
+}
+.crew-leaderboard th:last-child {
+  width: 90px;
+  text-align: right;
+}
+.crew-leaderboard td {
+  padding: 18px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.crew-leaderboard td:first-child {
+  font-family: "JetBrains Mono", monospace;
+}
+.crew-leaderboard td:last-child {
+  text-align: right;
+  font-family: "JetBrains Mono", monospace;
+}
+.crew-podium {
+  background: rgba(255, 46, 147, 0.045);
+}
+.crew-podium td:first-child,
+.crew-podium td:last-child {
+  color: #ff2e93;
+}
+.crew-empty {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  padding: 45px 25px;
+  margin-top: 24px;
+}
+.crew-empty > svg {
+  color: #ff2e93;
+  margin: 0 auto 18px;
+}
+.crew-empty h3 {
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: -0.035em;
+}
+.crew-empty p {
+  max-width: 470px;
+  margin: 12px auto;
+  color: #9b9ba8;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.crew-history {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 35px 0;
+}
+.crew-history ol {
+  padding: 0;
+  list-style: none;
+}
+.crew-history li {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 0;
+}
+.crew-history strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+.crew-history small {
+  display: block;
+  margin-top: 7px;
+  font-size: 11px;
+  color: #9b9ba8;
+}
+.crew-history li > span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 20px;
+}
+.crew-rules {
+  background: #121216;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 28px;
+  margin-top: 25px;
+}
+.crew-rules h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.crew-rules .text-link {
+  font-size: 10px;
+  margin-top: 15px;
+}
+.mission-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  max-width: 570px;
+  width: calc(100% - 32px);
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+  background: #121216;
+  color: #f5f2eb;
+  border: 1px solid rgba(255, 46, 147, 0.5);
+  padding: 38px 30px 28px;
+}
+.mission-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+}
+.mission-dialog h2 {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+  margin: 22px 0 15px;
+}
+.mission-dialog > p {
+  font-size: 15px;
+  color: #b6b6c1;
+  line-height: 1.8;
+}
+.mission-dialog > small {
+  display: block;
+  color: #9797a4;
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 22px;
+}
+.mission-dialog .button {
+  width: 100%;
+  margin-top: 22px;
+}
+.mission-dialog fieldset {
+  border: 0;
+  padding: 0;
+  margin: 20px 0;
+}
+.briefing-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 9px 0;
+  cursor: pointer;
+}
+.briefing-choice input {
+  accent-color: #ff2e93;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.briefing-choice:has(input:checked) {
+  border-color: #ff2e93;
+  background: rgba(255, 46, 147, 0.06);
+}
+.mission-memory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 22px 0;
+}
+.mission-memory-grid button {
+  aspect-ratio: 1.45;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #08080a;
+  color: #f5f2eb;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+.mission-memory-grid .memory-matched {
+  border-color: #71e1ab;
+  color: #71e1ab;
+  background: rgba(113, 225, 171, 0.05);
+}
+.mission-dialog .eyebrow {
+  font-size: 8px;
+}
+.mission-dialog .form-error {
+  font-size: 13px;
+  color: #ff80bb;
+}
+.hq-missions-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: linear-gradient(110deg, rgba(255, 46, 147, 0.1), #121216);
+  border: 1px solid rgba(255, 46, 147, 0.25);
+  padding: 25px 28px;
+  margin: 30px 0;
+}
+.hq-missions-callout h2 {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin: 8px 0;
+}
+.hq-missions-callout p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #9b9ba8;
+  margin: 0;
+}
+.hq-missions-callout .button {
+  white-space: nowrap;
+  font-size: 10px;
+}
+@media (max-width: 800px) {
+  .missions-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .crew-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    align-items: start;
+    gap: 20px;
+    grid-row: 1;
+  }
+  .crew-account-panel {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .missions-header {
+    padding-top: 30px;
+  }
+  .missions-kicker > .text-link {
+    font-size: 9px;
+  }
+  .crew-rewards {
+    gap: 25px;
+  }
+  .mission-section-title {
+    flex-wrap: wrap;
+  }
+  .mission-section-title > .eyebrow {
+    white-space: normal;
+  }
+  .hq-missions-callout {
+    flex-wrap: wrap;
+  }
+  .hq-missions-callout .button {
+    width: 100%;
+  }
+}
+@media (max-width: 520px) {
+  .missions-page {
+    padding-top: 22px;
+  }
+  .missions-kicker {
+    align-items: flex-start;
+  }
+  .missions-kicker > .eyebrow {
+    font-size: 8px;
+  }
+  .missions-kicker > .text-link {
+    font-size: 7px;
+    gap: 4px;
+  }
+  .missions-header h1 {
+    font-size: 38px;
+  }
+  .missions-header > p {
+    font-size: 14px;
+  }
+  .mission-reset {
+    gap: 12px;
+    font-size: 8px;
+    justify-content: space-between;
+  }
+  .mission-reset strong {
+    font-size: 15px;
+  }
+  .crew-sidebar {
+    display: block;
+  }
+  .crew-wallet {
+    padding: 24px;
+  }
+  .crew-account-panel {
+    padding: 24px;
+    border-top: 0;
+  }
+  .daily-mission {
+    padding: 22px;
+  }
+  .daily-mission h3 {
+    font-size: 22px;
+  }
+  .daily-mission-top .eyebrow {
+    font-size: 8px;
+  }
+  .daily-mission-foot {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .daily-mission-foot .button {
+    width: 100%;
+  }
+  .crew-rewards {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 28px;
+    margin: 40px 0;
+  }
+  .crew-reward-art {
+    max-width: 230px;
+    aspect-ratio: 9/12;
+  }
+  .crew-reward-copy h2 {
+    font-size: 36px;
+  }
+  .crew-reward-copy > .button {
+    width: 100%;
+    font-size: 9px;
+  }
+  .crew-leaderboard .mission-section-title h2 {
+    font-size: 26px;
+  }
+  .crew-leaderboard td {
+    font-size: 12px;
+    padding: 16px 6px;
+  }
+  .crew-leaderboard th:first-child {
+    width: 46px;
+  }
+  .crew-leaderboard th:last-child {
+    width: 72px;
+  }
+  .crew-empty {
+    padding: 30px 20px;
+  }
+  .crew-empty h3 {
+    font-size: 22px;
+  }
+  .crew-recovery {
+    padding: 23px;
+    gap: 12px;
+  }
+  .crew-recovery > svg {
+    width: 18px;
+  }
+  .crew-recovery h2 {
+    font-size: 21px;
+  }
+  .mission-dialog {
+    padding: 35px 22px 24px;
+  }
+  .mission-dialog h2 {
+    font-size: 27px;
+  }
+  .mission-dialog > p {
+    font-size: 14px;
+  }
+  .mission-memory-grid {
+    gap: 8px;
+  }
+  .mission-memory-grid button {
+    font-size: 10px;
+  }
+  .crew-rules {
+    padding: 23px;
+  }
+  .hq-missions-callout {
+    padding: 24px;
+  }
+  .header nav {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0;
+  }
+  .header .nav-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    font-size: 8px;
+    letter-spacing: 0.02em;
+    padding: 12px 2px;
+    white-space: nowrap;
+  }
+  .header .nav-link > svg {
+    width: 13px;
+    height: 13px;
+  }
+  .header .nav-dot {
+    display: none;
+  }
+}
+
+.crew-settings {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 20px 0;
+  padding: 18px 0 0;
+}
+.crew-settings summary {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+.crew-settings form > label {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  margin: 12px 0 8px;
+}
+.crew-settings .button {
+  width: 100%;
+  margin-top: 12px;
+  font-size: 9px;
+}

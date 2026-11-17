@@ -23,15 +23,15 @@
   "faq": [
     {
       "question": "Does it cost anything to join or play?",
-      "answer": "No. The crew board, practice games, and episode vault are free. No purchase or account is required."
+      "answer": "Watching, the crew board, practice games, and the episode vault are free. A free website account is needed only to save Crew Credits from daily missions. Rewards and weekly rankings require creator-confirmed crew membership."
     },
     {
       "question": "How do I vote on the next move?",
       "answer": "When an episode is released, watch its Instagram Reel and comment your choice there. Choosing an option on this website prepares your comment; your Instagram comment casts the vote."
     },
     {
-      "question": "Can I play before Part 01 premieres?",
-      "answer": "Yes. Room 17 is a complete original practice case. Dead Drop and Signal Intercept are quick drills. All three are open now, with no Part 01 spoilers. The episode vault stays sealed until release."
+      "question": "Can I play without creating an account?",
+      "answer": "Yes. Room 17, Dead Drop, Signal Intercept, and the released episode vault are open without an account. Daily missions use a free website account to save credits. Existing practice-game scores do not automatically award credits."
     },
     {
       "question": "Is my crew pin public?",
@@ -40,6 +40,10 @@
     {
       "question": "Where do I watch the episodes?",
       "answer": "Story episodes link to their Instagram Reels. YouTube is a separate home for upcoming full-length episodes."
+    },
+    {
+      "question": "How do I earn Crew Credits?",
+      "answer": "Join Daily Missions with your Instagram handle and a separate website password. Complete the cipher, case briefing and evidence memory challenge for up to 50 credits a day. Follow @crimex.house and DM your crew code for manual verification before redeeming rewards or appearing in the weekly Top 10."
     }
   ],
   "artwork": "/art/motel-room.webp",

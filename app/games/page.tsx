@@ -33,6 +33,19 @@ export default function GamesPage() {
         <p>The right answer opens the case. The right decisions get you out.</p>
       </header>
       <Room17 />
+      <section className="hq-missions-callout">
+        <div>
+          <span className="eyebrow pink">READY FOR YOUR NEXT ASSIGNMENT?</span>
+          <h2>Daily missions. Crew Credits.</h2>
+          <p>
+            Join a crew account for three fresh daily challenges and a saved
+            credit wallet. Practice games stay free to play.
+          </p>
+        </div>
+        <Link href="/missions" className="button primary">
+          OPEN DAILY MISSIONS <ArrowRight size={16} />
+        </Link>
+      </section>
       <details className="quick-drills">
         <summary>
           <span>

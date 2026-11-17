@@ -74,6 +74,22 @@ export default function Home() {
         </div>
       </section>
       <Hud />
+      <section
+        className="hq-missions-callout"
+        aria-labelledby="hq-missions-title"
+      >
+        <div>
+          <span className="eyebrow pink">THE DAILY BRIEFING IS OPEN</span>
+          <h2 id="hq-missions-title">Make your next move count.</h2>
+          <p>
+            Complete daily missions. Earn Crew Credits. Unlock your personal
+            Crew ID wallpaper.
+          </p>
+        </div>
+        <Link href="/missions" className="button primary">
+          DAILY MISSIONS <ArrowRight size={16} />
+        </Link>
+      </section>
 
       <section className="hq-path" aria-label="How the crew changes the story">
         {[

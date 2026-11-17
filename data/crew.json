@@ -1,0 +1,101 @@
+{
+  "name": "Crew Credits",
+  "timeZone": "America/New_York",
+  "dailyLimit": 50,
+  "maxAttempts": 5,
+  "missions": [
+    {
+      "id": "cipher",
+      "title": "Crack the daily cipher",
+      "label": "CODEBREAKER",
+      "description": "Decode a four-digit combination from today's intercepted memo.",
+      "credits": 15
+    },
+    {
+      "id": "briefing",
+      "title": "Read the room",
+      "label": "FIELD INTELLIGENCE",
+      "description": "Read a short fictional case and choose the move supported by the evidence.",
+      "credits": 10
+    },
+    {
+      "id": "memory",
+      "title": "Recover the evidence",
+      "label": "MEMORY DRILL",
+      "description": "Match six evidence pairs in 18 moves or fewer.",
+      "credits": 25
+    }
+  ],
+  "briefings": [
+    {
+      "scene": "A caller says the lobby is clear. The evacuation map marks a camera over the lobby desk. Which source gives you a confirmed detail?",
+      "choices": [
+        "The unverified caller",
+        "The marked evacuation map",
+        "Neither; all exits are identical"
+      ],
+      "answer": 1
+    },
+    {
+      "scene": "A ledger is missing page 17. The torn edge in the binding matches a scrap on the desk. What should go into the evidence file?",
+      "choices": [
+        "The ledger and matching scrap",
+        "Only the ledger cover",
+        "An invented replacement page"
+      ],
+      "answer": 0
+    },
+    {
+      "scene": "A sealed envelope is labelled 02:14. A photograph shows the same room clock at 02:14. What does this establish?",
+      "choices": [
+        "The identity of the suspect",
+        "The escape route",
+        "A matching recorded time, not a confirmed identity"
+      ],
+      "answer": 2
+    },
+    {
+      "scene": "Two notes conflict. One names a street; the other names a person. What belongs in the case record?",
+      "choices": [
+        "Both notes, with their sources and uncertainty",
+        "Whichever note sounds dramatic",
+        "Only your preferred theory"
+      ],
+      "answer": 0
+    },
+    {
+      "scene": "A key fits a locked case, but the dial still needs four digits. Which next move follows the evidence?",
+      "choices": [
+        "Assume every code works",
+        "Search for the combination clue",
+        "Discard the key"
+      ],
+      "answer": 1
+    },
+    {
+      "scene": "The rear stairwell is marked on the map, but its door is locked. You have no matching key. What is confirmed?",
+      "choices": [
+        "The route is ready to use",
+        "The door will open if ignored",
+        "The route exists, but access is unresolved"
+      ],
+      "answer": 2
+    },
+    {
+      "scene": "A photograph contains a reflection of a second bag. No one has inspected that bag. What should the crew record?",
+      "choices": [
+        "The contents are unknown",
+        "It definitely contains cash",
+        "It definitely contains nothing"
+      ],
+      "answer": 0
+    }
+  ],
+  "reward": {
+    "id": "crew-id-v1",
+    "title": "Your personal Crew ID wallpaper",
+    "credits": 40,
+    "description": "A personalized noir Crew ID for your phone. Download a 1080 × 1920 PNG after verification. Personal use only."
+  },
+  "verifiedCrew": []
+}
