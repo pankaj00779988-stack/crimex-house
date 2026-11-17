@@ -26,7 +26,12 @@ import {
   recover,
   redeemReward,
 } from "../lib/crew/service";
-import { Conflict, type CrewStore, type Stored } from "../lib/crew/store";
+import {
+  Conflict,
+  consistentSnapshot,
+  type CrewStore,
+  type Stored,
+} from "../lib/crew/store";
 import sharp from "sharp";
 import { renderCrewWallpaper } from "../lib/crew/wallpaper";
 class MemoryStore implements CrewStore {
@@ -450,4 +455,22 @@ test("personal Crew ID renders a downloadable portrait PNG", async () => {
   assert.equal(metadata.width, 1080);
   assert.equal(metadata.height, 1920);
   assert.ok(image.byteLength > 10000);
+});
+test("missing delivery ETags never pair a stale body with a newer write revision", async () => {
+  const bodies = ["stale", "changed-between-heads", "latest"];
+  const versions = ["v1", "v2", "v2", "v2"];
+  const result = await consistentSnapshot(
+    async () => ({ value: bodies.shift(), etag: "" }),
+    async () => versions.shift()!,
+  );
+  assert.deepEqual(result, { value: "latest", etag: "v2" });
+});
+test("missing revisions fail closed instead of overwriting an existing wallet", async () => {
+  await assert.rejects(
+    consistentSnapshot(
+      async () => ({ value: { balance: 50 }, etag: "" }),
+      async () => "",
+    ),
+    /changed while it was loading/,
+  );
 });
