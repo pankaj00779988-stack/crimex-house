@@ -15,11 +15,20 @@ import {
   MessageCircle,
   UserRound,
 } from "lucide-react";
-import { activeEpisode, corkboard, siteConfig } from "@/lib/data";
+import {
+  activeEpisode,
+  vaultEpisode,
+  episodes,
+  corkboard,
+  siteConfig,
+} from "@/lib/data";
 import { normalizeHandle, validHandle } from "@/lib/game";
 import { isString, useStoredState } from "@/lib/storage";
 import { crewCompletionKey, crewDraftKey } from "@/lib/crew-browser";
 import { useCrewIdentity, type CrewIdentity } from "./crew-identity";
+const evidenceEpisode =
+  episodes.find((episode) => episode.id === corkboard.episodeId) ??
+  activeEpisode;
 function EvidenceVisual({ kind }: { kind: string }) {
   if (kind === "silhouette")
     return (
@@ -98,7 +107,7 @@ function PersonalBoard({
   const [handle, setHandle] = useState("");
   const [message, setMessage] = useState("");
   const [completion] = useStoredState(
-    crewCompletionKey(activeEpisode.id, account?.handle),
+    crewCompletionKey(vaultEpisode.id, account?.handle),
     "",
     isString,
   );
@@ -123,7 +132,8 @@ function PersonalBoard({
         <div className="board-top">
           <span className="eyebrow">
             <Crosshair size={13} />
-            OPERATION: {activeEpisode.title}
+            PART {String(evidenceEpisode.part).padStart(2, "0")} EVIDENCE /{" "}
+            {evidenceEpisode.title}
           </span>
           <span className="mono">CASE #CH–001</span>
         </div>
@@ -286,14 +296,14 @@ function PersonalBoard({
           <CommentLink
             text={theory.trim()}
             reelUrl={activeEpisode.reelUrl!}
-            label="COPY THEORY + OPEN THE REEL"
+            label={`COPY THEORY + OPEN PART ${String(activeEpisode.part).padStart(2, "0")}`}
           />
         ) : (
           <div className="crew-next">
             <MessageCircle size={18} />
             <p>
               {released
-                ? "Part 01 is live. Draft your theory here, then post it in the Reel’s Instagram comments."
+                ? `Part ${String(activeEpisode.part).padStart(2, "0")} is live. Draft your theory here, then post it in the Reel’s Instagram comments.`
                 : "Save your theory here. Join the Instagram conversation when the next Reel is released."}
             </p>
           </div>

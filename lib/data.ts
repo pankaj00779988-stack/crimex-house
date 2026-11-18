@@ -14,6 +14,7 @@ export interface Episode {
   title: string;
   status: string;
   isReleased?: boolean;
+  vaultReady?: boolean;
   reelUrl?: string;
   teaser?: string;
   subtitle: string;
@@ -49,13 +50,8 @@ for (const episode of episodes) {
       `Invalid status for ${episode.id}. Use LIVE, LOCKED, or ARCHIVED.`,
     );
   }
-  if (
-    episode.status !== "LOCKED" &&
-    (!episode.summary || !episode.realLawRule)
-  ) {
-    throw new Error(
-      `Released episode ${episode.id} needs a summary and realLawRule.`,
-    );
+  if (episode.status !== "LOCKED" && !episode.summary) {
+    throw new Error(`Released episode ${episode.id} needs a summary.`);
   }
   if (episode.isReleased && !isInstagramReelUrl(episode.reelUrl ?? "")) {
     throw new Error(
@@ -67,9 +63,18 @@ export const activeEpisode = episodes.find(
   (episode) => episode.status === "LIVE",
 )!;
 export const activeEpisodeReleased = isEpisodeReleased(activeEpisode);
+// Reel releases and vault puzzles can be published independently.
+export const latestEpisode =
+  episodes.filter(isEpisodeReleased).sort((a, b) => b.part - a.part)[0] ??
+  activeEpisode;
+export const latestEpisodeReleased = isEpisodeReleased(latestEpisode);
+export const vaultEpisode =
+  episodes
+    .filter(
+      (episode) => isEpisodeReleased(episode) && episode.vaultReady !== false,
+    )
+    .sort((a, b) => b.part - a.part)[0] ?? activeEpisode;
 if (
-  !/^\d{4}$/.test(activeEpisode.safeCode ?? "") ||
-  !activeEpisode.safeClue ||
   activeEpisode.choices?.length !== 2 ||
   !activeEpisode.initialVotes ||
   !Object.values(activeEpisode.initialVotes).every(
@@ -77,7 +82,15 @@ if (
   )
 ) {
   throw new Error(
-    "The LIVE episode needs a four-digit safeCode, safeClue, two choices, and nonnegative initialVotes.",
+    "The LIVE episode needs two choices and nonnegative initialVotes.",
+  );
+}
+if (
+  vaultEpisode.vaultReady !== false &&
+  (!/^\d{4}$/.test(vaultEpisode.safeCode ?? "") || !vaultEpisode.safeClue)
+) {
+  throw new Error(
+    "The playable vault needs a four-digit safeCode and safeClue.",
   );
 }
 if (
@@ -90,6 +103,11 @@ if (
 new Intl.DateTimeFormat("en-US", {
   timeZone: config.countdownTimeZone,
 }).format();
-if (config.nextReleaseAt !== null && releaseTime(config.nextReleaseAt) === null) {
-  throw new Error("nextReleaseAt must be null or a dated ISO timestamp with a timezone.");
+if (
+  config.nextReleaseAt !== null &&
+  releaseTime(config.nextReleaseAt) === null
+) {
+  throw new Error(
+    "nextReleaseAt must be null or a dated ISO timestamp with a timezone.",
+  );
 }

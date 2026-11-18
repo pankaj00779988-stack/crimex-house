@@ -3,10 +3,17 @@ import episodes from "../../data/episodes.json";
 import { isEpisodeReleased } from "../../lib/release";
 
 const episode = episodes.find((item) => item.status === "LIVE")!;
+const latestEpisode =
+  episodes.filter(isEpisodeReleased).sort((a, b) => b.part - a.part)[0] ??
+  episode;
+const vaultEpisode = episodes.find((item) => item.part === 1)!;
 const released = isEpisodeReleased(episode);
 
 test.beforeEach(async ({ page, baseURL }) => {
-  if (baseURL && ["localhost", "127.0.0.1"].includes(new URL(baseURL).hostname)) {
+  if (
+    baseURL &&
+    ["localhost", "127.0.0.1"].includes(new URL(baseURL).hostname)
+  ) {
     // Vercel serves Analytics itself; a local Next server has no Insights route.
     await page.route("**/_vercel/insights/script.js", (route) =>
       route.fulfill({ contentType: "application/javascript", body: "void 0;" }),
@@ -37,43 +44,96 @@ async function imagesReady(page: Page) {
   }
 }
 
-test("episode-first discovery and mobile mission browsing preserve the release gate", async ({ page }, info) => {
+test("episode-first discovery and mobile mission browsing preserve the release gate", async ({
+  page,
+}, info) => {
   await page.goto("/");
-  await expect(page.locator(".announcement")).toContainText("NEXT PART IN PRODUCTION");
+  await expect(page.locator(".announcement")).toContainText(
+    "NEXT PART IN PRODUCTION",
+  );
   await expect(page.locator(".announcement .countdown")).toHaveCount(0);
-  await expect(page.locator(".vote-instruction")).toContainText("Post your choice in the Instagram comments to vote.");
-  const caseTop = await page.locator(".hq-case-section").evaluate((el) => el.getBoundingClientRect().top);
-  const missionTop = await page.locator(".hq-missions-callout").evaluate((el) => el.getBoundingClientRect().top);
+  await expect(page.locator(".vote-instruction")).toContainText(
+    "Post your choice in the Instagram comments to vote.",
+  );
+  const caseTop = await page
+    .locator(".hq-case-section")
+    .evaluate((el) => el.getBoundingClientRect().top);
+  const missionTop = await page
+    .locator(".hq-missions-callout")
+    .evaluate((el) => el.getBoundingClientRect().top);
   expect(caseTop).toBeLessThan(missionTop);
-  await expect(page.locator(".hud")).toContainText("$5,000,000");
+  await expect(page.locator(".hud")).toContainText("$4,900,000");
   await page.goto("/files");
-  await expect(page.getByRole("button", { name: "Part 2 locked" })).toBeDisabled();
+  await expect(
+    page.getByRole("button", { name: "Part 3 locked" }),
+  ).toBeDisabled();
+  await page
+    .getByRole("button", { name: "Open Part 2: THE $200K TRAP" })
+    .click();
+  const releasedReel = page.getByRole("dialog");
+  await expect(releasedReel).toContainText("Part 02 is live on Instagram.");
+  await expect(releasedReel).not.toContainText("Bundle #50");
+  await expect(
+    releasedReel.getByRole("link", { name: "Watch on Instagram" }),
+  ).toHaveAttribute("href", latestEpisode.reelUrl!);
+  await page.keyboard.press("Escape");
   await page.goto("/board");
-  await expect(page.locator(".crew-next")).toContainText("Part 01 is live.");
+  await expect(page.locator(".crew-next")).toContainText("Part 02 is live.");
 
   // Exercise the guest journey without creating accounts or touching a real wallet.
-  await page.route("**/api/crew", (route) => route.fulfill({ json: {
-    configured: true, account: null, day: "2026-11-17", week: "2026-11-16",
-    resetAt: new Date(Date.now() + 60 * 60_000).toISOString(),
-  } }));
-  await page.route("**/api/crew/leaderboard", (route) => route.fulfill({ json: {
-    week: "2026-11-16", nextWeek: "2026-11-23", entries: [],
-  } }));
+  await page.route("**/api/crew", (route) =>
+    route.fulfill({
+      json: {
+        configured: true,
+        account: null,
+        day: "2026-11-17",
+        week: "2026-11-16",
+        resetAt: new Date(Date.now() + 60 * 60_000).toISOString(),
+      },
+    }),
+  );
+  await page.route("**/api/crew/leaderboard", (route) =>
+    route.fulfill({
+      json: {
+        week: "2026-11-16",
+        nextWeek: "2026-11-23",
+        entries: [],
+      },
+    }),
+  );
   await page.goto("/missions");
-  await expect(page.locator(".mission-reward-preview")).toContainText("40 credits");
+  await expect(page.locator(".mission-reward-preview")).toContainText(
+    "40 credits",
+  );
   if ((page.viewportSize()?.width ?? 0) <= 800) {
-    const formTop = await page.locator(".crew-account-panel").evaluate((el) => el.getBoundingClientRect().top);
+    const formTop = await page
+      .locator(".crew-account-panel")
+      .evaluate((el) => el.getBoundingClientRect().top);
     for (const selector of [".mission-reward-preview", ".daily-mission"])
-      expect(await page.locator(selector).first().evaluate((el) => el.getBoundingClientRect().top)).toBeLessThan(formTop);
+      expect(
+        await page
+          .locator(selector)
+          .first()
+          .evaluate((el) => el.getBoundingClientRect().top),
+      ).toBeLessThan(formTop);
   }
   if (info.project.name === "phone-375") {
-    await expect(page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Case files" })).toHaveCSS("font-size", "10px");
+    await expect(
+      page
+        .getByRole("navigation", { name: "Main navigation" })
+        .getByRole("link", { name: "Case files" }),
+    ).toHaveCSS("font-size", "10px");
   }
   await page.getByRole("button", { name: "JOIN TO EARN" }).first().click();
-  await expect(page.getByLabel("INSTAGRAM HANDLE", { exact: true })).toBeFocused();
+  await expect(
+    page.getByLabel("INSTAGRAM HANDLE", { exact: true }),
+  ).toBeFocused();
   await noOverflow(page);
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.screenshot({ path: info.outputPath("missions-discovery.png"), fullPage: true });
+  await page.screenshot({
+    path: info.outputPath("missions-discovery.png"),
+    fullPage: true,
+  });
 });
 
 test("HQ artwork, six responsive pages, channel links, and episode release state", async ({
@@ -106,11 +166,15 @@ test("HQ artwork, six responsive pages, channel links, and episode release state
     if (path === "/") {
       await expect(
         page.getByRole("link", {
-          name: released ? "WATCH PART 01" : "FOLLOW @CRIMEX.HOUSE FOR PART 01",
+          name: isEpisodeReleased(latestEpisode)
+            ? `WATCH PART ${String(latestEpisode.part).padStart(2, "0")}`
+            : `FOLLOW @CRIMEX.HOUSE FOR PART ${String(latestEpisode.part).padStart(2, "0")}`,
         }),
       ).toHaveAttribute(
         "href",
-        released ? episode.reelUrl! : "https://instagram.com/crimex.house",
+        isEpisodeReleased(latestEpisode)
+          ? latestEpisode.reelUrl!
+          : "https://instagram.com/crimex.house",
       );
       if (released) {
         await expect(page.locator(".cinema-stamp")).toContainText("LIVE NOW");
@@ -152,7 +216,7 @@ test("HQ artwork, six responsive pages, channel links, and episode release state
         await expect(dialog).toContainText("31 U.S.C. § 5324");
         await expect(
           dialog.getByRole("link", { name: "Watch on Instagram" }),
-        ).toHaveAttribute("href", episode.reelUrl!);
+        ).toHaveAttribute("href", vaultEpisode.reelUrl!);
       } else {
         await expect(dialog).toContainText(
           "declassifies when the Reel goes live",
@@ -177,24 +241,30 @@ test("HQ artwork, six responsive pages, channel links, and episode release state
   expect(errors).toEqual([]);
 });
 
-test("released Part 01 saves a choice and unlocks the episode vault", async ({
+test("Part 2 saves DEAL separately and Part 1's vault stays playable", async ({
   page,
 }) => {
-  test.skip(!released, "Part 01 has not been released.");
+  test.skip(!released, "The current part has not been released.");
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
-  const decoy = page.getByRole("button", { name: /DECOY/ });
-  await decoy.click();
-  await expect(decoy).toHaveAttribute("aria-pressed", "true");
+  await page.evaluate(() =>
+    localStorage.setItem("crimex:vote:s1-p1", '"optionB"'),
+  );
+  const deal = page.getByRole("button", { name: /DEAL/ });
+  await deal.click();
+  await expect(deal).toHaveAttribute("aria-pressed", "true");
   await expect(
-    page.getByRole("link", { name: "COMMENT DECOY", exact: true }),
+    page.getByRole("link", { name: "COMMENT DEAL", exact: true }),
   ).toHaveAttribute("href", episode.reelUrl!);
   await expect(page.locator(".vote-bottom")).toContainText(
     "Post it on the Reel to cast your vote.",
   );
   await page.reload();
-  await expect(decoy).toHaveAttribute("aria-pressed", "true");
+  await expect(deal).toHaveAttribute("aria-pressed", "true");
+  expect(
+    await page.evaluate(() => localStorage.getItem("crimex:vote:s1-p1")),
+  ).toBe('"optionB"');
   await page.goto("/safe");
   await page.getByRole("button", { name: "SFX ON", exact: true }).click();
   for (const digit of "0000")
@@ -225,7 +295,7 @@ test("released Part 01 saves a choice and unlocks the episode vault", async ({
     "@release.check",
   );
   await page.goto("/");
-  await expect(page.locator(".hud .suspicion strong")).toContainText("39%");
+  await expect(page.locator(".hud .suspicion strong")).toContainText("57%");
   expect(errors).toEqual([]);
 });
 

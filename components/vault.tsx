@@ -13,7 +13,7 @@ import {
   VolumeX,
   UnlockKeyhole,
 } from "lucide-react";
-import { activeEpisode, siteConfig, type Episode } from "@/lib/data";
+import { vaultEpisode, siteConfig, type Episode } from "@/lib/data";
 import { isEpisodeReleased } from "@/lib/release";
 import { normalizeHandle, scoreGuess, validHandle } from "@/lib/game";
 import { isBoolean, isNumber, isString, useStoredState } from "@/lib/storage";
@@ -25,7 +25,22 @@ const isAttempts = (v: unknown): v is string[] =>
   Array.isArray(v) &&
   v.length <= siteConfig.safeMaxAttempts &&
   v.every((g) => typeof g === "string" && /^\d{4}$/.test(g));
-export function Vault({ episode = activeEpisode }: { episode?: Episode }) {
+export function Vault({ episode = vaultEpisode }: { episode?: Episode }) {
+  if (isEpisodeReleased(episode) && episode.vaultReady === false)
+    return (
+      <section className="vault-standby">
+        <h1>This part’s vault is not available yet.</h1>
+        <a
+          href={episode.reelUrl}
+          className="button primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WATCH PART {String(episode.part).padStart(2, "0")}{" "}
+          <ArrowRight size={16} />
+        </a>
+      </section>
+    );
   return isEpisodeReleased(episode) ? (
     <ActiveVault episode={episode} />
   ) : (
@@ -176,7 +191,9 @@ function ActiveVault({ episode }: { episode: Episode }) {
   return (
     <div className="vault-layout">
       <div className="vault-brief">
-        <span className="eyebrow pink">RESTRICTED ACCESS / EXHIBIT 001</span>
+        <span className="eyebrow pink">
+          PART {String(episode.part).padStart(2, "0")} VAULT / EXHIBIT 001
+        </span>
         <h1>
           EVERY SAFE
           <br />

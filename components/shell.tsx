@@ -18,13 +18,18 @@ import {
   Coins,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { siteConfig, activeEpisode, activeEpisodeReleased } from "@/lib/data";
+import { siteConfig, latestEpisode, latestEpisodeReleased } from "@/lib/data";
 import { upcomingRelease } from "@/lib/schedule";
 import { isNumber, useStoredState } from "@/lib/storage";
 import { Avatar } from "./art";
 const navigation = [
   { href: "/", label: "HQ", shortLabel: "HQ", icon: House },
-  { href: "/files", label: "Case files", shortLabel: "Files", icon: FolderOpen },
+  {
+    href: "/files",
+    label: "Case files",
+    shortLabel: "Files",
+    icon: FolderOpen,
+  },
   { href: "/safe", label: "The safe", shortLabel: "Safe", icon: LockKeyhole },
   { href: "/board", label: "The board", shortLabel: "Board", icon: Network },
   { href: "/games", label: "Games", shortLabel: "Games", icon: Gamepad2 },
@@ -44,10 +49,13 @@ export function Brand() {
   );
 }
 export function Announcement() {
-  const [release, setRelease] = useState<ReturnType<typeof upcomingRelease>>(null);
+  const [release, setRelease] =
+    useState<ReturnType<typeof upcomingRelease>>(null);
   useEffect(() => {
     const tick = () => {
-      setRelease(upcomingRelease(siteConfig.nextReleaseAt, siteConfig.countdownTimeZone));
+      setRelease(
+        upcomingRelease(siteConfig.nextReleaseAt, siteConfig.countdownTimeZone),
+      );
     };
     const initial = setTimeout(tick, 0);
     if (!siteConfig.nextReleaseAt) return () => clearTimeout(initial);
@@ -65,20 +73,32 @@ export function Announcement() {
           <span className="announcement-copy">
             {release
               ? `NEXT DROP · ${release.label}`
-              : activeEpisodeReleased
-                ? `PART ${String(activeEpisode.part).padStart(2, "0")} LIVE · NEXT PART IN PRODUCTION`
+              : latestEpisodeReleased
+                ? `PART ${String(latestEpisode.part).padStart(2, "0")} LIVE · NEXT PART IN PRODUCTION`
                 : "THE NEXT CASE IS IN PRODUCTION"}
           </span>
           <span className="announcement-mobile">
-            {release ? release.label : "NEXT PART IN PRODUCTION"}
+            {release
+              ? release.label
+              : latestEpisodeReleased
+                ? `PART ${String(latestEpisode.part).padStart(2, "0")} LIVE`
+                : "NEXT PART IN PRODUCTION"}
           </span>
         </span>
         {release ? (
-          <span className="countdown" aria-label={`Next drop in ${release.countdown}`}>
+          <span
+            className="countdown"
+            aria-label={`Next drop in ${release.countdown}`}
+          >
             {release.countdown}
           </span>
         ) : (
-          <a className="announcement-link" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+          <a
+            className="announcement-link"
+            href={siteConfig.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             GET UPDATES <ArrowUpRight size={13} />
           </a>
         )}
@@ -105,7 +125,9 @@ export function Header() {
               >
                 <Icon size={14} />
                 <span className="nav-label-full">{label}</span>
-                <span className="nav-label-short" aria-hidden="true">{shortLabel}</span>
+                <span className="nav-label-short" aria-hidden="true">
+                  {shortLabel}
+                </span>
                 {href === "/safe" && <span className="nav-dot" />}
               </Link>
             ))}

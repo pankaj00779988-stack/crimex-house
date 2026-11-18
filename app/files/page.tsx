@@ -36,8 +36,8 @@ export default function FilesPage() {
       <div className="archive-heading">
         <span className="mono">SEASON 01 — CASE FILES</span>
         <span className="mono muted">
-          {episodes.filter(isEpisodeReleased).length} DECLASSIFIED /{" "}
-          {episodes.length} FILES
+          {episodes.filter(isEpisodeReleased).length} RELEASED /{" "}
+          {episodes.length} PARTS
         </span>
       </div>
       <section className="files-grid" aria-label="Season one episodes">

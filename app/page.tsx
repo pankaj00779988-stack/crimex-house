@@ -15,7 +15,13 @@ import { getPublicEpisode } from "@/lib/release";
 import { Engagement } from "@/components/share";
 import { Vote } from "@/components/vote";
 import { EpisodeCard, WatchButton } from "@/components/dossier";
-import { activeEpisode, activeEpisodeReleased, siteConfig } from "@/lib/data";
+import {
+  activeEpisode,
+  activeEpisodeReleased,
+  latestEpisode,
+  latestEpisodeReleased,
+  siteConfig,
+} from "@/lib/data";
 import heist from "@/data/heist.json";
 
 export default function Home() {
@@ -49,7 +55,7 @@ export default function Home() {
             Watch the story. <strong>Tell us the next move.</strong>
           </p>
           <div className="cinema-actions">
-            <WatchButton episode={getPublicEpisode(activeEpisode)} />
+            <WatchButton episode={getPublicEpisode(latestEpisode)} />
             <Link className="cinema-game-link" href="/games#room-17">
               PLAY THE FREE CASE
               <ArrowRight size={17} />
@@ -61,11 +67,14 @@ export default function Home() {
         </div>
         <div className="cinema-stamp">
           <span className="stamp">
-            {activeEpisodeReleased
-              ? "LIVE NOW"
-              : "COMING SOON"}
+            {latestEpisodeReleased ? "LIVE NOW" : "COMING SOON"}
           </span>
-          <span>PART 01 / {activeEpisode.runtime}</span>
+          <span>
+            PART {String(latestEpisode.part).padStart(2, "0")}
+            {latestEpisode.runtime
+              ? ` / ${latestEpisode.runtime}`
+              : " / ON INSTAGRAM"}
+          </span>
         </div>
         <div className="cinema-caption">
           <ScanLine size={14} />
@@ -77,8 +86,10 @@ export default function Home() {
       <section className="hq-case-section" aria-labelledby="case-title">
         <div className="hq-section-heading">
           <div>
-            <span className="eyebrow pink">THE CURRENT CASE / YOUR NEXT MOVE</span>
-            <h2 id="case-title">The first bad decision.</h2>
+            <span className="eyebrow pink">
+              PART {String(activeEpisode.part).padStart(2, "0")} / YOUR NEXT MOVE
+            </span>
+            <h2 id="case-title">The next move has a price.</h2>
           </div>
           <Link href="/files" className="text-link">
             OPEN THE ARCHIVE

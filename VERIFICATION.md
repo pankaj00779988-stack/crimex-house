@@ -215,3 +215,30 @@ The live phone shared-identity and release-gate journeys both passed. No runtime
 error/fatal logs were found for the deployment during the checked ten-minute
 window. A post-release database read confirmed automatic checks remain paused.
 Part 2 stays locked, cash stays $5,000,000, and hosting/database plans are unchanged.
+
+## Part 02 release — 18 November 2026
+
+The creator supplied the Part 02 Reel (`Df5gbH3y-xP`). Instagram's public page
+lookup was throttled, so the existing saved Meta connection was used read-only
+to retrieve the matching caption, Reel and official cover. The cover confirms
+**THE $200K TRAP**; the caption confirms DEAL/BOLT, the $200,000 demand and
+$4,900,000 remaining. The Reel's ending shows $0 banked, 52% suspicion and
+2:47 AM at the lift bay. Runtime is 77.5 seconds, displayed as 01:18. Automatic
+DM checks were not enabled and no Instagram message or comment was sent.
+
+Part 02 is now the active story, with its real cover, synopsis, choices and exact
+creator-supplied URL. Watch, Like, Comment and Board theory actions point to that
+Reel. Votes are still local drafts until posted on Instagram; no totals were
+invented. Part 01 remains archived and playable. Reel release and vault readiness
+are separate: Part 02 has no confirmed vault clue/code, so `/safe` retains the
+Part 01 puzzle and its existing storage keys. The Board identifies the retained
+Part 01 evidence separately. Parts 03–06 remain locked. Mission credit rules,
+member data and hosting/database plans are unchanged.
+
+Local checks passed all 70 unit/service tests, ESLint, TypeScript and the final
+production build. Twelve Chromium checks passed across phone and desktop, with
+two viewport-independent duplicate cases skipped. They cover the current Reel's
+exact links, both released archive files, Part 3's lock, the $4.9M HUD, separate
+Part 1/2 vote history, the retained Part 1 vault, Room 17, shared account identity,
+local drafts and metadata. Mobile HQ and the Part 02 modal were visually reviewed;
+the new released badge was moved into normal flow to prevent text overlap.

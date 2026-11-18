@@ -2,7 +2,13 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { activeEpisode, siteConfig, type Episode } from "../lib/data";
+import {
+  activeEpisode,
+  latestEpisode,
+  vaultEpisode,
+  siteConfig,
+  type Episode,
+} from "../lib/data";
 import {
   getPublicEpisode,
   getWatchUrl,
@@ -16,8 +22,44 @@ import { DossierModal, EpisodeCard, WatchButton } from "../components/dossier";
 
 const reelUrl =
   "https://www.instagram.com/reel/ReleaseFixture_01/?igsh=test123";
-const standby: Episode = { ...activeEpisode, isReleased: false, reelUrl: "" };
+const standby: Episode = { ...vaultEpisode, isReleased: false, reelUrl: "" };
 const released: Episode = { ...standby, isReleased: true, reelUrl };
+
+test("Part 2 release opens its real choices while keeping Part 1's vault and avoiding an invented clue", () => {
+  assert.equal(latestEpisode.part, 2);
+  assert.equal(
+    latestEpisode.reelUrl,
+    "https://www.instagram.com/reel/Df5gbH3y-xP/?knvt=Y3M3NWczcHl6dGZl",
+  );
+  assert.equal(isEpisodeReleased(latestEpisode), true);
+  assert.equal(activeEpisode.part, 2);
+  assert.equal(activeEpisode.title, "THE $200K TRAP");
+  assert.equal(siteConfig.cash, 4900000);
+  assert.equal(siteConfig.initialSuspicion, 52);
+  assert.equal(vaultEpisode.part, 1);
+  assert.equal(vaultEpisode.safeCode, "1150");
+  const html = renderToStaticMarkup(
+    createElement(DossierModal, {
+      episode: latestEpisode,
+      open: false,
+      onClose() {},
+    }),
+  );
+  assert.ok(html.includes(`href="${latestEpisode.reelUrl}"`));
+  assert.match(html, /vault is not available yet/);
+  assert.doesNotMatch(html, /Structuring|Bundle #50|RECOVERED INTELLIGENCE/);
+  const vote = renderToStaticMarkup(
+    createElement(Vote, { episode: latestEpisode }),
+  );
+  assert.match(vote, /DEAL/);
+  assert.match(vote, /BOLT/);
+  assert.doesNotMatch(vote, /DECOY/);
+  const vault = renderToStaticMarkup(
+    createElement(Vault, { episode: latestEpisode }),
+  );
+  assert.match(vault, /vault is not available yet/);
+  assert.doesNotMatch(vault, /aria-label="Digit/);
+});
 
 test("standby remains sealed regardless of the clock or a prefilled Reel URL", () => {
   assert.equal(isEpisodeReleased(standby), false);

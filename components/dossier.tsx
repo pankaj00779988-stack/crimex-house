@@ -9,7 +9,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
-import { Episode, siteConfig } from "@/lib/data";
+import { Episode, siteConfig, vaultEpisode } from "@/lib/data";
 import { getWatchUrl, isEpisodeReleased } from "@/lib/release";
 import { SceneArt } from "./art";
 export function DossierModal({
@@ -63,16 +63,43 @@ export function DossierModal({
         </span>
         <h2 id={titleId}>{episode.title}</h2>
         <div className="dossier-divider" />
-        {released ? (
+        {released && episode.vaultReady === false ? (
+          <div className="teaser-dossier released-dossier">
+            <span className="stamp">REEL RELEASED</span>
+            <span className="eyebrow">INCIDENT REPORT</span>
+            <p>{episode.summary}</p>
+            <p className="teaser-note">
+              Part {String(episode.part).padStart(2, "0")} is live on Instagram.
+              This part’s vault is not available yet. Part{" "}
+              {String(vaultEpisode.part).padStart(2, "0")}’s vault remains open
+              on the website.
+            </p>
+            <a
+              href={episode.reelUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button dark-button"
+            >
+              <Play size={15} /> Watch on Instagram
+              <ArrowUpRight size={15} />
+            </a>
+            <Link href="/safe" onClick={onClose} className="text-link">
+              Play the Part {String(vaultEpisode.part).padStart(2, "0")} vault{" "}
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        ) : released ? (
           <>
             <span className="eyebrow">INCIDENT REPORT</span>
             <p>{episode.summary}</p>
-            <div className="law-card">
-              <span className="stamp">FEDERAL FELONY</span>
-              <FileText size={24} />
-              <h3>{episode.realLawRule}</h3>
-              <p>{episode.lawExplanation}</p>
-            </div>
+            {episode.realLawRule && (
+              <div className="law-card">
+                <span className="stamp">FEDERAL FELONY</span>
+                <FileText size={24} />
+                <h3>{episode.realLawRule}</h3>
+                <p>{episode.lawExplanation}</p>
+              </div>
+            )}
             <div className="clue-card">
               <span className="eyebrow">RECOVERED INTELLIGENCE</span>
               <p>{episode.recoveredIntelligence ?? episode.safeClue}</p>

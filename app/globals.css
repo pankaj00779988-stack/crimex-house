@@ -4240,6 +4240,15 @@ legend,
 .teaser-dossier > .button {
   margin-top: 25px;
 }
+.teaser-dossier.released-dossier > .stamp {
+  position: static;
+  display: table;
+  margin-bottom: 22px;
+}
+.released-dossier > .eyebrow {
+  display: block;
+  margin-bottom: 8px;
+}
 .vault-standby {
   max-width: 700px;
   margin: 56px auto 10px;

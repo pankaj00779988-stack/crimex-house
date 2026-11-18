@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
-import { activeEpisode, activeEpisodeReleased } from "@/lib/data";
+import { latestEpisode, latestEpisodeReleased } from "@/lib/data";
 
 export const runtime = "nodejs";
 export const alt =
@@ -137,8 +137,8 @@ export default async function OpenGraphImage() {
                 color: "#08080a",
               }}
             >
-              {activeEpisodeReleased
-                ? `PART ${String(activeEpisode.part).padStart(2, "0")} LIVE ON INSTAGRAM`
+              {latestEpisodeReleased
+                ? `PART ${String(latestEpisode.part).padStart(2, "0")} LIVE ON INSTAGRAM`
                 : "THE NEXT CASE IS IN PRODUCTION"}
             </div>
             <div style={{ display: "flex", color: "#efebf3" }}>

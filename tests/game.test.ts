@@ -8,6 +8,7 @@ import {
 } from "../lib/game";
 import config from "../data/siteConfig.json";
 import episodes from "../data/episodes.json";
+import { vaultEpisode } from "../lib/data";
 
 test("vault recognizes all four correct positions", () => {
   assert.deepEqual(scoreGuess("1150", "1150"), [
@@ -71,8 +72,11 @@ test("handles accept Instagram characters and reject injection, whitespace and e
 test("editorial configuration has one active episode, valid counts, and no paid tiers", () => {
   const live = episodes.filter((e) => e.status === "LIVE");
   assert.equal(live.length, 1);
-  assert.equal(episodes.filter((e) => e.status === "LOCKED").length, 5);
-  assert.match(live[0].safeCode!, /^\d{4}$/);
+  assert.deepEqual(
+    episodes.filter((e) => e.status === "LOCKED").map((e) => e.part),
+    [3, 4, 5, 6],
+  );
+  assert.match(vaultEpisode.safeCode!, /^\d{4}$/);
   assert.equal(live[0].choices!.length, 2);
   assert.ok(
     Object.values(live[0].initialVotes!).every(
