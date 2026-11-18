@@ -66,6 +66,21 @@ function newSession(now: Date) {
     stored: { hash: digest(token), expires: now.getTime() + 30 * 86400_000 },
   };
 }
+export async function crewIdentity(
+  cookie: string | undefined,
+  store: CrewStore = privateStore,
+  now = new Date(),
+) {
+  if (!cookie) return null;
+  try {
+    const { account } = await authenticate(cookie, store, now);
+    return { handle: account.handle, verified: isVerified(account) };
+  } catch (error) {
+    if (error instanceof CrewError && error.status === 401) return null;
+    throw error;
+  }
+}
+
 export async function rateLimit(
   store: CrewStore,
   identity: string,

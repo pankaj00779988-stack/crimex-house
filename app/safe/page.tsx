@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { LockKeyhole } from "lucide-react";
 import { Hud } from "@/components/shell";
 import { Vault } from "@/components/vault";
-export const metadata: Metadata = {
-  title: "Crack the Safe",
-  description:
-    "Four digits. Five attempts. Follow the evidence and crack the Crimex House vault.",
-};
+import { pageMetadata } from "@/lib/metadata";
+export const metadata: Metadata = pageMetadata(
+  "Crack the Safe",
+  "Four digits. Five attempts. Follow the evidence and crack the Crimex House vault.",
+  "/safe",
+);
 export default function SafePage() {
   return (
     <main id="main" className="page-container subpage">

@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Network } from "lucide-react";
 import { Hud } from "@/components/shell";
 import { InvestigationBoard } from "@/components/board";
-export const metadata: Metadata = {
-  title: "Persons of Interest",
-  description:
-    "Join the free crew board, save a personal handle pin, and draft your theory for Instagram.",
-};
+import { pageMetadata } from "@/lib/metadata";
+export const metadata: Metadata = pageMetadata(
+  "Persons of Interest",
+  "Join the free crew board, save a personal handle pin, and draft your theory for Instagram.",
+  "/board",
+);
 export default function BoardPage() {
   return (
     <main id="main" className="page-container subpage">

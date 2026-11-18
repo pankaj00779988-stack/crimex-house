@@ -30,6 +30,8 @@ lockout; an operator must remove or transfer its grant first.
 
 1. The person creates a free website account and DMs their `CREW-XXXXXXXXXX`
    code to `@crimex.house` from the same Instagram handle.
+   Their pending account offers **Copy crew code** and **Open Instagram DM**;
+   they must paste and send the message themselves.
 2. Check the actual DM sender and their follow on Instagram.
 3. Find the handle under **Pending**, open **Verify**, paste the code from the
    DM, and confirm both checks. A mismatched code keeps the account pending.
@@ -55,11 +57,15 @@ they exclude account hashes, passwords, sessions, recovery codes and CREW codes.
 The code for approval must come from the Instagram DM. Each account retains its
 last 20 approval/revocation events. Member deletion removes that account record.
 
-## Connect the DM verification bot
+## Optional future DM bot connection
 
-The integration is implemented but starts disconnected and paused. A Creator
-account is supported. Real Meta account authorization and a live DM test remain
-necessary before claiming that Instagram delivery works end to end.
+The current connection is saved but automatic checks are paused at the owner's
+request. The professional account's app notification subscription was removed
+and a read-back confirmed no subscription. Callback verification succeeded,
+but a real coded DM never completed automatic approval. Use manual review
+above. The steps below are reference for a future reconnection, not a required
+part of today's approval workflow. A Creator account is supported; a live DM
+test is still necessary before claiming delivery works end to end.
 
 1. In [Meta for Developers](https://developers.facebook.com/), create an app
    with **Manage messaging & content on Instagram**. New apps use **API setup

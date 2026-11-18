@@ -15,6 +15,12 @@ import {
   X,
 } from "lucide-react";
 import type { publicAccount } from "@/lib/crew/model";
+import { CrewVerification } from "./crew-verification";
+import {
+  CREW_SESSION_EVENT,
+  CREW_SESSION_KEY,
+  notifyCrewSessionChanged,
+} from "./crew-identity";
 type Wallet = ReturnType<typeof publicAccount>;
 interface CrewState {
   configured: boolean;
@@ -54,6 +60,17 @@ async function api<T>(url: string, body?: unknown): Promise<T> {
     throw new Error(
       data.error || "The crew service is unavailable. Please try again.",
     );
+  if (
+    url === "/api/crew/auth" &&
+    body &&
+    typeof body === "object" &&
+    "mode" in body &&
+    ["register", "login", "recover", "logout", "delete"].includes(
+      String(body.mode),
+    )
+  ) {
+    notifyCrewSessionChanged();
+  }
   return data as T;
 }
 interface Catalog {
@@ -104,10 +121,17 @@ export function CrewMissions({ catalog }: { catalog: Catalog }) {
   useEffect(() => {
     const timer = setTimeout(() => void refresh(), 0);
     const focus = () => void refresh();
+    const storage = (event: StorageEvent) => {
+      if (event.key === CREW_SESSION_KEY) void refresh();
+    };
     window.addEventListener("focus", focus);
+    window.addEventListener(CREW_SESSION_EVENT, focus);
+    window.addEventListener("storage", storage);
     return () => {
       clearTimeout(timer);
       window.removeEventListener("focus", focus);
+      window.removeEventListener(CREW_SESSION_EVENT, focus);
+      window.removeEventListener("storage", storage);
     };
   }, [refresh]);
   useEffect(() => {
@@ -232,18 +256,25 @@ export function CrewMissions({ catalog }: { catalog: Catalog }) {
         </p>
       )}
       {!account && (
-        <section className="mission-reward-preview" aria-labelledby="reward-preview-title">
+        <section
+          className="mission-reward-preview"
+          aria-labelledby="reward-preview-title"
+        >
           <div className="mission-reward-preview-art" aria-hidden="true">
             <span>CRIMEX HOUSE</span>
-            <strong>ZERO<br /><i>ALIBIS.</i></strong>
+            <strong>
+              ZERO
+              <br />
+              <i>ALIBIS.</i>
+            </strong>
             <span>YOUR CREW ID</span>
           </div>
           <div>
             <span className="eyebrow pink">YOUR FIRST UNLOCK</span>
             <h2 id="reward-preview-title">Your personal Crew ID.</h2>
             <p>
-              Earn {catalog.reward.credits} credits for a personalized phone wallpaper.
-              Follow and verify your crew account before redeeming.
+              Earn {catalog.reward.credits} credits for a personalized phone
+              wallpaper. Follow and verify your crew account before redeeming.
             </p>
             <a className="text-link" href="#crew-rewards">
               VIEW THE REWARD <ArrowRight size={14} />
@@ -357,32 +388,10 @@ export function CrewMissions({ catalog }: { catalog: Catalog }) {
                 </span>
               </div>
               {!account.verified && (
-                <>
-                  <h3>Make your membership official.</h3>
-                  <p>
-                    Follow{" "}
-                    <a
-                      href="https://instagram.com/crimex.house"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      @crimex.house
-                    </a>
-                    , then DM this code from the same Instagram account:
-                  </p>
-                  <input
-                    aria-label="Instagram verification code"
-                    className="crew-code"
-                    value={account.verificationCode}
-                    readOnly
-                    onFocus={(e) => e.target.select()}
-                  />
-                  <p className="mission-fineprint">
-                    The creator checks your account and follow manually. You can
-                    earn now; verified followers can redeem rewards and enter
-                    the weekly Top 10.
-                  </p>
-                </>
+                <CrewVerification
+                  code={account.verificationCode}
+                  handle={account.handle}
+                />
               )}
               {account.verified && (
                 <p>
@@ -637,7 +646,11 @@ export function CrewMissions({ catalog }: { catalog: Catalog }) {
           </div>
         </section>
       )}
-      <section className="crew-rewards" id="crew-rewards" aria-labelledby="rewards-title">
+      <section
+        className="crew-rewards"
+        id="crew-rewards"
+        aria-labelledby="rewards-title"
+      >
         <div className="crew-reward-art" aria-hidden="true">
           <span>CRIMEX HOUSE</span>
           <strong>

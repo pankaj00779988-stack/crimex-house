@@ -8,11 +8,12 @@ import {
   SealedEpisodeGame,
 } from "@/components/arcade";
 import { activeEpisodeReleased } from "@/lib/data";
-export const metadata: Metadata = {
-  title: "Room 17 — The Free Heist Case",
-  description:
-    "Read the room. Recover the ledger. Choose your exit. Play the original Room 17 interactive heist case for free.",
-};
+import { pageMetadata } from "@/lib/metadata";
+export const metadata: Metadata = pageMetadata(
+  "Room 17 — The Free Heist Case",
+  "Read the room. Recover the ledger. Choose your exit. Play the original Room 17 interactive heist case for free.",
+  "/games",
+);
 export default function GamesPage() {
   return (
     <main id="main" className="page-container subpage heist-page">

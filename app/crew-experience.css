@@ -1,0 +1,49 @@
+.crew-verification-steps {
+  list-style: decimal;
+  padding-left: 22px;
+  margin: 18px 0;
+  color: #b7b7c1;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.crew-verification-steps li + li {
+  margin-top: 8px;
+}
+.crew-code-label {
+  display: block;
+  margin-bottom: 8px;
+  font:
+    10px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.07em;
+  color: #b7b7c1;
+}
+.crew-verification-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0;
+}
+.crew-verification-actions .button {
+  min-height: 44px;
+  flex: 1 1 180px;
+  white-space: normal;
+  text-align: center;
+}
+.crew-account-panel .crew-verification-actions a {
+  color: #08080a;
+}
+.crew-identity-note {
+  color: #9999a6;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 10px;
+}
+.crew-identity-note a {
+  color: var(--pink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.board-handle-wrap input:read-only {
+  color: #f5f2eb;
+}

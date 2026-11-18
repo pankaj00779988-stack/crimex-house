@@ -158,6 +158,21 @@ test("daily missions save real credits, reject duplicate claims, and recover an 
       fullPage: true,
     });
 
+    const identity = await request("/api/crew/identity");
+    expect(identity.status).toBe(200);
+    expect(identity.data).toEqual({
+      account: { handle: `@${handle}`, verified: false },
+    });
+    await page.goto("/board");
+    await expect(page.getByLabel("YOUR INSTAGRAM HANDLE")).toHaveValue(handle);
+    await expect(page.getByLabel("YOUR INSTAGRAM HANDLE")).toHaveAttribute(
+      "readonly",
+      "",
+    );
+    await page.goto("/missions");
+    await expect(page.locator(".wallet-number")).toContainText("50", {
+      timeout: 30000,
+    });
     await page.getByRole("button", { name: "SIGN OUT", exact: true }).click();
     await expect(
       page.getByRole("button", { name: "CREATE CREW ACCOUNT" }),

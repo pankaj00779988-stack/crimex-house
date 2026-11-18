@@ -18,6 +18,8 @@ import { isEpisodeReleased } from "@/lib/release";
 import { normalizeHandle, scoreGuess, validHandle } from "@/lib/game";
 import { isBoolean, isNumber, isString, useStoredState } from "@/lib/storage";
 import { useSound } from "@/lib/sound";
+import { crewCompletionKey } from "@/lib/crew-browser";
+import { useCrewIdentity, type CrewIdentity } from "./crew-identity";
 const emptyAttempts: string[] = [];
 const isAttempts = (v: unknown): v is string[] =>
   Array.isArray(v) &&
@@ -40,8 +42,8 @@ function VaultStandby({ episode }: { episode: Episode }) {
         <LockKeyhole size={44} />
       </div>
       <h1 id="vault-standby-title">
-        VAULT SEALED UNTIL PART {String(episode.part).padStart(2, "0")}{" "}
-        IS RELEASED
+        VAULT SEALED UNTIL PART {String(episode.part).padStart(2, "0")} IS
+        RELEASED
       </h1>
       <p>
         The keypad and evidence are under seal. Watch the premiere to find your
@@ -78,15 +80,8 @@ function ActiveVault({ episode }: { episode: Episode }) {
   );
   const [misses, setMisses] = useStoredState("crimex:misses", 0, isNumber);
   const [sfx, setSfx] = useStoredState("crimex:sfx", true, isBoolean);
-  const [completion, setCompletion] = useStoredState(
-    `crimex:crew:${episode.id}`,
-    "",
-    isString,
-  );
   const [input, setInput] = useState("");
   const [message, setMessage] = useState("");
-  const [handle, setHandle] = useState("");
-  const [handleError, setHandleError] = useState("");
   const play = useSound(sfx);
   const code = episode.safeCode ?? "";
   const unlocked = attempts.includes(code);
@@ -376,62 +371,104 @@ function ActiveVault({ episode }: { episode: Episode }) {
           <p>{episode.unlockMessage}</p>
           <div className="dossier-divider" />
           <span className="eyebrow">CREW COMPLETION LOG</span>
-          {completion ? (
-            <div className="completion-confirmation">
-              <Check size={21} />
-              <div>
-                <strong>{completion}</strong>
-                <p>Completion recorded on this device. You’re in the crew.</p>
-              </div>
-              <Link href="/board" className="text-link">
-                See the board
-                <ArrowRight size={15} />
-              </Link>
-            </div>
-          ) : (
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                if (!validHandle(handle)) {
-                  setHandleError(
-                    "Use 1–30 letters, numbers, dots, or underscores.",
-                  );
-                  return;
-                }
-                if (!setCompletion(normalizeHandle(handle)))
-                  setHandleError(
-                    "Storage is unavailable. Enable it to log your completion.",
-                  );
-              }}
-            >
-              <label htmlFor="crew-handle">YOUR INSTAGRAM HANDLE</label>
-              <div className="handle-form-row">
-                <input
-                  id="crew-handle"
-                  value={handle}
-                  onChange={(e) => setHandle(e.target.value)}
-                  placeholder="@your.handle"
-                  autoComplete="off"
-                  maxLength={31}
-                  aria-describedby={handleError ? "crew-error" : undefined}
-                />
-                <button className="button dark-button" type="submit">
-                  LOG COMPLETION
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-              {handleError && (
-                <p className="form-error" id="crew-error" role="alert">
-                  {handleError}
-                </p>
-              )}
-              <small>
-                Saved on this device. No Instagram sign-in required.
-              </small>
-            </form>
-          )}
+          <VaultCompletion episode={episode} />
         </section>
       )}
     </div>
+  );
+}
+
+function VaultCompletion({ episode }: { episode: Episode }) {
+  const { account, loading } = useCrewIdentity();
+  return (
+    <PersonalCompletion
+      key={account?.handle ?? "guest"}
+      episode={episode}
+      account={account}
+      loading={loading}
+    />
+  );
+}
+function PersonalCompletion({
+  episode,
+  account,
+  loading,
+}: {
+  episode: Episode;
+  account: CrewIdentity | null;
+  loading: boolean;
+}) {
+  const [completion, setCompletion] = useStoredState(
+    crewCompletionKey(episode.id, account?.handle),
+    "",
+    isString,
+  );
+  const [handle, setHandle] = useState("");
+  const [handleError, setHandleError] = useState("");
+  return (
+    <>
+      {loading ? (
+        <p role="status">Checking your saved crew account…</p>
+      ) : completion ? (
+        <div className="completion-confirmation">
+          <Check size={21} />
+          <div>
+            <strong>{completion}</strong>
+            <p>
+              Completion recorded on this device. Crew verification is separate.
+            </p>
+          </div>
+          <Link href="/board" className="text-link">
+            See the board
+            <ArrowRight size={15} />
+          </Link>
+        </div>
+      ) : (
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            const chosenHandle = account?.handle ?? handle;
+            if (!validHandle(chosenHandle)) {
+              setHandleError(
+                "Use 1–30 letters, numbers, dots, or underscores.",
+              );
+              return;
+            }
+            if (!setCompletion(normalizeHandle(chosenHandle)))
+              setHandleError(
+                "Storage is unavailable. Enable it to log your completion.",
+              );
+          }}
+        >
+          <label htmlFor="crew-handle">YOUR INSTAGRAM HANDLE</label>
+          <div className="handle-form-row">
+            <input
+              id="crew-handle"
+              value={account?.handle ?? handle}
+              readOnly={!!account}
+              onChange={(e) => setHandle(e.target.value)}
+              placeholder="@your.handle"
+              autoComplete="off"
+              maxLength={31}
+              aria-describedby={handleError ? "crew-error" : undefined}
+            />
+            <button className="button dark-button" type="submit">
+              LOG COMPLETION
+              <ArrowRight size={16} />
+            </button>
+          </div>
+          {handleError && (
+            <p className="form-error" id="crew-error" role="alert">
+              {handleError}
+            </p>
+          )}
+          <small>
+            {account
+              ? "Using your saved crew handle. Completion stays on this device and does not award credits."
+              : "Saved on this device. No account required. Crew verification is separate."}
+          </small>
+        </form>
+      )}
+    </>
   );
 }

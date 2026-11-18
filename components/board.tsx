@@ -18,6 +18,8 @@ import {
 import { activeEpisode, corkboard, siteConfig } from "@/lib/data";
 import { normalizeHandle, validHandle } from "@/lib/game";
 import { isString, useStoredState } from "@/lib/storage";
+import { crewCompletionKey, crewDraftKey } from "@/lib/crew-browser";
+import { useCrewIdentity, type CrewIdentity } from "./crew-identity";
 function EvidenceVisual({ kind }: { kind: string }) {
   if (kind === "silhouette")
     return (
@@ -71,8 +73,24 @@ const isDraft = (value: unknown): value is CrewDraft => {
   );
 };
 export function InvestigationBoard() {
+  const { account, loading } = useCrewIdentity();
+  return (
+    <PersonalBoard
+      key={account?.handle ?? "guest"}
+      account={account}
+      loading={loading}
+    />
+  );
+}
+function PersonalBoard({
+  account,
+  loading,
+}: {
+  account: CrewIdentity | null;
+  loading: boolean;
+}) {
   const [saved, setSaved] = useStoredState(
-    "crimex:crew:draft",
+    crewDraftKey(account?.handle),
     emptyDraft,
     isDraft,
   );
@@ -80,15 +98,18 @@ export function InvestigationBoard() {
   const [handle, setHandle] = useState("");
   const [message, setMessage] = useState("");
   const [completion] = useStoredState(
-    `crimex:crew:${activeEpisode.id}`,
+    crewCompletionKey(activeEpisode.id, account?.handle),
     "",
     isString,
   );
   const theory = draftTheory ?? saved.theory;
   const released = isEpisodeReleased(activeEpisode);
-  const preview = handle.trim()
-    ? normalizeHandle(handle).slice(0, 31)
-    : saved.handle || completion || "@your.handle";
+  const preview = loading
+    ? "CHECKING ACCOUNT…"
+    : (account?.handle ??
+      (handle.trim()
+        ? normalizeHandle(handle).slice(0, 31)
+        : saved.handle || completion || "@your.handle"));
   return (
     <div className="board-layout">
       <section
@@ -181,7 +202,8 @@ export function InvestigationBoard() {
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            const chosenHandle = handle || saved.handle || completion;
+            const chosenHandle =
+              account?.handle || handle || saved.handle || completion;
             if (!validHandle(chosenHandle)) {
               setMessage(
                 "Enter 1–30 letters, numbers, dots, or underscores for your Instagram handle.",
@@ -210,7 +232,9 @@ export function InvestigationBoard() {
             <span>@</span>
             <input
               id="board-handle"
-              value={handle}
+              value={account ? account.handle.replace(/^@/, "") : handle}
+              readOnly={!!account}
+              disabled={loading}
               onChange={(e) => {
                 setHandle(e.target.value.replace(/^@/, ""));
                 setMessage("");
@@ -221,12 +245,19 @@ export function InvestigationBoard() {
               aria-describedby="crew-pin-note"
             />
           </div>
+          {account && (
+            <p className="crew-identity-note">
+              Using your saved crew account.{" "}
+              <Link href="/missions#crew-account">Manage account</Link>
+            </p>
+          )}
           <label className="form-label theory-label" htmlFor="board-theory">
             YOUR CASE THEORY <span>OPTIONAL</span>
           </label>
           <textarea
             id="board-theory"
-            value={theory}
+            value={loading ? "" : theory}
+            disabled={loading}
             onChange={(e) => setDraftTheory(e.target.value)}
             maxLength={siteConfig.participation.maxTheoryLength}
             placeholder="What would you do if you found the money?"
@@ -235,7 +266,11 @@ export function InvestigationBoard() {
           <span className="theory-limit">
             {theory.length}/{siteConfig.participation.maxTheoryLength}
           </span>
-          <button className="button primary crew-save" type="submit">
+          <button
+            className="button primary crew-save"
+            type="submit"
+            disabled={loading}
+          >
             SAVE MY FREE CREW PIN
             <ArrowUpRight size={16} />
           </button>
@@ -247,7 +282,7 @@ export function InvestigationBoard() {
             publish to Instagram or the public board.
           </p>
         </form>
-        {released && theory.trim() ? (
+        {released && !loading && theory.trim() ? (
           <CommentLink
             text={theory.trim()}
             reelUrl={activeEpisode.reelUrl!}

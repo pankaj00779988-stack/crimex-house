@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { SiteAnalytics } from "@/components/site-analytics";
+import { CrewIdentityProvider } from "@/components/crew-identity";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
@@ -14,9 +15,11 @@ import "./redesign.css";
 import "./missions.css";
 import "./owner.css";
 import "./policy.css";
+import "./crew-experience.css";
 import { Header, Footer } from "@/components/shell";
 import { siteConfig } from "@/lib/data";
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.siteUrl),
   title: {
     default: "CRIMEX HOUSE — Every move leaves a trace.",
     template: "%s | CRIMEX HOUSE",
@@ -33,6 +36,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.seriesTitle,
     description: siteConfig.description,
+    images: [
+      {
+        url: "/opengraph-image",
+        alt: "CRIMEX HOUSE — Five million. Zero alibis.",
+      },
+    ],
   },
   robots: { index: true, follow: true },
 };
@@ -50,10 +59,12 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <Header />
-        {children}
-        <Footer />
-        <SiteAnalytics />
+        <CrewIdentityProvider>
+          <Header />
+          {children}
+          <Footer />
+          <SiteAnalytics />
+        </CrewIdentityProvider>
       </body>
     </html>
   );

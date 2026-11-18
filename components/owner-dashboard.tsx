@@ -10,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import type { CrewMember } from "@/lib/crew/directory";
+import { notifyCrewSessionChanged } from "./crew-identity";
 
 interface DashboardState {
   authenticated: boolean;
@@ -43,6 +44,15 @@ async function api<T>(url: string, body?: unknown): Promise<T> {
     throw new Error(
       data.error ?? "The owner service is unavailable. Please retry.",
     );
+  if (
+    body &&
+    typeof body === "object" &&
+    "mode" in body &&
+    ((url === "/api/crew/auth" &&
+      ["login", "recover", "logout"].includes(String(body.mode))) ||
+      (url === "/api/owner" && body.mode === "setup"))
+  )
+    notifyCrewSessionChanged();
   return data;
 }
 export function OwnerDashboard() {
@@ -509,7 +519,7 @@ export function OwnerDashboard() {
                   {state.bot?.configured
                     ? state.bot.enabled
                       ? "Automatic checks enabled"
-                      : "Ready to connect"
+                      : "Automatic checks paused"
                     : "Meta connection needed"}
                 </h2>
                 <p>

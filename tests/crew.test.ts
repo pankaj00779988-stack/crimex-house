@@ -17,6 +17,7 @@ import {
   challenge,
   claim,
   createAccount,
+  crewIdentity,
   deleteAccount,
   leaderboard,
   login,
@@ -137,6 +138,18 @@ test("website accounts store password hashes and expose only the private wallet 
     /12–128/,
   );
 });
+test("shared identity exposes only the authenticated handle and eligibility and clears on logout", async () => {
+  const a = await joined();
+  assert.equal(await crewIdentity(undefined, a.store, now), null);
+  assert.equal(await crewIdentity("forged.session", a.store, now), null);
+  assert.deepEqual(await crewIdentity(a.cookie, a.store, now), {
+    handle: "@crew.test",
+    verified: false,
+  });
+  await logout(a.cookie, a.store, now);
+  assert.equal(await crewIdentity(a.cookie, a.store, now), null);
+});
+
 test("concurrent replayed claims award a daily mission exactly once", async () => {
   const a = await joined();
   const p = await challenge(a.cookie, "cipher", secret, a.store, now);

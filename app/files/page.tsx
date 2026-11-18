@@ -4,7 +4,12 @@ import { isEpisodeReleased, getPublicEpisode } from "@/lib/release";
 import { Hud } from "@/components/shell";
 import { EpisodeCard } from "@/components/dossier";
 import { episodes, siteConfig } from "@/lib/data";
-export const metadata: Metadata = { title: "Case Files" };
+import { pageMetadata } from "@/lib/metadata";
+export const metadata: Metadata = pageMetadata(
+  "Case Files",
+  "Open released CRIMEX HOUSE case files and watch each episode on Instagram. Future files stay locked.",
+  "/files",
+);
 export default function FilesPage() {
   return (
     <main id="main" className="page-container subpage">
@@ -43,7 +48,11 @@ export default function FilesPage() {
       <p className="archive-note">
         <span className="live-dot" />
         The next part is in production. Follow{" "}
-        <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+        <a
+          href={siteConfig.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {siteConfig.handle}
         </a>{" "}
         for confirmed release updates. Locked files open as the story unfolds.

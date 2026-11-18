@@ -169,3 +169,33 @@ receipt or approval; request logs showed the callback-verification GET but no DM
 POST during the test window. The Meta app was still in Development/Unpublished
 mode. Inspect and complete Meta's publishing requirements, then repeat the real
 DM test before claiming public crew verification works end to end.
+
+## Manual verification, shared identity and link previews — 18 November 2026
+
+Automatic Instagram checks were subsequently paused at the owner's request.
+The professional account's app notification subscription was removed; Meta
+confirmed success and a read-back returned no subscription. Saved credentials
+and callback settings were retained. No successful real DM delivery or automatic
+approval is claimed. Manual owner review remains available.
+
+Pending members now get numbered manual steps, a copy-code control with a
+selectable-code fallback, and an Instagram DM link that sends nothing itself.
+The authenticated handle is reused by the Board and vault via a minimal private,
+uncached identity endpoint. Account drafts/completions and existing guest records
+stay separate in localStorage; theories are never uploaded. Vault completion is
+explicitly separate from membership verification and credit awards. Public links
+have a branded 1200×630 PNG cover and page-specific sharing metadata.
+
+Final local validation passed 69 unit/service tests, lint, TypeScript and the
+production build. Chromium passed the existing public route/game suite on phone
+and desktop, plus the shared-identity journey on both sizes. The journey checks
+manual instructions, clipboard success and denial, read-only handles, separate
+guest/account drafts, vault completion, focus refresh, and cross-tab sign-out.
+A phone check confirmed free guest Board/vault use during both an identity-service
+failure and a stalled request. Metadata and PNG dimensions passed; the cover and mobile verification
+panel were visually reviewed. A real account lifecycle passed against the
+isolated development namespace on the preview database, including the new
+authenticated identity response, all 50 daily credits, recovery and QA deletion.
+No production QA account was created. A fresh production status check confirmed
+automatic checks disabled, callback verification retained and zero Meta account
+notification subscriptions. Story, mission and reward JSON are unchanged.
