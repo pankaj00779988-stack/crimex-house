@@ -197,6 +197,10 @@ export function Footer() {
           </a>
         </div>
       </div>
+      <nav className="footer-policies" aria-label="Privacy and account data">
+        <Link href="/privacy">Privacy policy</Link>
+        <Link href="/data-deletion">Data deletion</Link>
+      </nav>
       <div className="footer-bottom">
         <span>© {new Date().getUTCFullYear()} CRIMEX HOUSE</span>
         <span>

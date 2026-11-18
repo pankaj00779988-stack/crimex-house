@@ -96,6 +96,17 @@ necessary before claiming that Instagram delivery works end to end.
    Confirm approval. Also test a non-follower, wrong code, and a sender outside
    the app's roles as Meta permits. Keep manual review available.
 
+If Meta's **Publish** page asks for a privacy-policy URL, use
+`https://crimexhouse.vercel.app/privacy` in **App settings → Basic**. The public
+data-deletion instructions are at
+`https://crimexhouse.vercel.app/data-deletion`; choose the **Data deletion
+instructions URL** option if Meta asks for it, not an automatic callback. These
+pages describe the implemented account and verification behavior, including
+manual deletion help through the creator. A `DATA DELETION` DM is not an
+automatic command. Complete the publishing and access requirements Meta actually
+shows; successful callback verification and subscription alone do not prove that
+real DMs are delivered in Development mode.
+
 For an older Meta app that still offers **Instagram Login**, choose **Instagram
 Login (older Meta apps)** in the owner form and supply its Instagram User access
 token. That mode uses `graph.instagram.com`, `instagram_business_basic` and

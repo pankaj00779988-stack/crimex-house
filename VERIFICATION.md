@@ -147,3 +147,25 @@ preview QA data was removed after testing. Story, credit and reward JSON stayed
 unchanged. A real Meta token/callback/DM test is still required; the bot has not
 been declared connected or enabled. This setup uses Meta's dashboard-generated
 token for the owner's account, not a public OAuth onboarding implementation.
+
+## Public privacy and deletion pages — 18 November 2026
+
+Added `/privacy` and `/data-deletion` with links in the existing site footer.
+The pages describe current crew storage, Instagram verification, ranking
+consent, retention limits and existing password-confirmed account deletion.
+Future paid-store plans are explicitly separate. No account, wallet, bot logic
+or episode-release configuration was changed.
+
+Validation: ESLint, TypeScript and the production build passed. Browser checks
+passed at 375px and 1440px, including footer navigation, numbered deletion
+instructions, no horizontal overflow or client errors, and public access with
+JavaScript disabled. The existing phone episode-first release-gate check passed:
+Part 2 stays locked and cash remains $5,000,000.
+
+Meta connection progress: the owner privately saved credentials, Meta verified
+the callback, and both the app and professional account subscribed to `messages`.
+Automatic checks are enabled. A real coded test DM has not produced a completed
+receipt or approval; request logs showed the callback-verification GET but no DM
+POST during the test window. The Meta app was still in Development/Unpublished
+mode. Inspect and complete Meta's publishing requirements, then repeat the real
+DM test before claiming public crew verification works end to end.

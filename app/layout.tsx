@@ -13,6 +13,7 @@ import "./globals.css";
 import "./redesign.css";
 import "./missions.css";
 import "./owner.css";
+import "./policy.css";
 import { Header, Footer } from "@/components/shell";
 import { siteConfig } from "@/lib/data";
 export const metadata: Metadata = {
