@@ -9,6 +9,11 @@ export function response(data: unknown, status = 200) {
   });
 }
 export async function readBody(request: NextRequest) {
+  if (process.env.CREW_MIGRATING === "1")
+    throw new CrewError(
+      "Crew accounts are briefly paused for a storage upgrade. Please retry shortly; your saved credits are safe.",
+      503,
+    );
   if (request.headers.get("origin") !== request.nextUrl.origin)
     throw new CrewError("Please submit from this website.", 403);
   if (!request.headers.get("content-type")?.includes("application/json"))

@@ -1,103 +1,50 @@
-import {
-  del,
-  get,
-  head,
-  put,
-  BlobError,
-  BlobPreconditionFailedError,
-} from "@vercel/blob";
 import { CrewError, type Account } from "./model";
-export interface Stored<T> {
-  value: T;
-  etag: string;
+import { createBlobStore } from "./blob-store";
+import { createPostgresStore } from "./postgres-store";
+import { Conflict, type CrewStore } from "./store-types";
+export { Conflict, type CrewStore, type Stored } from "./store-types";
+export { consistentSnapshot } from "./blob-store";
+
+export function crewNamespace() {
+  if (process.env.VERCEL_ENV === "production") return "crew-v1";
+  if (process.env.VERCEL_ENV === "preview") return "crew-preview-v1";
+  return "crew-development-v1";
 }
-export interface CrewStore {
-  read<T>(key: string): Promise<Stored<T> | null>;
-  write<T>(key: string, value: T, etag?: string): Promise<void>;
-  remove(key: string, etag: string): Promise<void>;
+export function storageConfigured() {
+  const backend = process.env.CREW_STORAGE_BACKEND ?? "blob";
+  return backend === "postgres"
+    ? !!process.env.DATABASE_URL
+    : backend === "blob" && !!process.env.BLOB_READ_WRITE_TOKEN;
 }
-export class Conflict extends Error {}
-interface Snapshot {
-  value: unknown;
-  etag: string;
-}
-export async function consistentSnapshot(
-  load: () => Promise<Snapshot | null>,
-  revision: () => Promise<string>,
-): Promise<Snapshot | null> {
-  const first = await load();
-  if (!first || (first.etag && !first.etag.startsWith("W/"))) return first;
-  // Some delivery layers omit or weaken HTTP ETags. Discard that first body.
-  // A revision sandwich binds a new origin read to a stable control-plane ETag.
-  for (let attempt = 0; attempt < 4; attempt++) {
-    const before = await revision();
-    const current = await load();
-    const after = await revision();
-    if (!current) return null;
-    if (before && before === after)
-      return { value: current.value, etag: after };
-  }
-  throw new CrewError(
-    "Your wallet changed while it was loading. Please retry.",
-    409,
-  );
-}
-const prefix =
-  process.env.VERCEL_ENV === "preview" ? "crew-preview-v1" : "crew-v1";
-export const privateStore: CrewStore = {
-  async remove(key, etag) {
-    const metadata = await head(`${prefix}/${key}.json`);
-    try {
-      await del(metadata.url, { ifMatch: etag });
-    } catch (error) {
-      if (error instanceof BlobPreconditionFailedError)
-        throw new CrewError(
-          "Your account changed. Please retry deletion.",
-          409,
-        );
-      throw error;
-    }
-  },
-  async read<T>(key: string) {
-    const path = `${prefix}/${key}.json`;
-    const read = await consistentSnapshot(
-      async () => {
-        const result = await get(path, {
-          access: "private",
-          useCache: false,
-          headers: { "accept-encoding": "identity" },
-        });
-        if (!result || result.statusCode !== 200 || !result.stream) return null;
-        return {
-          value: await new Response(result.stream).json(),
-          etag: result.blob.etag,
-        };
-      },
-      async () => (await head(path)).etag,
+let selected: { identity: string; store: CrewStore } | undefined;
+function activeStore() {
+  const backend = process.env.CREW_STORAGE_BACKEND ?? "blob";
+  const namespace = crewNamespace();
+  if (!storageConfigured())
+    throw new CrewError(
+      "Crew storage is temporarily unavailable. Please retry later.",
+      503,
     );
-    return read as Stored<T> | null;
-  },
-  async write<T>(key: string, value: T, etag?: string) {
-    try {
-      await put(`${prefix}/${key}.json`, JSON.stringify(value), {
-        access: "private",
-        addRandomSuffix: false,
-        contentType: "application/json",
-        ...(etag
-          ? { allowOverwrite: true, ifMatch: etag }
-          : { allowOverwrite: false }),
-      });
-    } catch (error) {
-      if (
-        error instanceof BlobPreconditionFailedError ||
-        (error instanceof BlobError && /already exists/i.test(error.message))
-      ) {
-        throw new Conflict();
-      }
-      throw error;
-    }
-  },
+  const identity = `${backend}:${namespace}`;
+  if (selected?.identity !== identity) {
+    selected = {
+      identity,
+      store:
+        backend === "postgres"
+          ? createPostgresStore(process.env.DATABASE_URL!, namespace)
+          : createBlobStore(namespace),
+    };
+  }
+  return selected.store;
+}
+// Select explicitly. A database failure must never fall back to a stale wallet.
+export const privateStore: CrewStore = {
+  read: async <T>(key: string) => activeStore().read<T>(key),
+  write: async <T>(key: string, value: T, etag?: string) =>
+    activeStore().write(key, value, etag),
+  remove: async (key, etag) => activeStore().remove(key, etag),
 };
+
 export async function mutate<T, R>(
   store: CrewStore,
   key: string,

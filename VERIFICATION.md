@@ -26,3 +26,25 @@ Public HTTP checks verify accessible pages and expected release content. Practic
 Unit and service tests cover concurrent claim/redeem idempotency, server-issued challenge signatures and expiry, cross-account rejection, daily caps, memory proofs, five-attempt limits, Eastern daily/weekly boundaries and DST, password hashing, session revocation, credential recovery, follower approval matching, opt-in standings, account deletion and the 1080×1920 personalized PNG.
 
 The account browser test runs once on the phone project to avoid filling the public service with QA accounts. It creates a private, unverified account; solves all three missions through the UI; replays a claim; confirms 50 saved credits after reload; checks pending-account redemption/ranking restrictions; recovers the account; and deletes the QA record. Responsive route checks visit all six pages at 375, 768 and 1440px. No Instagram likes, comments, follows, DMs or paid purchases are submitted by tests.
+
+## Neon migration checks — 18 November 2026
+
+The Postgres adapter passed 55 unit/service checks, lint, TypeScript and the
+production build. Six real-Neon integration checks (including the parent test)
+passed against the isolated preview resource: concurrent create/update races,
+stale writes and deletes, delete/recreate revision safety, session/hash JSON
+roundtrips, simultaneous replayed claims, pending-member restrictions,
+idempotent approved redemption, recovery and deletion. QA namespaces were
+removed after testing.
+
+The first Neon preview passed 13 Chromium checks across phone, tablet and
+desktop; two duplicate account-lifecycle cases were intentionally skipped.
+The account test earned 50 credits, preserved them after reload, rejected a
+replayed award and unverified redemption, recovered the account, and deleted
+it. Preview Postgres had zero remaining QA accounts afterward. Legacy preview
+Blob snapshots taken before and after the browser test had identical counts
+and canonical checksums, confirming normal wallet traffic had moved to Neon.
+Production dependencies report zero known vulnerabilities after a compatible
+Zod 4 patch override within the retained Blob SDK's configuration dependency.
+These are functional checks, not a concurrency-capacity guarantee or a
+physical Safari test.

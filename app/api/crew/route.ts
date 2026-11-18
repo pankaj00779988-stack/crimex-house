@@ -1,12 +1,15 @@
 import type { NextRequest } from "next/server";
 import { guarded, response, session } from "@/lib/crew/http";
+import { storageConfigured } from "@/lib/crew/store";
 import { authenticate } from "@/lib/crew/service";
 import { crewConfig, CrewError, period, publicAccount } from "@/lib/crew/model";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   return guarded(async () => {
-    const configured = !!process.env.BLOB_READ_WRITE_TOKEN;
+    const configured =
+      storageConfigured() &&
+      !!(process.env.CREW_SIGNING_SECRET || process.env.BLOB_READ_WRITE_TOKEN);
     let account = null;
     if (configured && session(request)) {
       try {

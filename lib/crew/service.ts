@@ -37,6 +37,7 @@ async function passwordHash(password: string, salt: string) {
   return ((await scryptAsync(password, salt, 32)) as Buffer).toString("hex");
 }
 export function signingSecret() {
+  if (process.env.CREW_SIGNING_SECRET) return process.env.CREW_SIGNING_SECRET;
   if (!process.env.BLOB_READ_WRITE_TOKEN)
     throw new CrewError(
       "Crew accounts are temporarily unavailable. Please try again later.",

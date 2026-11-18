@@ -10,11 +10,14 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "test:browser": "playwright test",
+    "test:postgres": "node --import tsx --test tests/postgres.integration.ts",
+    "crew:storage": "tsx scripts/crew-storage.ts",
     "crew:approve": "tsx scripts/approve-crew.ts"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.0",
     "@fontsource/jetbrains-mono": "^5.2.0",
+    "@neondatabase/serverless": "^1.2.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.9.0",
     "lucide-react": "^0.468.0",
@@ -37,5 +40,10 @@
     "tailwindcss": "^4.1.0",
     "tsx": "^4.20.0",
     "typescript": "^5.9.0"
+  },
+  "overrides": {
+    "@vercel/cli-config": {
+      "zod": "^4.6.7"
+    }
   }
 }
