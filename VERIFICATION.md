@@ -192,10 +192,26 @@ and desktop, plus the shared-identity journey on both sizes. The journey checks
 manual instructions, clipboard success and denial, read-only handles, separate
 guest/account drafts, vault completion, focus refresh, and cross-tab sign-out.
 A phone check confirmed free guest Board/vault use during both an identity-service
-failure and a stalled request. Metadata and PNG dimensions passed; the cover and mobile verification
-panel were visually reviewed. A real account lifecycle passed against the
+failure and a stalled request. Metadata and PNG dimensions passed; the cover and
+mobile verification panel were visually reviewed. A real account lifecycle passed against the
 isolated development namespace on the preview database, including the new
 authenticated identity response, all 50 daily credits, recovery and QA deletion.
 No production QA account was created. A fresh production status check confirmed
 automatic checks disabled, callback verification retained and zero Meta account
 notification subscriptions. Story, mission and reward JSON are unchanged.
+
+Production build `ea27370` was staged as
+`dpl_3QNAfnA4BJenWGvLavNkG55DCBTi`. Six staged Chromium checks passed across
+phone and desktop, covering the shared-identity journey, guest failure/timeout
+fallback, preview metadata/image and existing episode-first release gate.
+The image check uses the browser network path because direct Node HTTP requests
+are blocked in this workspace. Public crawler HTML and anonymous private API
+projections also passed; a forged session returned no identity.
+
+The same tested deployment was promoted without rebuilding. Both
+`crimexhouse.vercel.app` and `crimex-house.vercel.app` resolved to it and passed
+public page, 1200×630 PNG, private/no-store API and unauthenticated-owner checks.
+The live phone shared-identity and release-gate journeys both passed. No runtime
+error/fatal logs were found for the deployment during the checked ten-minute
+window. A post-release database read confirmed automatic checks remain paused.
+Part 2 stays locked, cash stays $5,000,000, and hosting/database plans are unchanged.

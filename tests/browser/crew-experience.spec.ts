@@ -252,7 +252,6 @@ test("guest board and vault remain usable when account lookup is unavailable", a
 
 test("public links include the branded cover and page-specific sharing titles", async ({
   page,
-  request,
 }, info) => {
   test.skip(
     info.project.name !== "phone-375",
@@ -276,7 +275,7 @@ test("public links include the branded cover and page-specific sharing titles", 
       page.locator('meta[name="twitter:image"]').first(),
     ).toHaveAttribute("content", /opengraph-image/);
   }
-  const image = await request.get("/opengraph-image");
+  const image = (await page.goto("/opengraph-image"))!;
   expect(image.status()).toBe(200);
   expect(image.headers()["content-type"]).toContain("image/png");
   const bytes = await image.body();
