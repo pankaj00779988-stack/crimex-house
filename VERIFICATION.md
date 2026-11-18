@@ -242,3 +242,13 @@ exact links, both released archive files, Part 3's lock, the $4.9M HUD, separate
 Part 1/2 vote history, the retained Part 1 vault, Room 17, shared account identity,
 local drafts and metadata. Mobile HQ and the Part 02 modal were visually reviewed;
 the new released badge was moved into normal flow to prevent text overlap.
+
+Commit `5a6ac5b` was staged as `dpl_D1QmTFzc291ifJvCGXmfAfmYRmRG`.
+All six staged story checks passed on phone and desktop. Server HTML contained
+the Part 02 title, exact Reel, real choices and $4.9M; the official cover and
+1200×630 sharing image returned successfully. The released badge cleared the
+incident report on mobile and the modal had no horizontal overflow. The same
+tested deployment was promoted without rebuilding. Both public aliases passed
+page/image/private-API checks, and both live phone story checks passed. No
+error/fatal runtime logs were found in the checked ten-minute window. A private
+post-release read confirmed automatic Instagram checks remain disabled.
