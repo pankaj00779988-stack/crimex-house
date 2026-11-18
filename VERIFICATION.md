@@ -108,3 +108,14 @@ paused; these tests do not claim successful live Instagram delivery.
 Lint, TypeScript, production build and the production dependency audit passed.
 Episode JSON, story configuration, reward prices and mission award rules were
 unchanged. Part 2 remains locked and the HUD remains $5,000,000.
+
+## Instagram connection preflight — 18 November 2026
+
+Current Meta documentation distinguishes the app-scoped `id` from the
+professional `user_id` used by webhook entries. Connection now calls
+`/me?fields=user_id,username`, checks the token belongs to `@crimex.house`, and
+detects the professional ID automatically. An optional entered ID must match;
+app-scoped and missing professional IDs are rejected. Tests cover both flat
+and `data`-wrapped Meta response shapes. All 64 unit/service checks, lint,
+TypeScript and the production build passed. Live Meta credentials and DM delivery
+remain untested until the owner finishes their developer-app setup.

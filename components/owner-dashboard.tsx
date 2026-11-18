@@ -553,13 +553,13 @@ export function OwnerDashboard() {
                       and never shown again.
                     </p>
                     <label>
-                      INSTAGRAM PROFESSIONAL ACCOUNT ID
+                      INSTAGRAM ACCOUNT ID (OPTIONAL)
                       <input
                         value={instagramId}
                         onChange={(e) => setInstagramId(e.target.value)}
                         inputMode="numeric"
+                        placeholder="Leave blank to detect from your token"
                         autoComplete="off"
-                        required
                       />
                     </label>
                     <label>

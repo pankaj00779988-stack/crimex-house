@@ -69,10 +69,12 @@ necessary before claiming that Instagram delivery works end to end.
    `instagram_business_manage_messages` access. Use the Instagram User token
    for this API, not a token from a different login/API setup.
 3. In the owner dashboard, choose **Connect your Meta app** and enter the
-   Instagram professional account ID, the app secret used to sign its Instagram
-   webhook notifications, and the Instagram User access token. Enter these on
+   app secret used to sign Instagram webhook notifications and the Instagram User
+   access token. The professional account ID is detected from the token; the
+   account ID field is optional. Enter these on
    the private site rather than in chat or Git. The server checks that the token
-   resolves to `@crimex.house` before saving it.
+   resolves to `@crimex.house` before saving it. The connector uses Meta’s
+   professional `user_id`, which can differ from the app-scoped `id`.
 4. Copy the callback URL and verification token displayed in the dashboard into
    the app's Instagram webhook setup:
    `https://crimexhouse.vercel.app/api/instagram/webhook`.

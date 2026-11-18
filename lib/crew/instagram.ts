@@ -95,9 +95,9 @@ async function profile(
   basic = false,
 ) {
   const params = new URLSearchParams({
-    fields: basic ? "id,username" : "username,is_user_follow_business",
+    fields: basic ? "user_id,username" : "username,is_user_follow_business",
   });
-  const res = await fetcher(`${GRAPH}/${id}?${params}`, {
+  const res = await fetcher(`${GRAPH}/${basic ? "me" : id}?${params}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
     signal: AbortSignal.timeout(3000),
     cache: "no-store",
@@ -107,8 +107,10 @@ async function profile(
       "Instagram could not complete the check. Confirm the token and messaging permissions in Meta, then retry.",
       503,
     );
-  return (await res.json()) as {
+  const body = await res.json();
+  return (basic && Array.isArray(body?.data) ? body.data[0] : body) as {
     id?: string;
+    user_id?: string;
     username?: string;
     is_user_follow_business?: boolean;
   };
@@ -118,25 +120,29 @@ export async function connectInstagram(
   store: CrewStore = privateStore,
   fetcher = fetch,
 ) {
-  const accountId =
+  const suppliedId =
     typeof input.accountId === "string" ? input.accountId.trim() : "";
   const appSecret =
     typeof input.appSecret === "string" ? input.appSecret.trim() : "";
   const accessToken =
     typeof input.accessToken === "string" ? input.accessToken.trim() : "";
   if (
-    !/^\d{5,32}$/.test(accountId) ||
+    (suppliedId !== "" && !/^\d{5,32}$/.test(suppliedId)) ||
     !/^[a-f0-9]{32}$/i.test(appSecret) ||
     accessToken.length < 20 ||
     accessToken.length > 4096
   )
     throw new CrewError(
-      "Enter the Instagram account ID, Meta app secret, and Instagram User access token from your Meta app.",
+      "Enter your Meta app secret and Instagram User access token. The Instagram account ID can be detected automatically.",
     );
-  const owner = await profile(accountId, accessToken, fetcher, true);
+  const owner = await profile("me", accessToken, fetcher, true);
+  // Meta's `id` is app-scoped. `user_id` is the professional account ID
+  // used in webhook entry/recipient fields, so they must not be interchanged.
+  const accountId = String(owner?.user_id ?? "");
   if (
-    owner.username?.toLowerCase() !== "crimex.house" ||
-    String(owner.id) !== accountId
+    owner?.username?.toLowerCase() !== "crimex.house" ||
+    !/^\d{5,32}$/.test(accountId) ||
+    (suppliedId !== "" && suppliedId !== accountId)
   )
     throw new CrewError(
       "This connection must belong to @crimex.house. Check the Instagram account ID and token.",

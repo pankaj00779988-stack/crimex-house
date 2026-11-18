@@ -245,12 +245,16 @@ async function botFixture() {
   let providerFails = false;
   const fetcher: typeof fetch = async (url) => {
     const basic =
-      new URL(String(url)).searchParams.get("fields") === "id,username";
+      new URL(String(url)).searchParams.get("fields") === "user_id,username";
     if (!basic) profileCalls++;
     if (providerFails) return Response.json({ error: {} }, { status: 503 });
     return Response.json(
       basic
-        ? { id: instagramId, username: "crimex.house" }
+        ? {
+            id: "111111111111111",
+            user_id: instagramId,
+            username: "crimex.house",
+          }
         : {
             username,
             ...(follows === undefined
@@ -317,7 +321,11 @@ async function botFixture() {
 test("Meta credentials are encrypted, the connection is account-bound, and a callback is required before activation", async () => {
   const store = new MemoryStore();
   const bad: typeof fetch = async () =>
-    Response.json({ id: instagramId, username: "someone.else" });
+    Response.json({
+      id: "111111111111111",
+      user_id: instagramId,
+      username: "someone.else",
+    });
   await assert.rejects(
     connectInstagram(
       { accountId: instagramId, appSecret, accessToken },
@@ -328,7 +336,11 @@ test("Meta credentials are encrypted, the connection is account-bound, and a cal
   );
   assert.equal((await instagramStatus(store)).configured, false);
   const good: typeof fetch = async () =>
-    Response.json({ id: instagramId, username: "crimex.house" });
+    Response.json({
+      id: "111111111111111",
+      user_id: instagramId,
+      username: "crimex.house",
+    });
   const connected = await connectInstagram(
     { accountId: instagramId, appSecret, accessToken },
     store,
@@ -360,6 +372,43 @@ test("Meta credentials are encrypted, the connection is account-bound, and a cal
   );
   await toggleInstagram(true, store);
   assert.equal((await instagramStatus(store)).enabled, true);
+});
+test("Meta connection discovers the professional user_id and rejects app-scoped or missing IDs", async () => {
+  const store = new MemoryStore();
+  const fetcher: typeof fetch = async (url) => {
+    const request = new URL(String(url));
+    assert.equal(request.pathname, "/v27.0/me");
+    assert.equal(request.searchParams.get("fields"), "user_id,username");
+    return Response.json({
+      data: [
+        {
+          id: "111111111111111",
+          user_id: instagramId,
+          username: "crimex.house",
+        },
+      ],
+    });
+  };
+  const connected = await connectInstagram(
+    { appSecret, accessToken },
+    store,
+    fetcher,
+  );
+  assert.equal(connected.accountId, instagramId);
+  await assert.rejects(
+    connectInstagram(
+      { accountId: "111111111111111", appSecret, accessToken },
+      store,
+      fetcher,
+    ),
+    status(403),
+  );
+  const missingId: typeof fetch = async () =>
+    Response.json({ id: instagramId, username: "crimex.house" });
+  await assert.rejects(
+    connectInstagram({ appSecret, accessToken }, new MemoryStore(), missingId),
+    status(403),
+  );
 });
 test("webhooks reject forged signatures, ignore other accounts and enforce the paused state", async () => {
   const f = await botFixture();
