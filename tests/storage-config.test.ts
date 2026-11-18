@@ -12,9 +12,15 @@ import { CrewError } from "../lib/crew/model";
 test("database configuration never falls back to legacy balances, and environments are isolated", async () => {
   const previous = { ...process.env };
   try {
-    process.env.CREW_STORAGE_BACKEND = "postgres";
     process.env.BLOB_READ_WRITE_TOKEN = "test-only-legacy-token";
     delete process.env.DATABASE_URL;
+    delete process.env.CREW_STORAGE_BACKEND;
+    assert.equal(storageConfigured(), false);
+    await assert.rejects(
+      privateStore.read("accounts/test"),
+      (e) => e instanceof CrewError && e.status === 503,
+    );
+    process.env.CREW_STORAGE_BACKEND = "postgres";
     assert.equal(storageConfigured(), false);
     await assert.rejects(
       privateStore.read("accounts/test"),

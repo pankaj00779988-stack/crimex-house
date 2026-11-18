@@ -48,3 +48,22 @@ Production dependencies report zero known vulnerabilities after a compatible
 Zod 4 patch override within the retained Blob SDK's configuration dependency.
 These are functional checks, not a concurrency-capacity guarantee or a
 physical Safari test.
+
+The final preview repeated the account and release-gate checks successfully.
+The production cutover paused all three account POST endpoints on both public
+aliases while story pages continued returning HTTP 200. Four source records,
+including a private continuity-test account, were copied with identical
+canonical SHA-256 checksums. A fresh source snapshot still matched the target
+before the explicit backend switch. The legacy records remain private and
+unchanged as a backup.
+
+After cutover, the pre-migration account's existing cookie still authenticated
+and its 15-credit balance survived. Password sign-in worked, then the QA
+account was deleted. A new live account completed all daily missions, retained
+50 credits after reload, rejected invalid redemption, recovered credentials
+and was deleted. Both live phone checks passed, including Part 2 remaining
+locked and the $5,000,000 HUD. Postgres had no remaining test accounts, while
+the legacy Blob checksum was unchanged, confirming active traffic and deletion
+used the new database. Both public aliases returned healthy Crew APIs and no
+maintenance flag remains. The post-cutover default is also Postgres: missing
+backend configuration cannot silently revive a legacy wallet.

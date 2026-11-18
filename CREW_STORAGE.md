@@ -36,9 +36,11 @@ uploads. Keep any production environment file outside the repository, so local
 Next.js builds cannot accidentally prefer it over development settings.
 
 The old Blob adapter remains available only for deliberate operations. There is
-no automatic fallback when Postgres fails. An unset backend uses Blob for
-compatibility with pre-cutover deployments; production must explicitly retain
-`CREW_STORAGE_BACKEND=postgres`.
+no automatic fallback when Postgres fails. After the verified cutover, an unset backend defaults to Postgres as well, so
+removing a configuration variable cannot accidentally revive old Blob wallets.
+Keep `CREW_STORAGE_BACKEND=postgres` explicit in the project. Selecting `blob`
+is a deliberate operator override and requires reconciliation after any
+Postgres writes.
 
 ## Initialize and verify
 

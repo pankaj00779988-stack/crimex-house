@@ -11,14 +11,14 @@ export function crewNamespace() {
   return "crew-development-v1";
 }
 export function storageConfigured() {
-  const backend = process.env.CREW_STORAGE_BACKEND ?? "blob";
+  const backend = process.env.CREW_STORAGE_BACKEND ?? "postgres";
   return backend === "postgres"
     ? !!process.env.DATABASE_URL
     : backend === "blob" && !!process.env.BLOB_READ_WRITE_TOKEN;
 }
 let selected: { identity: string; store: CrewStore } | undefined;
 function activeStore() {
-  const backend = process.env.CREW_STORAGE_BACKEND ?? "blob";
+  const backend = process.env.CREW_STORAGE_BACKEND ?? "postgres";
   const namespace = crewNamespace();
   if (!storageConfigured())
     throw new CrewError(
