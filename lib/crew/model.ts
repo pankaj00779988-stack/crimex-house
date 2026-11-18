@@ -29,6 +29,18 @@ export interface Account {
   rewards: string[];
   loginFailures: number;
   blockedUntil: number;
+  verification?: {
+    status: "approved" | "revoked";
+    code: string;
+    at: string;
+    method: "owner" | "instagram";
+    instagramId?: string;
+    history: {
+      status: "approved" | "revoked";
+      at: string;
+      method: "owner" | "instagram";
+    }[];
+  };
 }
 export class CrewError extends Error {
   constructor(
@@ -59,6 +71,11 @@ export function mission(id: string) {
   return value;
 }
 export function isVerified(account: Account) {
+  if (account.verification)
+    return (
+      account.verification.status === "approved" &&
+      account.verification.code === account.verificationCode
+    );
   const approved = config.verifiedCrew as { handle: string; code: string }[];
   return approved.some(
     (p) =>

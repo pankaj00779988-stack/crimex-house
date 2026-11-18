@@ -14,4 +14,9 @@ export async function prepareCrewDatabase(databaseUrl: string) {
       PRIMARY KEY (namespace, key)
     )
   `;
+  await sql`
+    CREATE INDEX IF NOT EXISTS crimex_crew_account_handle_idx
+    ON crimex_crew_records (namespace, (value->>'handle'))
+    WHERE starts_with(key, 'accounts/')
+  `;
 }

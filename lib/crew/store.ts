@@ -43,6 +43,12 @@ export const privateStore: CrewStore = {
   write: async <T>(key: string, value: T, etag?: string) =>
     activeStore().write(key, value, etag),
   remove: async (key, etag) => activeStore().remove(key, etag),
+  rankedAccounts: async (week, legacy) => {
+    const store = activeStore();
+    if (!store.rankedAccounts)
+      throw new CrewError("Weekly standings are temporarily unavailable.", 503);
+    return store.rankedAccounts(week, legacy);
+  },
 };
 
 export async function mutate<T, R>(

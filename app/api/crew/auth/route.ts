@@ -23,6 +23,15 @@ export const runtime = "nodejs";
 export async function POST(request: NextRequest) {
   return guarded(async () => {
     const input = await readBody(request);
+    if (
+      input.mode === "register" &&
+      typeof input.handle === "string" &&
+      input.handle.trim().replace(/^@/, "").toLowerCase() === "crimex.house"
+    )
+      throw new CrewError(
+        "This handle is reserved for owner access. Use the private owner setup link or sign in.",
+        403,
+      );
     const secret = signingSecret();
     if (input.mode === "preferences")
       return response(await preferences(session(request), input.publicRanking));

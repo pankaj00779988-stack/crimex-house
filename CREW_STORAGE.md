@@ -7,6 +7,14 @@ request cannot overwrite a newer award, redemption, recovery or deletion.
 Balance, claims, ledger and reward entitlements change together in that account
 record. Database credentials are server-only; there is no browser SQL endpoint.
 
+Owner access, dynamic approval/revocation and encrypted Instagram connection
+records also live in this private store. Account verification fields are
+optional, so existing account records remain compatible. The account-handle
+partial index supports the owner directory. See [OWNER_GUIDE.md](OWNER_GUIDE.md)
+for owner setup and Meta connection requirements. Backups of the namespace must
+include these records as well as accounts and rate-limit buckets; retain the
+server signing secret to decrypt the Instagram connection.
+
 ## Environments
 
 The existing Vercel project is `crimexhouse/crimex-house`.

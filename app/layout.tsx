@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
+import { SiteAnalytics } from "@/components/site-analytics";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
@@ -12,6 +12,7 @@ import "@fontsource/jetbrains-mono/700.css";
 import "./globals.css";
 import "./redesign.css";
 import "./missions.css";
+import "./owner.css";
 import { Header, Footer } from "@/components/shell";
 import { siteConfig } from "@/lib/data";
 export const metadata: Metadata = {
@@ -51,7 +52,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
-        <Analytics />
+        <SiteAnalytics />
       </body>
     </html>
   );

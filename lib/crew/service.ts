@@ -280,6 +280,12 @@ export async function deleteAccount(
   now = new Date(),
 ) {
   const { account, sessionHash } = await authenticate(cookie, store, now);
+  const { isOwnerAccount } = await import("./owner");
+  if (await isOwnerAccount(account, store))
+    throw new CrewError(
+      "This account holds owner access. Contact the project administrator before deleting it; use your recovery code if you need a new password.",
+      409,
+    );
   if (
     typeof password !== "string" ||
     password.length > 128 ||
@@ -405,12 +411,17 @@ export async function leaderboard(
     code: string;
   }[];
   const entries: { handle: string; points: number; reachedAt: string }[] = [];
-  for (let i = 0; i < approved.length; i += 8) {
-    const batch = await Promise.all(
-      approved
-        .slice(i, i + 8)
-        .map((p) => store.read<Account>(`accounts/${accountId(p.handle)}`)),
-    );
+  const ranked = store.rankedAccounts
+    ? await store.rankedAccounts(week, approved)
+    : null;
+  for (let i = 0; i < (ranked ? 1 : approved.length); i += 8) {
+    const batch = ranked
+      ? ranked.map((value) => ({ value }))
+      : await Promise.all(
+          approved
+            .slice(i, i + 8)
+            .map((p) => store.read<Account>(`accounts/${accountId(p.handle)}`)),
+        );
     for (const item of batch) {
       const a = item?.value;
       if (!a || !isVerified(a) || !a.publicRanking) continue;

@@ -67,3 +67,44 @@ the legacy Blob checksum was unchanged, confirming active traffic and deletion
 used the new database. Both public aliases returned healthy Crew APIs and no
 maintenance flag remains. The post-cutover default is also Postgres: missing
 backend configuration cannot silently revive a legacy wallet.
+
+## Private owner dashboard — 18 November 2026
+
+The owner dashboard uses the existing website credentials and secure session
+cookie, with a separate server-checked owner grant created through a private,
+one-time setup token. Tests reject claimed handles without the grant, invalid
+setup tokens, repeated setup, ordinary members, cross-origin changes and
+oversized webhook requests. Recovery retains the role and revokes previous
+sessions; deleting/recreating the website account cannot inherit its grant.
+
+All 63 unit/service checks passed, including code/checkbox matching, stale
+account review, concurrent approval, preserved wallet data and owner revocation.
+Seven real-Neon integration checks (including parent tests) passed. They cover
+owner grants, 25-row directory pagination, private response projections, dynamic
+and legacy approval eligibility, ranking consent, weekly score ties, redemption
+and immediate removal after revocation. QA namespaces were deleted.
+
+The public Chromium route/game suite passed 12 checks at 375px, 768px and
+1440px. The final isolated phone run passed both the complete 50-credit mission
+lifecycle and the owner dashboard lifecycle: setup/recovery-code display,
+ordinary-member denial, wrong-code rejection, approval, immediate standings,
+revocation without balance changes, sign-out and owner recovery. Private owner
+analytics were absent and the page had no horizontal overflow. Two UI issues
+found during testing (status-filter naming and sign-out mode) were corrected.
+Concurrent initial browser runs conflicted in their output directory; the final
+combined run used a separate directory and passed. Preview owner/member QA
+records were then removed. No production owner credentials were selected or
+claimed on the user's behalf.
+
+The Instagram adapter was tested with simulated Meta responses. It verifies
+HMAC signatures, account/recipient binding, the real sender handle, follower
+status, code matching, pause state, deduplication and retryable provider failure.
+Missing follower information and owner revocations cannot become approvals.
+Credentials are encrypted at rest; secrets are omitted from owner responses.
+Meta authorization, callback delivery and a real external-user DM test remain
+pending until the owner connects their app. The bot starts disconnected and
+paused; these tests do not claim successful live Instagram delivery.
+
+Lint, TypeScript, production build and the production dependency audit passed.
+Episode JSON, story configuration, reward prices and mission award rules were
+unchanged. Part 2 remains locked and the HUD remains $5,000,000.

@@ -1,0 +1,270 @@
+.owner-page {
+  padding-top: 36px;
+  padding-bottom: 72px;
+  max-width: 1080px;
+}
+.owner-header {
+  padding: 28px 0 32px;
+  border-bottom: 1px solid #ffffff18;
+  margin-bottom: 28px;
+}
+.owner-header .eyebrow,
+.owner-toolbar p,
+.owner-alert {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+.owner-header h1 {
+  font-size: clamp(36px, 6vw, 68px);
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+  margin: 18px 0;
+}
+.owner-header h1 span {
+  color: #ff2e93;
+}
+.owner-page p {
+  color: #aaaab5;
+  line-height: 1.65;
+}
+.owner-auth,
+.owner-recovery {
+  max-width: 540px;
+  padding: 28px;
+  border: 1px solid #ffffff1c;
+  background: #111115;
+}
+.owner-page h2 {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.owner-page form {
+  display: grid;
+  gap: 20px;
+  margin: 24px 0;
+}
+.owner-page label {
+  display: grid;
+  gap: 9px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #bdbdc8;
+}
+.owner-page input:not([type="checkbox"]),
+.owner-page select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  background: #08080b;
+  border: 1px solid #ffffff2c;
+  color: #f5f2eb;
+  border-radius: 2px;
+  font:
+    15px "Inter",
+    sans-serif;
+  padding: 13px;
+}
+.owner-page input:focus,
+.owner-page select:focus,
+.owner-page button:focus-visible {
+  outline: 2px solid #ff2e93;
+  outline-offset: 3px;
+}
+.owner-page .owner-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font:
+    14px/1.6 "Inter",
+    sans-serif;
+  letter-spacing: 0;
+}
+.owner-check input {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  accent-color: #ff2e93;
+}
+.owner-page .owner-note {
+  font-size: 12px;
+  color: #9797a4;
+}
+.owner-page .owner-error {
+  color: #ff9fc9;
+}
+.owner-alert {
+  padding: 15px 18px;
+  border: 1px solid #ff2e9340;
+  margin-bottom: 24px;
+}
+.owner-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+.owner-guide {
+  border-left: 2px solid #ff2e93;
+  padding: 14px 20px;
+  background: #ff2e9306;
+  margin: 22px 0;
+}
+.owner-guide h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.owner-guide p {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.owner-page .owner-filters {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 22px 0;
+  border-top: 1px solid #ffffff18;
+  border-bottom: 1px solid #ffffff18;
+}
+.owner-filters > label:first-child {
+  flex: 1 1 240px;
+}
+.owner-search {
+  position: relative;
+}
+.owner-search svg {
+  position: absolute;
+  left: 12px;
+  top: 15px;
+}
+.owner-page .owner-search input {
+  padding-left: 38px;
+}
+.owner-member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0;
+  border-bottom: 1px solid #ffffff18;
+}
+.owner-member > div {
+  min-width: 0;
+}
+.owner-member h2 {
+  margin: 8px 0;
+}
+.owner-member p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+.owner-member .button {
+  flex-shrink: 0;
+}
+.owner-badge {
+  font:
+    9px "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.1em;
+  padding: 4px 6px;
+  color: #c8c8d3;
+  border: 1px solid #ffffff24;
+}
+.owner-approved {
+  color: #9de8bd;
+  border-color: #9de8bd50;
+}
+.owner-revoked {
+  color: #ff9fc9;
+  border-color: #ff2e9350;
+}
+.owner-empty {
+  padding: 50px 18px;
+  text-align: center;
+  border-bottom: 1px solid #ffffff18;
+}
+.owner-empty > svg {
+  margin: 0 auto 14px;
+  color: #ff2e93;
+}
+.owner-pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 0;
+}
+.owner-bot {
+  margin-top: 30px;
+  border: 1px solid #ffffff1c;
+  padding: 24px;
+  background: #111115;
+}
+.owner-bot h2 {
+  margin: 12px 0;
+}
+.owner-dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 40px);
+  box-sizing: border-box;
+  border: 1px solid #ff2e9366;
+  background: #111115;
+  color: #f5f2eb;
+  padding: 34px;
+  margin: auto;
+  overflow-y: auto;
+}
+.owner-dialog::backdrop {
+  background: #000c;
+  backdrop-filter: blur(5px);
+}
+.owner-dialog h2 {
+  margin: 18px 0;
+}
+.owner-dialog .owner-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 8px;
+}
+.owner-dialog .owner-revoke {
+  display: block;
+  color: #ff9fc9;
+  margin: 24px 0;
+}
+.owner-page button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+@media (max-width: 600px) {
+  .owner-auth,
+  .owner-recovery,
+  .owner-bot {
+    padding: 20px;
+  }
+  .owner-member {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .owner-member .button {
+    width: 100%;
+  }
+  .owner-page .owner-filters > label {
+    flex: 1 1 100%;
+  }
+  .owner-dialog {
+    padding: 28px 20px;
+  }
+  .owner-dialog .button {
+    width: 100%;
+  }
+}
+
+.owner-callback { display: grid; gap: 16px; padding: 20px 0; }

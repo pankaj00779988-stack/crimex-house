@@ -78,15 +78,11 @@ Wallets are private JSONB records in the connected Neon Postgres database. Each 
 
 ### Confirming follower eligibility
 
-New accounts can earn credits while pending. Redemption and public rankings require creator confirmation. The creator must check that the DM came from the same Instagram handle, that its `CREW-XXXXXXXXXX` code matches the website account, and that the person follows @crimex.house. Then run:
+New accounts can earn credits while pending. Use the private [owner dashboard](https://crimexhouse.vercel.app/owner) to approve members after checking their actual Instagram DM sender, CREW code, and follow. Search the pending list, paste the DM code and confirm both checks. Approval and revocation take effect in Neon without a Git edit or deployment. A separate one-time setup link establishes owner access for the website account @crimex.house; its handle alone never grants access. Save the recovery code privately.
 
-```bash
-npm run crew:approve -- @handle CREW-XXXXXXXXXX
-# To remove confirmation:
-npm run crew:approve -- @handle --revoke
-```
+Verified members need enough credits to redeem and must opt into public rankings. Revocation removes eligibility while keeping wallet credits and already-owned rewards. Database reviews override historical JSON approvals. The dashboard can also connect a Meta Instagram Login app and enable signed DM verification after callback verification; it starts disconnected and paused. Automatic checks match the actual sender's username, saved CREW code and follower status. Continuous follow monitoring and automatic Instagram replies are not enabled.
 
-Commit, push, and redeploy after changing this list. Codes are identifiers for manual matching, not passwords; the approval list is public source. Review follower eligibility regularly. This does not continuously track follows, comments, likes, shares, or DMs. Accounts with another person's handle never qualify automatically. Handle disputes and lost-password-plus-lost-recovery cases require creator review.
+See [OWNER_GUIDE.md](OWNER_GUIDE.md) for owner access, member reviews, recovery, Meta setup and the operator CLI fallback. The private directory never returns passwords, account hashes, recovery codes or member sessions.
 
 Hosting remains Vercel Hobby and both database resources use Neon Free. No paid plan or checkout is enabled. The Free database plan selected during setup includes 1 GB per project and 100 compute-unit hours per project; provider allowances can change. Database activity, hosting bandwidth, function usage and generated-reward downloads determine capacity, so these allowances are not a guaranteed concurrent-visitor count. Monitor both dashboards before promoting a large release. Idle database wake-up can add latency. Private QA accounts are deleted after browser tests. No sample handles are shown as real ranked participants.
 
