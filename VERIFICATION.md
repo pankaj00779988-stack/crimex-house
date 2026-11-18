@@ -119,3 +119,9 @@ app-scoped and missing professional IDs are rejected. Tests cover both flat
 and `data`-wrapped Meta response shapes. All 64 unit/service checks, lint,
 TypeScript and the production build passed. Live Meta credentials and DM delivery
 remain untested until the owner finishes their developer-app setup.
+
+The Enable action now registers the professional account's `messages`
+subscription with Meta after callback verification. It saves enabled status only
+after Meta returns success, rejects a connection changed during the request, and
+keeps pause independent of provider availability. All 65 unit/service checks
+passed, including rejected subscriptions, successful registration and pause.

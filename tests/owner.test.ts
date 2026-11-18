@@ -244,6 +244,8 @@ async function botFixture() {
   let username = m.saved.handle.slice(1);
   let providerFails = false;
   const fetcher: typeof fetch = async (url) => {
+    if (new URL(String(url)).pathname.endsWith("/subscribed_apps"))
+      return Response.json({ success: true });
     const basic =
       new URL(String(url)).searchParams.get("fields") === "user_id,username";
     if (!basic) profileCalls++;
@@ -275,7 +277,7 @@ async function botFixture() {
     "12345",
     store,
   );
-  await toggleInstagram(true, store);
+  await toggleInstagram(true, store, fetcher);
   const body = (
     mid: string,
     code = m.saved.verificationCode,
@@ -335,12 +337,14 @@ test("Meta credentials are encrypted, the connection is account-bound, and a cal
     status(403),
   );
   assert.equal((await instagramStatus(store)).configured, false);
-  const good: typeof fetch = async () =>
-    Response.json({
-      id: "111111111111111",
-      user_id: instagramId,
-      username: "crimex.house",
-    });
+  const good: typeof fetch = async (url) =>
+    new URL(String(url)).pathname.endsWith("/subscribed_apps")
+      ? Response.json({ success: true })
+      : Response.json({
+          id: "111111111111111",
+          user_id: instagramId,
+          username: "crimex.house",
+        });
   const connected = await connectInstagram(
     { accountId: instagramId, appSecret, accessToken },
     store,
@@ -370,8 +374,30 @@ test("Meta credentials are encrypted, the connection is account-bound, and a cal
     ),
     "123",
   );
-  await toggleInstagram(true, store);
+  await toggleInstagram(true, store, good);
   assert.equal((await instagramStatus(store)).enabled, true);
+});
+test("enabling the bot requires a successful Meta account subscription and pause makes no provider call", async () => {
+  const f = await botFixture();
+  await toggleInstagram(false, f.store);
+  const failed: typeof fetch = async () =>
+    Response.json({ error: {} }, { status: 403 });
+  await assert.rejects(toggleInstagram(true, f.store, failed), status(503));
+  assert.equal((await instagramStatus(f.store)).enabled, false);
+  const accepted: typeof fetch = async (url, init) => {
+    const request = new URL(String(url));
+    assert.equal(request.pathname, `/v27.0/${instagramId}/subscribed_apps`);
+    assert.equal(request.searchParams.get("subscribed_fields"), "messages");
+    assert.equal(init?.method, "POST");
+    return Response.json({ success: true });
+  };
+  await toggleInstagram(true, f.store, accepted);
+  assert.equal((await instagramStatus(f.store)).enabled, true);
+  const noRequest: typeof fetch = async () => {
+    throw new Error("Pause must not call Meta");
+  };
+  await toggleInstagram(false, f.store, noRequest);
+  assert.equal((await instagramStatus(f.store)).enabled, false);
 });
 test("Meta connection discovers the professional user_id and rejects app-scoped or missing IDs", async () => {
   const store = new MemoryStore();

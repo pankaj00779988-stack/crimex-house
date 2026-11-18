@@ -594,8 +594,8 @@ export function OwnerDashboard() {
                     <p>
                       In your Meta app, add this callback URL and verification
                       token, subscribe to the Instagram{" "}
-                      <strong>messages</strong> field, and enable the
-                      subscription for your professional account. Complete any
+                      <strong>messages</strong> field. The Enable button registers
+                      notifications for your professional account. Complete any
                       permissions or access review Meta requires.
                     </p>
                     <label>

@@ -78,9 +78,10 @@ necessary before claiming that Instagram delivery works end to end.
 4. Copy the callback URL and verification token displayed in the dashboard into
    the app's Instagram webhook setup:
    `https://crimexhouse.vercel.app/api/instagram/webhook`.
-5. Subscribe to `messages` and enable the subscription for the professional
-   account. When Meta verifies the callback, the dashboard shows that status.
-   Then select **Enable automatic checks**.
+5. Select the `messages` field in the Meta app. When Meta verifies the callback,
+   the owner dashboard shows that status. Select **Enable automatic checks**;
+   the site registers the professional account's `messages` subscription through
+   Meta and enables the bot only after Meta confirms success.
 6. Test with a real member: register a website account, follow `@crimex.house`,
    and send a new DM containing its CREW code. Confirm the member becomes
    approved. Also test a non-follower, wrong code, and an account outside the

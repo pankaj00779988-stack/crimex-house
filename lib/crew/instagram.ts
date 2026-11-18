@@ -172,12 +172,48 @@ export async function connectInstagram(
 export async function toggleInstagram(
   enabled: unknown,
   store: CrewStore = privateStore,
+  fetcher = fetch,
 ) {
   if (typeof enabled !== "boolean")
     throw new CrewError("Choose whether automatic verification is enabled.");
+  const checked = enabled ? await connection(store) : null;
+  if (enabled) {
+    if (!checked) throw new CrewError("Connect your Meta app first.", 409);
+    if (!checked.webhookVerifiedAt)
+      throw new CrewError(
+        "Verify the callback URL in your Meta app before enabling automatic checks.",
+        409,
+      );
+    const fields = new URLSearchParams({ subscribed_fields: "messages" });
+    const res = await fetcher(
+      `${GRAPH}/${checked.accountId}/subscribed_apps?${fields}`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${checked.accessToken}` },
+        signal: AbortSignal.timeout(5000),
+        cache: "no-store",
+      },
+    );
+    if (!res.ok || (await res.json()).success !== true)
+      throw new CrewError(
+        "Meta could not enable message notifications. Check the app's messaging permissions, access level and Live status, then retry.",
+        503,
+      );
+  }
   await mutate<Envelope, void>(store, KEY, (value) => {
     if (!value) throw new CrewError("Connect your Meta app first.", 409);
     const config = decryptConnection(value);
+    if (
+      enabled &&
+      (!checked ||
+        config.connectedAt !== checked.connectedAt ||
+        config.accessToken !== checked.accessToken ||
+        config.accountId !== checked.accountId)
+    )
+      throw new CrewError(
+        "The Meta connection changed. Refresh the dashboard and retry.",
+        409,
+      );
     if (enabled && !config.webhookVerifiedAt)
       throw new CrewError(
         "Verify the callback URL in your Meta app before enabling automatic checks.",
