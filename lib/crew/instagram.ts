@@ -19,7 +19,12 @@ import { reviewCrew } from "./verification";
 
 const KEY = "owner/instagram-v1";
 const GRAPH = "https://graph.instagram.com/v27.0";
+const UNIFIED_GRAPH = "https://graph.facebook.com/v27.0";
+type ApiSetup = "instagram" | "unified";
 interface Connection {
+  apiSetup?: ApiSetup;
+  clientBusinessId?: string;
+  configurationId?: string;
   accountId: string;
   appSecret: string;
   accessToken: string;
@@ -82,6 +87,10 @@ export async function instagramStatus(store: CrewStore = privateStore) {
       ? {
           verifyToken: config.verifyToken,
           accountId: config.accountId,
+          apiSetup: config.apiSetup ?? "instagram",
+          ...(config.configurationId
+            ? { configurationId: config.configurationId }
+            : {}),
           connectedAt: config.connectedAt,
           webhookVerified: !!config.webhookVerifiedAt,
         }
@@ -93,11 +102,12 @@ async function profile(
   accessToken: string,
   fetcher = fetch,
   basic = false,
+  graph = GRAPH,
 ) {
   const params = new URLSearchParams({
     fields: basic ? "user_id,username" : "username,is_user_follow_business",
   });
-  const res = await fetcher(`${GRAPH}/${basic ? "me" : id}?${params}`, {
+  const res = await fetcher(`${graph}/${basic ? "me" : id}?${params}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
     signal: AbortSignal.timeout(3000),
     cache: "no-store",
@@ -115,11 +125,101 @@ async function profile(
     is_user_follow_business?: boolean;
   };
 }
+function graphFor(config: Connection) {
+  return config.apiSetup === "unified" ? UNIFIED_GRAPH : GRAPH;
+}
+async function unifiedAccount(
+  accessToken: string,
+  suppliedId: string,
+  fetcher: typeof fetch,
+) {
+  const get = async (path: string, params: URLSearchParams) => {
+    const res = await fetcher(`${UNIFIED_GRAPH}/${path}?${params}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      signal: AbortSignal.timeout(5000),
+      cache: "no-store",
+    });
+    if (!res.ok)
+      throw new CrewError(
+        "Meta could not read the accounts shared with this token. Use the System-user token from Unified Login and grant Instagram basic and messaging access.",
+        503,
+      );
+    return await res.json();
+  };
+  const business = await get(
+    "me",
+    new URLSearchParams({ fields: "client_business_id" }),
+  );
+  const clientBusinessId = String(business?.client_business_id ?? "");
+  if (!/^\d{5,32}$/.test(clientBusinessId))
+    throw new CrewError(
+      "This token does not identify a Unified Login business portfolio. Generate a System-user access token (SUAT) in the app's Unified Login setup.",
+      403,
+    );
+  let after = "";
+  for (let page = 0; page < 10; page++) {
+    const params = new URLSearchParams({ fields: "id,username", limit: "100" });
+    if (after) params.set("after", after);
+    const body = await get("me/assigned_instagram_accounts", params);
+    if (!Array.isArray(body?.data))
+      throw new CrewError(
+        "Meta did not return the assigned Instagram accounts. Check the business portfolio and shared assets.",
+        503,
+      );
+    const matches = body.data.filter(
+      (a: { id?: unknown; username?: unknown }) =>
+        typeof a.username === "string" &&
+        a.username.toLowerCase() === "crimex.house",
+    );
+    if (matches.length > 1)
+      throw new CrewError(
+        "Meta returned ambiguous Instagram account information. Reconnect the intended account.",
+        403,
+      );
+    if (matches.length === 1) {
+      const accountId = String(matches[0].id ?? "");
+      if (
+        !/^\d{5,32}$/.test(accountId) ||
+        (suppliedId && suppliedId !== accountId)
+      )
+        throw new CrewError(
+          "The entered Instagram ID does not match @crimex.house. Leave it blank to detect the ID from your token.",
+          403,
+        );
+      return { accountId, clientBusinessId };
+    }
+    const next = body.paging?.cursors?.after;
+    if (
+      !body.paging?.next ||
+      typeof next !== "string" ||
+      !next ||
+      next === after
+    )
+      break;
+    // Rebuild the URL on Meta's fixed host; never follow a token-bearing paging URL.
+    after = next;
+  }
+  throw new CrewError(
+    "@crimex.house was not shared with this app. Add it to the correct portfolio and select it when generating the token.",
+    403,
+  );
+}
 export async function connectInstagram(
   input: Record<string, unknown>,
   store: CrewStore = privateStore,
   fetcher = fetch,
 ) {
+  const apiSetup = input.apiSetup ?? "instagram";
+  if (apiSetup !== "instagram" && apiSetup !== "unified")
+    throw new CrewError("Choose Unified Login or Instagram Login.");
+  const configurationId =
+    typeof input.configurationId === "string"
+      ? input.configurationId.trim()
+      : "";
+  if (configurationId && !/^\d{5,32}$/.test(configurationId))
+    throw new CrewError(
+      "Enter the numeric Meta configuration ID, or leave it blank.",
+    );
   const suppliedId =
     typeof input.accountId === "string" ? input.accountId.trim() : "";
   const appSecret =
@@ -129,18 +229,25 @@ export async function connectInstagram(
   if (
     (suppliedId !== "" && !/^\d{5,32}$/.test(suppliedId)) ||
     !/^[a-f0-9]{32}$/i.test(appSecret) ||
-    accessToken.length < 20 ||
-    accessToken.length > 4096
+    accessToken.length < 20
   )
     throw new CrewError(
-      "Enter your Meta app secret and Instagram User access token. The Instagram account ID can be detected automatically.",
+      "Enter your Meta app secret and the access token for the selected login setup. The Instagram account ID can be detected automatically.",
     );
-  const owner = await profile("me", accessToken, fetcher, true);
+  const owner =
+    apiSetup === "instagram"
+      ? await profile("me", accessToken, fetcher, true)
+      : null;
   // Meta's `id` is app-scoped. `user_id` is the professional account ID
   // used in webhook entry/recipient fields, so they must not be interchanged.
-  const accountId = String(owner?.user_id ?? "");
+  const unified =
+    apiSetup === "unified"
+      ? await unifiedAccount(accessToken, suppliedId, fetcher)
+      : null;
+  const accountId = unified?.accountId ?? String(owner?.user_id ?? "");
   if (
-    owner?.username?.toLowerCase() !== "crimex.house" ||
+    (apiSetup === "instagram" &&
+      owner?.username?.toLowerCase() !== "crimex.house") ||
     !/^\d{5,32}$/.test(accountId) ||
     (suppliedId !== "" && suppliedId !== accountId)
   )
@@ -152,6 +259,9 @@ export async function connectInstagram(
     const old = existing ? decryptConnection(existing) : null;
     return {
       value: encryptConnection({
+        apiSetup,
+        ...(unified ? { clientBusinessId: unified.clientBusinessId } : {}),
+        ...(configurationId ? { configurationId } : {}),
         accountId,
         appSecret,
         accessToken,
@@ -160,6 +270,7 @@ export async function connectInstagram(
         connectedAt: new Date().toISOString(),
         ...(old?.appSecret === appSecret &&
         old.accountId === accountId &&
+        (old.apiSetup ?? "instagram") === apiSetup &&
         old.webhookVerifiedAt
           ? { webhookVerifiedAt: old.webhookVerifiedAt }
           : {}),
@@ -186,7 +297,7 @@ export async function toggleInstagram(
       );
     const fields = new URLSearchParams({ subscribed_fields: "messages" });
     const res = await fetcher(
-      `${GRAPH}/${checked.accountId}/subscribed_apps?${fields}`,
+      `${graphFor(checked)}/${checked.accountId}/subscribed_apps?${fields}`,
       {
         method: "POST",
         headers: { Authorization: `Bearer ${checked.accessToken}` },
@@ -208,6 +319,7 @@ export async function toggleInstagram(
       (!checked ||
         config.connectedAt !== checked.connectedAt ||
         config.accessToken !== checked.accessToken ||
+        config.apiSetup !== checked.apiSetup ||
         config.accountId !== checked.accountId)
     )
       throw new CrewError(
@@ -321,6 +433,8 @@ export async function processInstagramWebhook(
           event.sender!.id!,
           config.accessToken,
           fetcher,
+          false,
+          graphFor(config),
         );
         // Missing/false follower information never becomes an approval.
         if (

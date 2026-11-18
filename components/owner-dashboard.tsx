@@ -19,6 +19,8 @@ interface DashboardState {
   bot?: {
     configured: boolean;
     enabled: boolean;
+    apiSetup?: "unified" | "instagram";
+    configurationId?: string;
     verifyToken?: string;
     accountId?: string;
     webhookVerified?: boolean;
@@ -51,6 +53,8 @@ export function OwnerDashboard() {
   const [mode, setMode] = useState<"login" | "setup" | "recover">("login");
   const [token, setToken] = useState("");
   const [connecting, setConnecting] = useState(false);
+  const [apiSetup, setApiSetup] = useState<"unified" | "instagram">("unified");
+  const [configurationId, setConfigurationId] = useState("");
   const [instagramId, setInstagramId] = useState("");
   const [appSecret, setAppSecret] = useState("");
   const [accessToken, setAccessToken] = useState("");
@@ -516,7 +520,13 @@ export function OwnerDashboard() {
                 <button
                   className="text-link"
                   disabled={busy}
-                  onClick={() => setConnecting(!connecting)}
+                  onClick={() => {
+                    if (!connecting) {
+                      setApiSetup(state.bot?.apiSetup ?? "unified");
+                      setConfigurationId(state.bot?.configurationId ?? "");
+                    }
+                    setConnecting(!connecting);
+                  }}
                 >
                   {connecting
                     ? "CLOSE CONNECTION FORM"
@@ -531,6 +541,8 @@ export function OwnerDashboard() {
                       void run(async () => {
                         await api("/api/owner", {
                           mode: "connect-instagram",
+                          apiSetup,
+                          configurationId,
                           accountId: instagramId,
                           appSecret,
                           accessToken,
@@ -546,12 +558,41 @@ export function OwnerDashboard() {
                     }}
                   >
                     <p>
-                      In Meta for Developers, configure Instagram API with
-                      Instagram Login for @crimex.house. Authorize basic profile
-                      and messaging access, then enter the credentials below.
-                      App secrets and access tokens are encrypted on the server
-                      and never shown again.
+                      Choose the login setup shown in your Meta app. New apps
+                      use Unified Login with a business portfolio and a
+                      System-user access token (SUAT). Authorize @crimex.house
+                      for basic profile and messaging access, then enter the
+                      credentials below. App secrets and access tokens are
+                      encrypted on the server and never shown again.
                     </p>
+                    <label>
+                      META APP LOGIN SETUP
+                      <select
+                        aria-label="META APP LOGIN SETUP"
+                        value={apiSetup}
+                        onChange={(e) =>
+                          setApiSetup(e.target.value as "unified" | "instagram")
+                        }
+                      >
+                        <option value="unified">
+                          Unified Login (new Meta apps)
+                        </option>
+                        <option value="instagram">
+                          Instagram Login (older Meta apps)
+                        </option>
+                      </select>
+                    </label>
+                    {apiSetup === "unified" && (
+                      <label>
+                        META CONFIGURATION ID (OPTIONAL)
+                        <input
+                          value={configurationId}
+                          onChange={(e) => setConfigurationId(e.target.value)}
+                          autoComplete="off"
+                          inputMode="numeric"
+                        />
+                      </label>
+                    )}
                     <label>
                       INSTAGRAM ACCOUNT ID (OPTIONAL)
                       <input
@@ -573,7 +614,9 @@ export function OwnerDashboard() {
                       />
                     </label>
                     <label>
-                      INSTAGRAM USER ACCESS TOKEN
+                      {apiSetup === "unified"
+                        ? "SYSTEM-USER ACCESS TOKEN (SUAT)"
+                        : "INSTAGRAM USER ACCESS TOKEN"}
                       <input
                         type="password"
                         value={accessToken}
@@ -594,9 +637,9 @@ export function OwnerDashboard() {
                     <p>
                       In your Meta app, add this callback URL and verification
                       token, subscribe to the Instagram{" "}
-                      <strong>messages</strong> field. The Enable button registers
-                      notifications for your professional account. Complete any
-                      permissions or access review Meta requires.
+                      <strong>messages</strong> field. The Enable button
+                      registers notifications for your professional account.
+                      Complete any permissions or access review Meta requires.
                     </p>
                     <label>
                       CALLBACK URL

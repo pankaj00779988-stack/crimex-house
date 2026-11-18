@@ -82,6 +82,30 @@ test("owner reviews are private, immediate, recoverable and preserve crew credit
     await page.getByLabel("I saved this recovery code privately.").check();
     await page.getByRole("button", { name: "CONTINUE TO DASHBOARD" }).click();
     await expect(page.getByText("Signed in as owner")).toBeVisible();
+    await page
+      .getByRole("button", { name: "CONNECT YOUR META APP", exact: true })
+      .click();
+    await expect(
+      page.getByLabel("META APP LOGIN SETUP", { exact: true }),
+    ).toHaveValue("unified");
+    await expect(
+      page.getByLabel("SYSTEM-USER ACCESS TOKEN (SUAT)", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByLabel("META CONFIGURATION ID (OPTIONAL)", { exact: true }),
+    ).toBeVisible();
+    await page
+      .getByLabel("META APP LOGIN SETUP", { exact: true })
+      .selectOption("instagram");
+    await expect(
+      page.getByLabel("INSTAGRAM USER ACCESS TOKEN", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByLabel("META CONFIGURATION ID (OPTIONAL)", { exact: true }),
+    ).toHaveCount(0);
+    await page
+      .getByRole("button", { name: "CLOSE CONNECTION FORM", exact: true })
+      .click();
     expect(analytics).toEqual([]);
     const cookie = (await page.context().cookies()).find(
       (c) => c.name === "__Host-crimex_crew",

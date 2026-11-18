@@ -125,3 +125,25 @@ subscription with Meta after callback verification. It saves enabled status only
 after Meta returns success, rejects a connection changed during the request, and
 keeps pause independent of provider availability. All 65 unit/service checks
 passed, including rejected subscriptions, successful registration and pause.
+
+## Unified Login compatibility — 18 November 2026
+
+The owner's newly created Meta app offers Unified Login. The connector now has
+an explicit Unified Login mode using `graph.facebook.com` and the System-user
+access token from Meta's dashboard. It discovers the client business ID and
+assigned Instagram accounts instead of mistaking `/me` for the Instagram
+profile. It accepts only the assigned `@crimex.house` account, stores the
+portfolio/configuration metadata encrypted with the token, and uses the selected
+host for message subscriptions and sender profile checks. Legacy Instagram Login
+and encrypted records without a mode field remain supported.
+
+All 68 unit/service checks passed. New checks cover shared-asset discovery,
+cursor pagination on a fixed host, missing business grants, wrong brands and
+IDs, provider-specific subscriptions and follower lookup, deduplication and
+legacy records. Lint, TypeScript, production build and production dependency
+audit passed. Preview browser checks passed the full private owner lifecycle,
+both login-mode form options, and the Part 2/$5,000,000 release gate. Private
+preview QA data was removed after testing. Story, credit and reward JSON stayed
+unchanged. A real Meta token/callback/DM test is still required; the bot has not
+been declared connected or enabled. This setup uses Meta's dashboard-generated
+token for the owner's account, not a public OAuth onboarding implementation.

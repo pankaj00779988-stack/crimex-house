@@ -520,3 +520,195 @@ test("temporary Meta failures are retryable and a bot cannot override an owner r
   assert.ok(await authenticate(f.m.cookie, f.store, now));
   assert.equal(await f.store.read(OWNER_KEY), null);
 });
+
+test("Unified Login resolves shared assets, subscribes and verifies DMs on graph.facebook.com", async () => {
+  const store = new MemoryStore();
+  const m = await member(store, "@unified.member");
+  const requests: { host: string; path: string; after: string | null }[] = [];
+  let profileCalls = 0;
+  const fetcher: typeof fetch = async (input, init) => {
+    const url = new URL(String(input));
+    assert.equal(url.hostname, "graph.facebook.com");
+    assert.equal(url.searchParams.has("access_token"), false);
+    assert.equal(
+      (init?.headers as Record<string, string>).Authorization,
+      `Bearer ${accessToken}`,
+    );
+    requests.push({
+      host: url.hostname,
+      path: url.pathname,
+      after: url.searchParams.get("after"),
+    });
+    if (url.pathname === "/v27.0/me") {
+      assert.equal(url.searchParams.get("fields"), "client_business_id");
+      return Response.json({
+        id: "111111111111111",
+        client_business_id: "222222222222222",
+      });
+    }
+    if (url.pathname === "/v27.0/me/assigned_instagram_accounts") {
+      assert.equal(url.searchParams.get("fields"), "id,username");
+      return Response.json(
+        url.searchParams.has("after")
+          ? { data: [{ id: instagramId, username: "crimex.house" }] }
+          : {
+              data: [{ id: "333333333333333", username: "other.brand" }],
+              paging: {
+                cursors: { after: "page-two" },
+                next: "https://unexpected.example/never-follow-this?access_token=hidden",
+              },
+            },
+      );
+    }
+    if (url.pathname === `/v27.0/${instagramId}/subscribed_apps`) {
+      assert.equal(init?.method, "POST");
+      assert.equal(url.searchParams.get("subscribed_fields"), "messages");
+      return Response.json({ success: true });
+    }
+    assert.equal(url.pathname, `/v27.0/${senderId}`);
+    assert.equal(
+      url.searchParams.get("fields"),
+      "username,is_user_follow_business",
+    );
+    profileCalls++;
+    return Response.json({
+      username: m.saved.handle.slice(1),
+      is_user_follow_business: true,
+    });
+  };
+  const connected = await connectInstagram(
+    {
+      apiSetup: "unified",
+      configurationId: "444444444444444",
+      appSecret,
+      accessToken,
+    },
+    store,
+    fetcher,
+  );
+  assert.equal(connected.apiSetup, "unified");
+  assert.equal(connected.accountId, instagramId);
+  assert.equal(connected.enabled, false);
+  assert.equal(requests[2].after, "page-two");
+  const encrypted = (await store.read<Parameters<typeof decryptConnection>[0]>(
+    "owner/instagram-v1",
+  ))!.value;
+  const saved = decryptConnection(encrypted);
+  assert.equal(saved.clientBusinessId, "222222222222222");
+  assert.equal(saved.configurationId, "444444444444444");
+  assert.equal(JSON.stringify(encrypted).includes(accessToken), false);
+  await verifyInstagramCallback(
+    "subscribe",
+    connected.verifyToken!,
+    "12345",
+    store,
+  );
+  await toggleInstagram(true, store, fetcher);
+  const body = JSON.stringify({
+    object: "instagram",
+    entry: [
+      {
+        id: instagramId,
+        messaging: [
+          {
+            sender: { id: senderId },
+            recipient: { id: instagramId },
+            timestamp: now.getTime(),
+            message: { mid: "unified-dm", text: m.saved.verificationCode },
+          },
+        ],
+      },
+    ],
+  });
+  const signature = `sha256=${createHmac("sha256", appSecret).update(body).digest("hex")}`;
+  await processInstagramWebhook(body, signature, store, fetcher, now);
+  await processInstagramWebhook(body, signature, store, fetcher, now);
+  const approved = (await store.read<Account>(m.key))!.value;
+  assert.equal(isVerified(approved), true);
+  assert.equal(approved.balance, 0);
+  assert.equal(profileCalls, 1);
+});
+test("Unified Login rejects unshared accounts, wrong IDs and tokens without a client business", async () => {
+  const store = new MemoryStore();
+  let calls = 0;
+  let hasBusiness = false;
+  let handle = "crimex.house";
+  const fetcher: typeof fetch = async (input) => {
+    calls++;
+    const url = new URL(String(input));
+    assert.equal(url.hostname, "graph.facebook.com");
+    return Response.json(
+      url.pathname.endsWith("/me")
+        ? {
+            id: instagramId,
+            ...(hasBusiness ? { client_business_id: "222222222222222" } : {}),
+          }
+        : { data: [{ id: instagramId, username: handle }] },
+    );
+  };
+  await assert.rejects(
+    connectInstagram(
+      { apiSetup: "unknown", appSecret, accessToken },
+      store,
+      fetcher,
+    ),
+    status(400),
+  );
+  assert.equal(calls, 0);
+  await assert.rejects(
+    connectInstagram(
+      { apiSetup: "unified", appSecret, accessToken },
+      store,
+      fetcher,
+    ),
+    status(403),
+  );
+  hasBusiness = true;
+  handle = "someone.else";
+  await assert.rejects(
+    connectInstagram(
+      { apiSetup: "unified", appSecret, accessToken },
+      store,
+      fetcher,
+    ),
+    status(403),
+  );
+  handle = "crimex.house";
+  await assert.rejects(
+    connectInstagram(
+      {
+        apiSetup: "unified",
+        accountId: "111111111111111",
+        appSecret,
+        accessToken,
+      },
+      store,
+      fetcher,
+    ),
+    status(403),
+  );
+  assert.equal((await instagramStatus(store)).configured, false);
+});
+test("legacy encrypted connections without a login-mode field keep the Instagram API host", async () => {
+  const f = await botFixture();
+  const current =
+    (await f.store.read<Parameters<typeof decryptConnection>[0]>(
+      "owner/instagram-v1",
+    ))!;
+  const config = decryptConnection(current.value);
+  delete config.apiSetup;
+  const { encryptConnection } = await import("../lib/crew/instagram");
+  await f.store.write(
+    "owner/instagram-v1",
+    encryptConnection(config),
+    current.etag,
+  );
+  assert.equal((await instagramStatus(f.store)).apiSetup, "instagram");
+  const body = f.body("legacy-connection-dm");
+  const checked: typeof fetch = async (input, init) => {
+    assert.equal(new URL(String(input)).hostname, "graph.instagram.com");
+    return f.fetcher(input, init);
+  };
+  await processInstagramWebhook(body, f.sign(body), f.store, checked, now);
+  assert.equal(isVerified((await f.store.read<Account>(f.m.key))!.value), true);
+});
