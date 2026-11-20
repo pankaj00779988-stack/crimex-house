@@ -4,6 +4,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import {
   activeEpisode,
+  episodes,
   latestEpisode,
   vaultEpisode,
   siteConfig,
@@ -25,17 +26,24 @@ const reelUrl =
 const standby: Episode = { ...vaultEpisode, isReleased: false, reelUrl: "" };
 const released: Episode = { ...standby, isReleased: true, reelUrl };
 
-test("Part 2 release opens its real choices while keeping Part 1's vault and avoiding an invented clue", () => {
-  assert.equal(latestEpisode.part, 2);
+test("Part 3 release opens its real choices while keeping earlier Reels and Part 1's vault", () => {
+  assert.equal(latestEpisode.part, 3);
   assert.equal(
     latestEpisode.reelUrl,
-    "https://www.instagram.com/reel/Df5gbH3y-xP/?knvt=Y3M3NWczcHl6dGZl",
+    "https://www.instagram.com/reel/Df8T-EwK8Im/?knvt=d2FsZWgzZ2cyMHZu",
   );
   assert.equal(isEpisodeReleased(latestEpisode), true);
-  assert.equal(activeEpisode.part, 2);
-  assert.equal(activeEpisode.title, "THE $200K TRAP");
-  assert.equal(siteConfig.cash, 4900000);
-  assert.equal(siteConfig.initialSuspicion, 52);
+  assert.equal(activeEpisode.part, 3);
+  assert.equal(activeEpisode.title, "THE CLEAN VAN");
+  assert.equal(siteConfig.cash, 4700000);
+  assert.equal(siteConfig.initialSuspicion, 61);
+  const previous = episodes.find((episode) => episode.part === 2)!;
+  assert.equal(previous.status, "ARCHIVED");
+  assert.equal(isEpisodeReleased(previous), true);
+  assert.equal(
+    previous.reelUrl,
+    "https://www.instagram.com/reel/Df5gbH3y-xP/?knvt=Y3M3NWczcHl6dGZl",
+  );
   assert.equal(vaultEpisode.part, 1);
   assert.equal(vaultEpisode.safeCode, "1150");
   const html = renderToStaticMarkup(
@@ -51,9 +59,9 @@ test("Part 2 release opens its real choices while keeping Part 1's vault and avo
   const vote = renderToStaticMarkup(
     createElement(Vote, { episode: latestEpisode }),
   );
-  assert.match(vote, /DEAL/);
+  assert.match(vote, /BLUFF/);
   assert.match(vote, /BOLT/);
-  assert.doesNotMatch(vote, /DECOY/);
+  assert.doesNotMatch(vote, /DEAL|DECOY/);
   const vault = renderToStaticMarkup(
     createElement(Vault, { episode: latestEpisode }),
   );

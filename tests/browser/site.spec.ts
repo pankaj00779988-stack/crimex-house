@@ -62,23 +62,30 @@ test("episode-first discovery and mobile mission browsing preserve the release g
     .locator(".hq-missions-callout")
     .evaluate((el) => el.getBoundingClientRect().top);
   expect(caseTop).toBeLessThan(missionTop);
-  await expect(page.locator(".hud")).toContainText("$4,900,000");
+  await expect(page.locator(".hud")).toContainText("$4,700,000");
   await page.goto("/files");
   await expect(
-    page.getByRole("button", { name: "Part 3 locked" }),
+    page.getByRole("button", { name: "Part 4 locked" }),
   ).toBeDisabled();
   await page
-    .getByRole("button", { name: "Open Part 2: THE $200K TRAP" })
+    .getByRole("button", { name: "Open Part 3: THE CLEAN VAN" })
     .click();
   const releasedReel = page.getByRole("dialog");
-  await expect(releasedReel).toContainText("Part 02 is live on Instagram.");
+  await expect(releasedReel).toContainText("Part 03 is live on Instagram.");
   await expect(releasedReel).not.toContainText("Bundle #50");
   await expect(
     releasedReel.getByRole("link", { name: "Watch on Instagram" }),
   ).toHaveAttribute("href", latestEpisode.reelUrl!);
   await page.keyboard.press("Escape");
+  await page
+    .getByRole("button", { name: "Open Part 2: THE $200K TRAP" })
+    .click();
+  await expect(
+    page.getByRole("dialog").getByRole("link", { name: "Watch on Instagram" }),
+  ).toHaveAttribute("href", episodes.find((item) => item.part === 2)!.reelUrl!);
+  await page.keyboard.press("Escape");
   await page.goto("/board");
-  await expect(page.locator(".crew-next")).toContainText("Part 02 is live.");
+  await expect(page.locator(".crew-next")).toContainText("Part 03 is live.");
 
   // Exercise the guest journey without creating accounts or touching a real wallet.
   await page.route("**/api/crew", (route) =>
@@ -241,29 +248,33 @@ test("HQ artwork, six responsive pages, channel links, and episode release state
   expect(errors).toEqual([]);
 });
 
-test("Part 2 saves DEAL separately and Part 1's vault stays playable", async ({
+test("Part 3 saves BLUFF separately and Part 1's vault stays playable", async ({
   page,
 }) => {
   test.skip(!released, "The current part has not been released.");
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
-  await page.evaluate(() =>
-    localStorage.setItem("crimex:vote:s1-p1", '"optionB"'),
-  );
-  const deal = page.getByRole("button", { name: /DEAL/ });
-  await deal.click();
-  await expect(deal).toHaveAttribute("aria-pressed", "true");
+  await page.evaluate(() => {
+    localStorage.setItem("crimex:vote:s1-p1", '"optionB"');
+    localStorage.setItem("crimex:vote:s1-p2", '"optionB"');
+  });
+  const bluff = page.getByRole("button", { name: /BLUFF/ });
+  await bluff.click();
+  await expect(bluff).toHaveAttribute("aria-pressed", "true");
   await expect(
-    page.getByRole("link", { name: "COMMENT DEAL", exact: true }),
+    page.getByRole("link", { name: "COMMENT BLUFF", exact: true }),
   ).toHaveAttribute("href", episode.reelUrl!);
   await expect(page.locator(".vote-bottom")).toContainText(
     "Post it on the Reel to cast your vote.",
   );
   await page.reload();
-  await expect(deal).toHaveAttribute("aria-pressed", "true");
+  await expect(bluff).toHaveAttribute("aria-pressed", "true");
   expect(
     await page.evaluate(() => localStorage.getItem("crimex:vote:s1-p1")),
+  ).toBe('"optionB"');
+  expect(
+    await page.evaluate(() => localStorage.getItem("crimex:vote:s1-p2")),
   ).toBe('"optionB"');
   await page.goto("/safe");
   await page.getByRole("button", { name: "SFX ON", exact: true }).click();
@@ -295,7 +306,7 @@ test("Part 2 saves DEAL separately and Part 1's vault stays playable", async ({
     "@release.check",
   );
   await page.goto("/");
-  await expect(page.locator(".hud .suspicion strong")).toContainText("57%");
+  await expect(page.locator(".hud .suspicion strong")).toContainText("66%");
   expect(errors).toEqual([]);
 });
 

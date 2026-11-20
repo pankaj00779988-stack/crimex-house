@@ -49,9 +49,11 @@ Keep exactly one episode in the editorial `LIVE` slot. Its public release is sep
 
 ## Released episodes
 
-Part 02, **THE $200K TRAP**, is the current episode and points to the creator-supplied [Instagram Reel](https://www.instagram.com/reel/Df5gbH3y-xP/?knvt=Y3M3NWczcHl6dGZl). Its official caption confirms **DEAL** (pay Vance $200,000) and **BOLT** (ram the door and run). Its Reel/cover confirm the title, poster, $4,900,000 remaining, $0 banked and the ending 52% suspicion baseline. Runtime is rounded from the Reel's 77.5 seconds. No comment counts were supplied, so website vote totals remain zero.
+Part 03, **THE CLEAN VAN**, is the current episode and points to the creator-supplied [Instagram Reel](https://www.instagram.com/reel/Df8T-EwK8Im/?knvt=d2FsZWgzZ2cyMHZu). Its caption, official cover and Reel confirm **BLUFF** (play sound tech) and **BOLT** (floor it in the fog), $4,700,000 remaining, $0 banked and a 61% suspicion baseline. The traffic stop is on Route 6 at 3:38 AM, with 45 seconds before the trooper runs the plates. Runtime is rounded from the Reel's 80.6 seconds. No current comment counts were supplied, so website vote totals remain zero.
 
-Part 01 remains accessible in the archive with its [original Reel](https://www.instagram.com/reel/Df0s0ByqzGz/?obrf=eDJ0NTcweGdlZDAy), case notes and 1150 vault. The Board labels its retained Part 01 evidence separately from the latest Reel’s theory link. Part 02 has a confirmed synopsis and real choices, but no creator-confirmed vault clue/code or legal citation; these are not invented. Parts 03–06 remain locked. Member verification, mission credits and reward costs are independent of episode release.
+Part 02, **THE $200K TRAP**, is archived with its [original Reel](https://www.instagram.com/reel/Df5gbH3y-xP/?knvt=Y3M3NWczcHl6dGZl), cover and synopsis. Its confirmed choices were DEAL (pay Vance $200,000) and BOLT (ram the door and run). Existing Part 1 and Part 2 local vote records are preserved independently of Part 3.
+
+Part 01 remains accessible in the archive with its [original Reel](https://www.instagram.com/reel/Df0s0ByqzGz/?obrf=eDJ0NTcweGdlZDAy), case notes and 1150 vault. The Board labels its retained Part 01 evidence separately from the latest Reel’s theory link. Parts 02 and 03 have confirmed synopses and real choices, but no creator-confirmed vault clue/code or legal citation; these are not invented. Parts 04–06 remain locked. Member verification, mission credits and reward costs are independent of episode release.
 
 Change these two fields together and redeploy:
 
@@ -112,6 +114,7 @@ The episode safe is a narrative puzzle, not authentication. Source data and puzz
 
 - `public/art/motel-room.webp`: generated text-free motel artwork in the established character style. Used by HQ, Room 17, and the Part 01 teaser. The original PNG is retained outside the repository; WebP keeps the site asset small.
 - `public/art/part-02.webp`: the creator's actual Part 02 cover, retrieved from the connected Instagram account and optimized as WebP. Its title is **THE $200K TRAP**.
+- `public/art/part-03.webp`: the creator's actual Part 03 cover, retrieved from the connected Instagram account and optimized as WebP. Its title is **THE CLEAN VAN**.
 - To use a supplied original episode image later, upload it under `/public/art/` and change the episode’s `image` field.
 - `public/art/scene_01.jpg`: original starter photo from [Unsplash](https://images.unsplash.com/photo-1519608487953-e999c86e7455).
 - `avatarUrl` in site configuration is empty for the CH monogram. Set it to `/art/pfp.jpg` after uploading a profile image. Missing configured images also fall back cleanly.

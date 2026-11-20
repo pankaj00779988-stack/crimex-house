@@ -252,3 +252,27 @@ tested deployment was promoted without rebuilding. Both public aliases passed
 page/image/private-API checks, and both live phone story checks passed. No
 error/fatal runtime logs were found in the checked ten-minute window. A private
 post-release read confirmed automatic Instagram checks remain disabled.
+
+## Part 03 release — 20 November 2026
+
+The creator supplied Reel `Df8T-EwK8Im`. The existing Meta connection was used
+read-only to retrieve its matching caption, official cover and video. These
+confirm **THE CLEAN VAN**, BLUFF (play sound tech), BOLT (floor it in the fog),
+$4,700,000 remaining, $0 banked, 61% suspicion and the 3:38 AM Route 6 stop.
+The trooper spots a $100 bill in the latch, with 45 seconds before the plate
+check. The 80.6-second video is displayed as 01:21. Automatic DM checks remained
+paused. No Instagram comment or message was sent.
+
+Part 03 is the active episode; Parts 01 and 02 remain in the archive with their
+original links and details. Watch, Like, Comment, Board theory links and the
+sharing badge follow Part 03 automatically. Prior local vote records remain
+separate. Current comment totals stay zero rather than deriving invented counts
+from the Reel's recap of the previous vote. No new vault clue/code was supplied:
+Part 01's playable vault and saved completions remain available. Parts 04–06
+stay locked. No member, credit, reward, hosting-plan or database changes were made.
+
+Local validation passed all 70 unit/service tests, ESLint, TypeScript and the
+production build. Eight Chromium checks passed across phone and desktop,
+including the current Reel links, both earlier archive files, the Part 4 lock,
+$4.7M HUD, saved BLUFF choice, earlier vote history, retained Part 1 vault and
+Room 17. Browser checks found no horizontal overflow or client errors.
