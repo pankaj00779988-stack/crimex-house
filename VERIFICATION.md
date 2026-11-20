@@ -276,3 +276,13 @@ production build. Eight Chromium checks passed across phone and desktop,
 including the current Reel links, both earlier archive files, the Part 4 lock,
 $4.7M HUD, saved BLUFF choice, earlier vote history, retained Part 1 vault and
 Room 17. Browser checks found no horizontal overflow or client errors.
+
+Commit `e7fd565` was staged as `dpl_AT3EfmzVMx7zsNaHQ2FcWyxsRSFh`.
+Six hosted story checks passed across phone and desktop, including preservation
+of both earlier votes while saving a different Part 3 choice. Server HTML,
+the official cover, the 1200×630 sharing image and private/uncached anonymous
+API projections passed. The mobile Part 3 modal and sharing cover were visually
+reviewed. The same tested deployment was promoted without rebuilding. Both
+public aliases passed page/image/API checks, and both live phone story checks
+passed. No error/fatal logs were found in the checked ten-minute window. A
+post-release read confirmed automatic Instagram checks are still disabled.
