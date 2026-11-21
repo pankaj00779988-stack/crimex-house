@@ -74,7 +74,7 @@ test("editorial configuration has one active episode, valid counts, and no paid 
   assert.equal(live.length, 1);
   assert.deepEqual(
     episodes.filter((e) => e.status === "LOCKED").map((e) => e.part),
-    [4, 5, 6],
+    [5, 6],
   );
   assert.match(vaultEpisode.safeCode!, /^\d{4}$/);
   assert.equal(live[0].choices!.length, 2);

@@ -53,7 +53,7 @@
     "id": "s1-p3",
     "part": 3,
     "title": "THE CLEAN VAN",
-    "status": "LIVE",
+    "status": "ARCHIVED",
     "subtitle": "A trooper spots the $100 bill in the latch.",
     "summary": "After paying Vance, the crew has $4,700,000 left. At 3:38 AM on Route 6, a trooper spots a $100 bill pinched in the van's latch. There are 45 seconds before he runs the plates. The crew must choose: BLUFF or BOLT.",
     "location": "ROUTE 6 / TRAFFIC STOP",
@@ -75,9 +75,25 @@
   {
     "id": "s1-p4",
     "part": 4,
-    "title": "CLASSIFIED",
-    "status": "LOCKED",
-    "subtitle": "Intelligence not yet released."
+    "title": "THE $100 LIE",
+    "status": "LIVE",
+    "subtitle": "$500,000 by sunrise—or the bodycam goes to the Feds.",
+    "summary": "The trooper lets the crew go, but the bodycam becomes a new threat. At 4:19 AM in an empty car wash bay, the burner lights up: Vance gave the trooper their number. With $4,700,000 left, the crew faces a $500,000 demand by sunrise. The next choice: PAY or GHOST.",
+    "location": "EXIT 12 / CAR WASH BAY",
+    "timestamp": "4:19 AM",
+    "runtime": "01:26",
+    "image": "/art/part-04.webp",
+    "choices": ["PAY (Put cop on payroll)", "GHOST (Dump van and vanish)"],
+    "initialVotes": { "optionA": 0, "optionB": 0 },
+    "voteHeading": "Pay or ghost?",
+    "voteContext": "Vance gave the trooper your number. $500,000 by sunrise—or the bodycam goes to the Feds. Your comments decide Part 5.",
+    "choiceStrategies": [
+      "Pay the $500,000 demand.",
+      "Leave the van and vanish."
+    ],
+    "isReleased": true,
+    "vaultReady": false,
+    "reelUrl": "https://www.instagram.com/reel/DgBLc9YqktZ/?knvt=MW5vbWpjMXN5cmt3dQ=="
   },
   {
     "id": "s1-p5",

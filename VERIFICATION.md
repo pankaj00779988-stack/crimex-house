@@ -286,3 +286,26 @@ reviewed. The same tested deployment was promoted without rebuilding. Both
 public aliases passed page/image/API checks, and both live phone story checks
 passed. No error/fatal logs were found in the checked ten-minute window. A
 post-release read confirmed automatic Instagram checks are still disabled.
+
+## Part 04 release — 21 November 2026
+
+The creator supplied Reel `DgBLc9YqktZ`. Its matching caption, official cover and
+video were retrieved read-only through the existing Meta connection. They
+confirm **THE $100 LIE**, PAY (put cop on payroll), GHOST (dump van and vanish),
+$4,700,000 remaining, $0 banked and 68% suspicion. At 4:19 AM in an empty car wash
+bay, the crew receives the trooper's $500,000 demand by sunrise. The 85.6-second
+video is displayed as 01:26. Automatic DM checks remained paused; no Instagram
+message or comment was sent.
+
+Part 04 is the active episode. Parts 01–03 retain their original archive links,
+posters and notes, while all current Watch/Like/Comment/theory actions follow
+Part 04. Prior local votes and Part 01 vault completions remain separate and
+available. No new vault clue/code or legal citation was invented. Parts 05–06
+remain locked. No member, credit, reward, hosting-plan or database changes were
+made, and current vote totals remain zero until genuine counts are supplied.
+
+Local checks passed all 70 unit/service tests, ESLint, TypeScript and the
+production build. Eight Chromium checks passed across phone and desktop,
+covering the current exact Reel, all earlier archive files, the Part 5 lock,
+$4.7M/68% HUD, saved PAY choice without overwriting Parts 1–3, retained Part 1
+vault and Room 17. No horizontal overflow or client errors were found.

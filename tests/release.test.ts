@@ -26,23 +26,23 @@ const reelUrl =
 const standby: Episode = { ...vaultEpisode, isReleased: false, reelUrl: "" };
 const released: Episode = { ...standby, isReleased: true, reelUrl };
 
-test("Part 3 release opens its real choices while keeping earlier Reels and Part 1's vault", () => {
-  assert.equal(latestEpisode.part, 3);
+test("Part 4 release opens its real choices while keeping earlier Reels and Part 1's vault", () => {
+  assert.equal(latestEpisode.part, 4);
   assert.equal(
     latestEpisode.reelUrl,
-    "https://www.instagram.com/reel/Df8T-EwK8Im/?knvt=d2FsZWgzZ2cyMHZu",
+    "https://www.instagram.com/reel/DgBLc9YqktZ/?knvt=MW5vbWpjMXN5cmt3dQ==",
   );
   assert.equal(isEpisodeReleased(latestEpisode), true);
-  assert.equal(activeEpisode.part, 3);
-  assert.equal(activeEpisode.title, "THE CLEAN VAN");
+  assert.equal(activeEpisode.part, 4);
+  assert.equal(activeEpisode.title, "THE $100 LIE");
   assert.equal(siteConfig.cash, 4700000);
-  assert.equal(siteConfig.initialSuspicion, 61);
-  const previous = episodes.find((episode) => episode.part === 2)!;
+  assert.equal(siteConfig.initialSuspicion, 68);
+  const previous = episodes.find((episode) => episode.part === 3)!;
   assert.equal(previous.status, "ARCHIVED");
   assert.equal(isEpisodeReleased(previous), true);
   assert.equal(
     previous.reelUrl,
-    "https://www.instagram.com/reel/Df5gbH3y-xP/?knvt=Y3M3NWczcHl6dGZl",
+    "https://www.instagram.com/reel/Df8T-EwK8Im/?knvt=d2FsZWgzZ2cyMHZu",
   );
   assert.equal(vaultEpisode.part, 1);
   assert.equal(vaultEpisode.safeCode, "1150");
@@ -59,9 +59,9 @@ test("Part 3 release opens its real choices while keeping earlier Reels and Part
   const vote = renderToStaticMarkup(
     createElement(Vote, { episode: latestEpisode }),
   );
-  assert.match(vote, /BLUFF/);
-  assert.match(vote, /BOLT/);
-  assert.doesNotMatch(vote, /DEAL|DECOY/);
+  assert.match(vote, /PAY/);
+  assert.match(vote, /GHOST/);
+  assert.doesNotMatch(vote, /BLUFF|BOLT|DEAL|DECOY/);
   const vault = renderToStaticMarkup(
     createElement(Vault, { episode: latestEpisode }),
   );
