@@ -343,3 +343,13 @@ production build. Eight Chromium checks passed across phone and desktop,
 covering the exact current Reel, all earlier archive files, the Part 6 lock,
 $4.7M/82% HUD, saved LEVERAGE choice without overwriting Parts 1–4, retained
 Part 1 vault and Room 17. No horizontal overflow or client errors were found.
+
+Commit `988ac75` was staged as `dpl_EHzXghQSWmcuekbkaCZPN8hgJR7B`.
+Six hosted story checks passed across phone and desktop. Server HTML, the actual
+cover, the 1200×630 sharing image and private/uncached anonymous API projections
+passed, including configured Crew storage. The mobile Part 5 modal and sharing
+cover were visually reviewed. The same tested deployment was promoted without
+rebuilding; both public aliases passed page/image/API checks, and both live
+phone story checks passed. No error/fatal logs were found in the checked
+ten-minute window. A post-release read confirmed automatic Instagram checks
+remain disabled.
