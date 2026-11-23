@@ -319,3 +319,27 @@ passed page/image/API checks, including configured Crew storage, and both live
 phone story checks passed. No error/fatal logs were found in the checked
 ten-minute window. A post-release read confirmed automatic Instagram checks
 remain disabled.
+
+## Part 05 release — 23 November 2026
+
+The creator supplied Reel `DgGW-krTvL_`. Its matching caption, official cover and
+video were retrieved read-only through the existing Meta connection. They
+confirm **THE BRASS CHAIN**, LEVERAGE (demand a free escort), LEAK (expose the
+trooper), $4,700,000 remaining, $0 banked and 82% suspicion. The trooper traced
+the last toll ping off Exit 14 and unlocked Room 8; the brass chain holds the
+door while the saved $500,000 extortion text becomes the next choice. The
+83.9-second video is displayed as 01:24. Automatic DM checks remained paused;
+no Instagram message or comment was sent.
+
+Part 05 is the active episode. Parts 01–04 retain their original archive links,
+posters and notes. Current Watch/Like/Comment/theory actions and the sharing
+badge follow Part 05. Prior local votes and Part 01 vault completions remain
+separate and available. No new vault clue/code, legal citation or comment total
+was invented. Part 06 remains locked. No member, credit, reward, hosting-plan or
+database changes were made.
+
+Local checks passed all 70 unit/service tests, ESLint, TypeScript and the
+production build. Eight Chromium checks passed across phone and desktop,
+covering the exact current Reel, all earlier archive files, the Part 6 lock,
+$4.7M/82% HUD, saved LEVERAGE choice without overwriting Parts 1–4, retained
+Part 1 vault and Room 17. No horizontal overflow or client errors were found.

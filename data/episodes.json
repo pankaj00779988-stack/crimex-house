@@ -76,7 +76,7 @@
     "id": "s1-p4",
     "part": 4,
     "title": "THE $100 LIE",
-    "status": "LIVE",
+    "status": "ARCHIVED",
     "subtitle": "$500,000 by sunrise—or the bodycam goes to the Feds.",
     "summary": "The trooper lets the crew go, but the bodycam becomes a new threat. At 4:19 AM in an empty car wash bay, the burner lights up: Vance gave the trooper their number. With $4,700,000 left, the crew faces a $500,000 demand by sunrise. The next choice: PAY or GHOST.",
     "location": "EXIT 12 / CAR WASH BAY",
@@ -98,9 +98,24 @@
   {
     "id": "s1-p5",
     "part": 5,
-    "title": "CLASSIFIED",
-    "status": "LOCKED",
-    "subtitle": "Intelligence not yet released."
+    "title": "THE BRASS CHAIN",
+    "status": "LIVE",
+    "subtitle": "The door is unlocked. Only the brass chain holds.",
+    "summary": "The crew chose GHOST and kept $4,700,000. The trooper traced the last toll ping off Exit 14 and unlocked Room 8 with a master key. A brass chain holds the door. With the $500,000 extortion text saved, the next choice is LEVERAGE or LEAK.",
+    "location": "EXIT 14 / ROOM 8",
+    "runtime": "01:24",
+    "image": "/art/part-05.webp",
+    "choices": ["LEVERAGE (Demand a free escort)", "LEAK (Expose the trooper)"],
+    "initialVotes": { "optionA": 0, "optionB": 0 },
+    "voteHeading": "Leverage or leak?",
+    "voteContext": "Only the brass chain holds Room 8's door. You still have proof of the $500,000 demand. Your comments decide Part 6.",
+    "choiceStrategies": [
+      "Use the saved extortion text.",
+      "Send the proof to State Police Dispatch."
+    ],
+    "isReleased": true,
+    "vaultReady": false,
+    "reelUrl": "https://www.instagram.com/reel/DgGW-krTvL_/?evlk=ZXp1ZXNrcWQxZzZi"
   },
   {
     "id": "s1-p6",

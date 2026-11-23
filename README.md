@@ -49,13 +49,15 @@ Keep exactly one episode in the editorial `LIVE` slot. Its public release is sep
 
 ## Released episodes
 
-Part 04, **THE $100 LIE**, is the current episode and points to the creator-supplied [Instagram Reel](https://www.instagram.com/reel/DgBLc9YqktZ/?knvt=MW5vbWpjMXN5cmt3dQ==). Its caption, official cover and Reel confirm **PAY** (put cop on payroll) and **GHOST** (dump van and vanish), $4,700,000 remaining, $0 banked and a 68% suspicion baseline. At 4:19 AM in an empty car wash bay, the crew faces a $500,000 demand by sunrise or the bodycam goes to the Feds. Runtime is rounded from the Reel's 85.6 seconds. No current comment counts were supplied, so website vote totals remain zero.
+Part 05, **THE BRASS CHAIN**, is the current episode and points to the creator-supplied [Instagram Reel](https://www.instagram.com/reel/DgGW-krTvL_/?evlk=ZXp1ZXNrcWQxZzZi). Its caption, official cover and Reel confirm **LEVERAGE** (demand a free escort) and **LEAK** (expose the trooper), $4,700,000 remaining, $0 banked and an 82% suspicion baseline. The trooper traced the last toll ping off Exit 14 and unlocked Room 8; the brass chain holds the door while the crew still has the $500,000 extortion text. Runtime is rounded from the Reel's 83.9 seconds. No current comment counts were supplied, so website vote totals remain zero.
+
+Part 04, **THE $100 LIE**, is archived with its [original Reel](https://www.instagram.com/reel/DgBLc9YqktZ/?knvt=MW5vbWpjMXN5cmt3dQ==), cover and synopsis. Its confirmed choices were PAY (put cop on payroll) and GHOST (dump van and vanish).
 
 Part 03, **THE CLEAN VAN**, is archived with its [original Reel](https://www.instagram.com/reel/Df8T-EwK8Im/?knvt=d2FsZWgzZ2cyMHZu), cover and synopsis. Its confirmed choices were BLUFF (play sound tech) and BOLT (floor it in the fog).
 
-Part 02, **THE $200K TRAP**, is archived with its [original Reel](https://www.instagram.com/reel/Df5gbH3y-xP/?knvt=Y3M3NWczcHl6dGZl), cover and synopsis. Its confirmed choices were DEAL (pay Vance $200,000) and BOLT (ram the door and run). Existing Parts 1–3 local vote records are preserved independently of Part 4.
+Part 02, **THE $200K TRAP**, is archived with its [original Reel](https://www.instagram.com/reel/Df5gbH3y-xP/?knvt=Y3M3NWczcHl6dGZl), cover and synopsis. Its confirmed choices were DEAL (pay Vance $200,000) and BOLT (ram the door and run). Existing Parts 1–4 local vote records are preserved independently of Part 5.
 
-Part 01 remains accessible in the archive with its [original Reel](https://www.instagram.com/reel/Df0s0ByqzGz/?obrf=eDJ0NTcweGdlZDAy), case notes and 1150 vault. The Board labels its retained Part 01 evidence separately from the latest Reel’s theory link. Parts 02–04 have confirmed synopses and real choices, but no creator-confirmed vault clue/code or legal citation; these are not invented. Parts 05–06 remain locked. Member verification, mission credits and reward costs are independent of episode release.
+Part 01 remains accessible in the archive with its [original Reel](https://www.instagram.com/reel/Df0s0ByqzGz/?obrf=eDJ0NTcweGdlZDAy), case notes and 1150 vault. The Board labels its retained Part 01 evidence separately from the latest Reel’s theory link. Parts 02–05 have confirmed synopses and real choices, but no creator-confirmed vault clue/code or legal citation; these are not invented. Part 06 remains locked. Member verification, mission credits and reward costs are independent of episode release.
 
 Change these two fields together and redeploy:
 
@@ -118,6 +120,7 @@ The episode safe is a narrative puzzle, not authentication. Source data and puzz
 - `public/art/part-02.webp`: the creator's actual Part 02 cover, retrieved from the connected Instagram account and optimized as WebP. Its title is **THE $200K TRAP**.
 - `public/art/part-03.webp`: the creator's actual Part 03 cover, retrieved from the connected Instagram account and optimized as WebP. Its title is **THE CLEAN VAN**.
 - `public/art/part-04.webp`: the creator's actual Part 04 cover, retrieved from the connected Instagram account and optimized as WebP. Its title is **THE $100 LIE**.
+- `public/art/part-05.webp`: the creator's actual Part 05 cover, retrieved from the connected Instagram account and optimized as WebP. Its title is **THE BRASS CHAIN**.
 - To use a supplied original episode image later, upload it under `/public/art/` and change the episode’s `image` field.
 - `public/art/scene_01.jpg`: original starter photo from [Unsplash](https://images.unsplash.com/photo-1519608487953-e999c86e7455).
 - `avatarUrl` in site configuration is empty for the CH monogram. Set it to `/art/pfp.jpg` after uploading a profile image. Missing configured images also fall back cleanly.
